@@ -1,236 +1,426 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Emery Campbell Consulting - Professional Website Design & Online Business Management Services">
-    <meta property="og:title" content="Emery Campbell Consulting">
-    <meta property="og:description" content="Professional website design and online business management services">
-    <meta name="theme-color" content="#8B7355">
+    <meta name="description" content="Emery Campbell Consulting - Professional consulting services">
+
+```
+<title>Emery Campbell Consulting</title>
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Your CSS Files -->
+<link rel="stylesheet" href="css/chatbot-styles.css">
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
     
-    <!-- Stylesheets -->
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="css/chatbot.css">
-    <link rel="stylesheet" href="css/payment-modal.css">
-    <link rel="stylesheet" href="css/custom-enhancements.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: #000000;
+        color: #FFFFFF;
+        line-height: 1.6;
+    }
     
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Cormorant Garamond', serif;
+    }
     
-    <title>Emery Campbell Consulting</title>
+    /* Brown/Tan Gradient Hero */
+    .hero-section {
+        background: linear-gradient(135deg, #C19A6B 0%, #8B7355 100%);
+        min-height: 60vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 80px 20px;
+    }
+    
+    .hero-title {
+        font-size: clamp(2.5rem, 7vw, 5rem);
+        color: #FFFFFF;
+        font-weight: 400;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        line-height: 1.2;
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Black sections */
+    .black-section {
+        background-color: #000000;
+        color: #FFFFFF;
+        padding: 80px 20px;
+    }
+    
+    /* Cream sections */
+    .cream-section {
+        background-color: #F5F1E8;
+        color: #000000;
+        padding: 80px 20px;
+    }
+    
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+    }
+    
+    .section-title {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin-bottom: 20px;
+        font-weight: 400;
+    }
+    
+    .section-subtitle {
+        font-size: clamp(1rem, 2vw, 1.2rem);
+        opacity: 0.9;
+        margin-bottom: 40px;
+    }
+    
+    /* Book Button */
+    .book-btn {
+        background-color: #000000;
+        color: #FFFFFF;
+        padding: 18px 50px;
+        border: none;
+        border-radius: 8px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-decoration: none;
+        display: inline-block;
+    }
+    
+    .book-btn:hover {
+        background-color: #8B7355;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(139, 115, 85, 0.3);
+    }
+    
+    /* Lead Form */
+    .lead-form-section {
+        background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=1200');
+        background-size: cover;
+        background-position: center;
+        padding: 80px 20px;
+    }
+    
+    .lead-form-box {
+        max-width: 600px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    
+    .lead-form-box h2 {
+        color: #FFFFFF;
+        margin-bottom: 40px;
+    }
+    
+    .form-input {
+        width: 100%;
+        padding: 16px 20px;
+        margin-bottom: 16px;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-family: 'Montserrat', sans-serif;
+    }
+    
+    .form-submit {
+        background-color: #8B7355;
+        color: #FFFFFF;
+        width: 100%;
+        padding: 18px;
+        border: none;
+        border-radius: 6px;
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+    
+    .form-submit:hover {
+        background-color: #C19A6B;
+        transform: translateY(-2px);
+    }
+    
+    /* Footer */
+    .footer {
+        background-color: #F5F1E8;
+        padding: 80px 20px 40px;
+        text-align: center;
+    }
+    
+    .footer-brand h2 {
+        font-size: clamp(2rem, 5vw, 3.5rem);
+        color: #C19A6B;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        margin: 0 0 60px 0;
+        font-weight: 400;
+    }
+    
+    .footer-nav {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        flex-wrap: wrap;
+        margin-bottom: 60px;
+    }
+    
+    .footer-link {
+        color: #000000;
+        text-decoration: none;
+        text-transform: uppercase;
+        font-size: 0.95rem;
+        letter-spacing: 0.1em;
+        transition: color 0.3s;
+    }
+    
+    .footer-link:hover {
+        color: #C19A6B;
+    }
+    
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin-bottom: 40px;
+    }
+    
+    .social-icon {
+        color: #C19A6B;
+        font-size: 28px;
+        transition: all 0.3s;
+    }
+    
+    .social-icon:hover {
+        color: #8B7355;
+        transform: translateY(-4px);
+    }
+    
+    .copyright {
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 0.85rem;
+        margin-top: 20px;
+    }
+    
+    /* Divider */
+    .divider {
+        width: 1px;
+        height: 80px;
+        background-color: #FFFFFF;
+        margin: 0 auto 40px;
+        opacity: 0.3;
+    }
+    
+    .divider-dark {
+        background-color: #000000;
+    }
+    
+    @media (max-width: 768px) {
+        .footer-nav {
+            flex-direction: column;
+            gap: 16px;
+        }
+    }
+</style>
+```
+
 </head>
 <body>
 
-    <!-- Header -->
-    <header class="header" style="background-color: #000; color: #fff; padding: 80px 20px; text-align: center;">
-        <h1 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 8vw, 5rem); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 20px 0;">Emery Campbell Consulting</h1>
-        <p style="font-family: 'Montserrat', sans-serif; font-size: 1.2rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.9;">Professional Website Design & Online Business Management</p>
-        <button class="book-call-btn" style="margin-top: 40px;">
-            <i class="fas fa-calendar-alt"></i> Book Discovery Call
+```
+<!-- HERO SECTION -->
+<section class="hero-section">
+    <div>
+        <h1 class="hero-title">
+            WELCOME TO<br>
+            EMERY CAMPBELL<br>
+            CONSULTING
+        </h1>
+    </div>
+</section>
+
+<!-- OUR SERVICES -->
+<section class="black-section">
+    <div class="container">
+        <div class="divider"></div>
+        <h2 class="section-title">OUR SERVICES</h2>
+        <p class="section-subtitle">We offer tailored consulting services to meet your unique needs.</p>
+        
+        <div style="text-align: center; margin-top: 60px;">
+            <button class="book-btn">
+                BOOK A DISCOVERY CALL
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- LEAD CAPTURE FORM -->
+<section class="lead-form-section">
+    <div class="lead-form-box">
+        <h2 class="section-title">DOWNLOAD MY<br>SERVICES & PRICING GUIDE!</h2>
+        
+        <form id="leadCaptureForm">
+            <input type="text" name="firstName" class="form-input" placeholder="First Name" required>
+            <input type="email" name="email" class="form-input" placeholder="Email" required>
+            <button type="submit" class="form-submit">Get Access Now!</button>
+        </form>
+    </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="black-section">
+    <div class="container">
+        <div class="divider"></div>
+        <h2 class="section-title">PORTFOLIO</h2>
+        <p class="section-subtitle">Check out our stunning projects.</p>
+    </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section class="cream-section">
+    <div class="container">
+        <div class="divider divider-dark"></div>
+        <h2 class="section-title" style="color: #000000;">CASE STUDIES</h2>
+        <p class="section-subtitle" style="color: #000000;">Learn how we've helped our clients succeed.</p>
+    </div>
+</section>
+
+<!-- ABOUT US -->
+<section class="black-section">
+    <div class="container">
+        <div class="divider"></div>
+        <h2 class="section-title">ABOUT US</h2>
+        <p class="section-subtitle">We are dedicated to providing exceptional service.</p>
+        
+        <div style="max-width: 900px; margin: 60px auto; text-align: center;">
+            <div style="background: linear-gradient(135deg, rgba(193, 154, 107, 0.1) 0%, rgba(139, 115, 85, 0.1) 100%); border-left: 4px solid #C19A6B; padding: 50px 40px; border-radius: 8px;">
+                <h3 style="font-size: clamp(1.8rem, 4vw, 2.5rem); color: #C19A6B; margin-bottom: 30px; font-weight: 300; letter-spacing: 0.05em;">
+                    Your Success Story Starts Here
+                </h3>
+                
+                <p style="font-size: 1.2rem; line-height: 2; color: rgba(255, 255, 255, 0.95); margin-bottom: 25px;">
+                    Welcome to <strong style="color: #C19A6B;">Emery Campbell Consulting</strong> — where fresh perspectives meet unwavering dedication. 
+                </p>
+                
+                <p style="font-size: 1.15rem; line-height: 2; color: rgba(255, 255, 255, 0.9); margin-bottom: 25px;">
+                    As a <span style="color: #C19A6B; font-weight: 600;">new force</span> in the consulting world, we bring <span style="color: #C19A6B; font-weight: 600;">innovative thinking</span>, <span style="color: #C19A6B; font-weight: 600;">personalized attention</span>, and an <span style="color: #C19A6B; font-weight: 600;">unmatched hunger</span> to see you succeed. We're not just building a business — we're building <span style="color: #C19A6B; font-weight: 600;">lasting partnerships</span> founded on trust, results, and genuine care.
+                </p>
+                
+                <p style="font-size: 1.15rem; line-height: 2; color: rgba(255, 255, 255, 0.9); margin-bottom: 25px;">
+                    Every client matters. Every project is personal. Every success is celebrated. We're committed to <span style="color: #C19A6B; font-weight: 600;">transforming your vision into reality</span> with strategies that work, solutions that last, and service that exceeds expectations.
+                </p>
+                
+                <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(193, 154, 107, 0.3);">
+                    <p style="font-size: 1.3rem; color: #C19A6B; font-style: italic; font-weight: 300; margin-bottom: 15px;">
+                        "Your growth is our mission. Your success is our promise."
+                    </p>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-top: 50px;">
+                    <div>
+                        <div style="font-size: 3rem; color: #C19A6B; margin-bottom: 10px;">✓</div>
+                        <h4 style="color: #FFFFFF; font-size: 1.1rem; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.1em;">Fresh Perspective</h4>
+                        <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.95rem;">Innovative solutions tailored to modern challenges</p>
+                    </div>
+                    
+                    <div>
+                        <div style="font-size: 3rem; color: #C19A6B; margin-bottom: 10px;">✓</div>
+                        <h4 style="color: #FFFFFF; font-size: 1.1rem; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.1em;">Dedicated Focus</h4>
+                        <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.95rem;">Your success is our top priority, always</p>
+                    </div>
+                    
+                    <div>
+                        <div style="font-size: 3rem; color: #C19A6B; margin-bottom: 10px;">✓</div>
+                        <h4 style="color: #FFFFFF; font-size: 1.1rem; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.1em;">Proven Results</h4>
+                        <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.95rem;">Strategies that deliver measurable impact</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT US -->
+<section class="cream-section">
+    <div class="container" style="text-align: center;">
+        <div class="divider divider-dark"></div>
+        <h2 class="section-title" style="color: #000000;">CONTACT US</h2>
+        <p class="section-subtitle" style="color: #000000; max-width: 600px; margin: 20px auto 40px;">
+            Get in touch for a consultation.
+        </p>
+        
+        <div style="margin-bottom: 40px;">
+            <p style="font-size: 1.2rem; color: #000000; margin-bottom: 10px;">
+                <i class="fas fa-envelope" style="color: #C19A6B; margin-right: 10px;"></i>
+                <a href="mailto:emerycampexp@gmail.com" style="color: #000000; text-decoration: none;">emerycampexp@gmail.com</a>
+            </p>
+            <p style="font-size: 1.2rem; color: #000000;">
+                <i class="fas fa-phone" style="color: #C19A6B; margin-right: 10px;"></i>
+                <a href="tel:+18479427399" style="color: #000000; text-decoration: none;">+1 (847) 942-7399</a>
+            </p>
+        </div>
+        
+        <button class="book-btn">
+            SCHEDULE CONSULTATION
         </button>
-    </header>
+    </div>
+</section>
 
-    <!-- Vertical Divider -->
-    <div class="vertical-divider"></div>
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-brand">
+        <h2>EMERY CAMPBELL</h2>
+    </div>
+    
+    <nav class="footer-nav">
+        <a href="#services" class="footer-link">SERVICES</a>
+        <a href="#about" class="footer-link">ABOUT</a>
+        <a href="#testimonials" class="footer-link">TESTIMONIALS</a>
+        <a href="#contact" class="footer-link">CONTACT</a>
+        <a href="#privacy" class="footer-link">PRIVACY POLICY</a>
+    </nav>
+    
+    <div class="social-icons">
+        <a href="mailto:emerycampexp@gmail.com" class="social-icon" title="Email Us"><i class="fas fa-envelope"></i></a>
+        <a href="tel:+18479427399" class="social-icon" title="Call Us"><i class="fas fa-phone"></i></a>
+        <a href="#" class="social-icon" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" class="social-icon" title="Facebook"><i class="fab fa-facebook"></i></a>
+        <a href="#" class="social-icon" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+    </div>
+    
+    <p class="copyright">© 2025 EMERY CAMPBELL CONSULTING | PRIVACY POLICY | TERMS & CONDITIONS</p>
+</footer>
 
-    <!-- Services Section -->
-    <section class="services-section">
-        <div style="max-width: 1200px; margin: 0 auto;">
-            <h2>Our Services</h2>
-            <p style="font-size: 1.1rem; margin-bottom: 50px; opacity: 0.8;">Emery Campbell Consulting specializes in two core areas designed to elevate your business:</p>
-            
-            <div class="service-card">
-                <h3>Website Design</h3>
-                <p>Custom, stunning websites built with the latest technologies. We create digital experiences that captivate your audience and drive results.</p>
-                <ul style="list-style: none; padding: 0; margin-top: 20px;">
-                    <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #C19A6B; margin-right: 10px;"></i> Custom Design & Development</li>
-                    <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #C19A6B; margin-right: 10px;"></i> Mobile-Responsive Layouts</li>
-                    <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #C19A6B; margin-right: 10px;"></i> SEO Optimization</li>
-                    <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #C19A6B; margin-right: 10px;"></i> WordPress & Showit Expertise</li>
-                </ul>
-            </div>
-
-            <div class="service-card">
-                <h3>Online Business Management</h3>
-                <p>Complete admin support, systems optimization, and process management to streamline your operations and scale your business effectively.</p>
-                <ul style="list-style: none; padding: 0; margin-top: 20px;">
-                    <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #C19A6B; margin-right: 10px;"></i> Administrative Support</li>
-                    <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #C19A6B; margin-right: 10px;"></i> Systems & Process Optimization</li>
-                    <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #C19A6B; margin-right: 10px;"></i> Project Management</li>
-                    <li style="margin-bottom: 10px;"><i class="fas fa-check" style="color: #C19A6B; margin-right: 10px;"></i> Team Coordination</li>
-                </ul>
-            </div>
-        </div>
-    </section>
-
-    <!-- Vertical Divider -->
-    <div class="vertical-divider"></div>
-
-    <!-- Stats Section -->
-    <section class="stats-section">
-        <div class="stats-grid">
-            <div class="stat-item">
-                <div class="stat-number counter" data-target="100">100</div>
-                <div class="stat-label">Projects Completed</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number counter" data-target="50">50</div>
-                <div class="stat-label">Happy Clients</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number counter" data-target="5">5</div>
-                <div class="stat-label">Years Experience</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-number">100<span style="font-size: 2rem;">%</span></div>
-                <div class="stat-label">Client Satisfaction</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Vertical Divider -->
-    <div class="vertical-divider"></div>
-
-    <!-- Video Testimonials Section -->
-    <section class="video-testimonials">
-        <div class="testimonial-heading">
-            <div class="divider"></div>
-            <h2>Client <span class="story-italic">stories</span></h2>
-            <p>Success Stories From Our Clients</p>
-        </div>
-        
-        <div class="video-grid">
-            <div class="video-item">
-                <video controls poster="placeholder-image.jpg">
-                    <source src="testimonial-1.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-            <div class="video-item">
-                <video controls poster="placeholder-image.jpg">
-                    <source src="testimonial-2.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-            <div class="video-item">
-                <video controls poster="placeholder-image.jpg">
-                    <source src="testimonial-3.mp4" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-        </div>
-    </section>
-
-    <!-- Vertical Divider -->
-    <div class="vertical-divider"></div>
-
-    <!-- Meet Section -->
-    <section class="meet-section">
-        <h3>Meet The Founder</h3>
-        <h2>Emery Campbell</h2>
-        
-        <div class="profile-photo">
-            <img src="emery-photo.jpg" alt="Emery Campbell - Founder">
-            <div class="chat-bubble">Let's Chat!</div>
-        </div>
-        
-        <div class="bio-text">
-            <p>Founded with a passion for technology and entrepreneurship, Emery Campbell Consulting helps businesses succeed in the digital world. With years of experience in website design and business management, we deliver exceptional results that transform your online presence.</p>
-            <p style="margin-top: 20px;">Our approach combines strategic thinking with hands-on execution to ensure your business not only survives but thrives in today's competitive digital landscape.</p>
-        </div>
-        
-        <button class="book-call-btn" style="margin-top: 40px;">
-            <i class="fas fa-calendar-alt"></i> Schedule A Call
-        </button>
-    </section>
-
-    <!-- Vertical Divider -->
-    <div class="vertical-divider"></div>
-
-    <!-- Lead Capture Form -->
-    <section class="lead-form">
-        <div class="lead-form-content">
-            <h2>Get Your Free Website Audit</h2>
-            <p style="color: #fff; margin-bottom: 30px; font-size: 1.1rem;">Discover how to improve your online presence and grow your business</p>
-            
-            <form id="leadCaptureForm" style="text-align: left;">
-                <input type="text" name="name" placeholder="Your Name" required>
-                <input type="email" name="email" placeholder="Your Email" required>
-                <input type="tel" name="phone" placeholder="Your Phone">
-                <input type="text" name="website" placeholder="Your Website (if applicable)">
-                <button type="submit">
-                    <i class="fas fa-download"></i> Get Free Audit
-                </button>
-            </form>
-        </div>
-    </section>
-
-    <!-- Vertical Divider -->
-    <div class="vertical-divider"></div>
-
-    <!-- Social Video Strip -->
-    <section class="social-videos">
-        <div class="social-video-item">
-            <img src="social-1.jpg" alt="Social post 1">
-            <div class="play-overlay">▶</div>
-        </div>
-        <div class="social-video-item">
-            <img src="social-2.jpg" alt="Social post 2">
-            <div class="play-overlay">▶</div>
-        </div>
-        <div class="social-video-item">
-            <img src="social-3.jpg" alt="Social post 3">
-            <div class="play-overlay">▶</div>
-        </div>
-        <div class="social-video-item">
-            <img src="social-4.jpg" alt="Social post 4">
-            <div class="play-overlay">▶</div>
-        </div>
-        <div class="social-video-item">
-            <img src="social-5.jpg" alt="Social post 5">
-            <div class="play-overlay">▶</div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-logo">
-            <h3 style="font-family: 'Cormorant Garamond', serif; color: #C19A6B; font-size: 2rem; margin: 0;">EMERY CAMPBELL</h3>
-            <p style="font-size: 0.8rem; color: #fff; margin-top: 5px; letter-spacing: 0.2em;">CONSULTING</p>
-        </div>
-        
-        <nav class="footer-links">
-            <a href="#services" class="footer-link">Services</a>
-            <a href="#about" class="footer-link">About</a>
-            <a href="#testimonials" class="footer-link">Testimonials</a>
-            <a href="#contact" class="footer-link">Contact</a>
-            <a href="#" class="footer-link">Privacy Policy</a>
-        </nav>
-        
-        <div class="footer-divider"></div>
-        
-        <div class="footer-copyright">
-            <p>&copy; 2026 Emery Campbell Consulting. All Rights Reserved.</p>
-            <p style="margin-top: 10px;">Professional Website Design & Online Business Management</p>
-        </div>
-        
-        <div style="margin-top: 30px;">
-            <a href="mailto:hello@emerycampbell.com" style="color: #C19A6B; margin: 0 10px; font-size: 1.5rem;"><i class="fas fa-envelope"></i></a>
-            <a href="https://instagram.com" style="color: #C19A6B; margin: 0 10px; font-size: 1.5rem;"><i class="fab fa-instagram"></i></a>
-            <a href="https://facebook.com" style="color: #C19A6B; margin: 0 10px; font-size: 1.5rem;"><i class="fab fa-facebook"></i></a>
-            <a href="https://linkedin.com" style="color: #C19A6B; margin: 0 10px; font-size: 1.5rem;"><i class="fab fa-linkedin"></i></a>
-        </div>
-    </footer>
-
-    <!-- Scripts -->
-    <script src="js/main.js"></script>
-    <script src="js/form-handler.js"></script>
-    <script src="js/dark-mode.js"></script>
-    <script src="js/seo-optimization.js"></script>
-    <script src="js/booking-integration.js"></script>
-    <script src="js/image-gallery.js"></script>
-    <script src="js/chatbot.js"></script>
+<!-- JavaScript Files -->
+<script src="js/main.js"></script>
+<script src="js/form-handler.js"></script>
+<script src="js/booking-integration.js"></script>
+<script src="js/ai-chatbot.js"></script>
+<script src="js/analytics.js"></script>
+```
 
 </body>
 </html>
