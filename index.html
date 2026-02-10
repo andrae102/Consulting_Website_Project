@@ -253,12 +253,20 @@
 ```
 <!-- HERO SECTION -->
 <section class="hero-section">
-    <div>
-        <h1 class="hero-title">
-            WELCOME TO<br>
-            EMERY CAMPBELL<br>
-            CONSULTING
+    <div style="max-width: 1000px; margin: 0 auto;">
+        <p style="font-family: 'Montserrat', sans-serif; font-size: clamp(0.9rem, 2vw, 1.1rem); font-weight: 300; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255, 255, 255, 0.9); margin-bottom: 20px;">
+            Welcome to
+        </p>
+        <h1 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 10vw, 7rem); font-weight: 300; letter-spacing: 0.02em; line-height: 1.1; color: #FFFFFF; margin-bottom: 15px; text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
+            Emery Campbell
         </h1>
+        <p style="font-family: 'Montserrat', sans-serif; font-size: clamp(1.2rem, 3vw, 2rem); font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255, 255, 255, 0.95); margin-top: 10px;">
+            Consulting
+        </p>
+        <div style="width: 100px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent); margin: 40px auto;"></div>
+        <p style="font-family: 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 2.5vw, 1.8rem); font-weight: 300; font-style: italic; color: rgba(255, 255, 255, 0.9); letter-spacing: 0.05em;">
+            Transforming Visions into Reality
+        </p>
     </div>
 </section>
 
@@ -267,8 +275,11 @@
     <div class="container">
         <div class="divider"></div>
         <h2 class="section-title">OUR SERVICES</h2>
-        <p class="section-subtitle" style="max-width: 800px; margin: 0 auto 60px; font-size: 1.15rem; line-height: 1.8;">
+        <p class="section-subtitle" style="max-width: 800px; margin: 0 auto 20px; font-size: 1.15rem; line-height: 1.8;">
             Emery Campbell Consulting specializes in two core areas designed to elevate your business:
+        </p>
+        <p style="font-family: 'Cormorant Garamond', serif; font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-style: italic; color: #C19A6B; text-align: center; margin-bottom: 60px; letter-spacing: 0.05em;">
+            We go near and far
         </p>
         
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 50px; margin-top: 60px;">
@@ -344,8 +355,11 @@
         </div>
         
         <div style="text-align: center; margin-top: 60px;">
-            <button class="book-btn">
+            <button class="book-btn" style="margin-right: 15px;">
                 BOOK A DISCOVERY CALL
+            </button>
+            <button class="book-btn open-chat" style="background: transparent; border: 2px solid #FFFFFF; color: #FFFFFF;">
+                💬 CHAT WITH US
             </button>
         </div>
     </div>
@@ -457,8 +471,11 @@
             </p>
         </div>
         
-        <button class="book-btn">
+        <button class="book-btn" style="margin-right: 15px;">
             SCHEDULE CONSULTATION
+        </button>
+        <button class="book-btn open-chat" style="background: transparent; border: 2px solid #000000; color: #000000;">
+            💬 LIVE CHAT
         </button>
     </div>
 </section>
@@ -572,14 +589,27 @@ document.addEventListener('DOMContentLoaded', function() {
     const messagesContainer = document.getElementById('chatMessages');
     const suggestions = document.getElementById('chatSuggestions');
     
-    // Toggle chat
-    toggleBtn.addEventListener('click', function() {
+    // Function to open chat
+    window.openChat = function() {
         chatWindow.classList.add('open');
         badge.style.display = 'none';
-    });
+        chatInput.focus();
+    };
+    
+    // Toggle chat
+    toggleBtn.addEventListener('click', window.openChat);
     
     closeBtn.addEventListener('click', function() {
         chatWindow.classList.remove('open');
+    });
+    
+    // MAKE ANY ELEMENT OPEN CHAT - Add class "open-chat" to any button/link
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('open-chat') || 
+            e.target.closest('.open-chat')) {
+            e.preventDefault();
+            window.openChat();
+        }
     });
     
     // Send message
