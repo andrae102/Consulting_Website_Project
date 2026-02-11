@@ -1,59 +1,79 @@
-<script>
-function trackActivity(action, page = '') {
-    const userData = JSON.parse(localStorage.getItem('userData') || '{"activity":[]}');
-
-    if (!userData.activity) {
-        userData.activity = [];
-    }
-
-    userData.activity.push({
-        action: action,
-        page: page,
-        timestamp: new Date().toISOString(),
-        date: new Date().toLocaleString()
-    });
-
-    localStorage.setItem('userData', JSON.stringify(userData));
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Sign Up</title>
+<style>
+body {
+    font-family: Arial;
+    background: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
 }
+.container {
+    background: #F5F1E8;
+    color: black;
+    padding: 40px;
+    border-radius: 10px;
+    width: 320px;
+}
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+}
+button {
+    width: 100%;
+    padding: 10px;
+    background: #C19A6B;
+    border: none;
+    color: white;
+}
+</style>
+</head>
+<body>
 
-function handleSignup(e) {
-    e.preventDefault();
+<div class="container">
+    <h2>Create Account</h2>
 
-    const name = document.getElementById('signupName').value.trim();
-    const email = document.getElementById('signupEmail').value.trim();
-    const password = document.getElementById('signupPassword').value;
-    const confirm = document.getElementById('signupConfirm').value;
+    <input type="text" id="name" placeholder="Full Name" required>
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="password" id="password" placeholder="Password" required>
 
-    if (password !== confirm) {
-        alert('Passwords do not match!');
-        return;
-    }
+    <button onclick="signup()">Sign Up</button>
+</div>
 
-    if (localStorage.getItem('userData')) {
-        alert('An account already exists on this device.');
+<script>
+function signup() {
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+
+    if (!name || !email || !password) {
+        alert("Please fill all fields.");
         return;
     }
 
     const userData = {
-        name,
-        email,
-        password, // temporary until backend
+        name: name,
+        email: email,
         signupDate: new Date().toISOString(),
-        business: {},
-        websitePrefs: {},
         activity: [{
-            action: 'Account Created',
-            page: 'signup.html',
-            timestamp: new Date().toISOString(),
+            action: "Account Created",
             date: new Date().toLocaleString()
         }]
     };
 
-    localStorage.setItem('userLoggedIn', 'true');
-    localStorage.setItem('userData', JSON.stringify(userData));
+    localStorage.setItem("userLoggedIn", "true");
+    localStorage.setItem("userData", JSON.stringify(userData));
 
-    alert('Welcome ' + name + '! Your account has been created.');
-
-    window.location.href = 'account.html';
+    window.location.href = "account.html";
 }
 </script>
+
+</body>
+</html>
