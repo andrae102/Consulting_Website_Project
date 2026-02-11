@@ -1,27 +1,106 @@
-import Head from 'next/head';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Emery Campbell Consulting - Professional consulting services">
 
-export default function Home() {
-  return (
-    <>
-      <Head>
-        <title>Emery Campbell Consulting</title>
-        <meta name="description" content="Professional consulting services" />
-      </Head>
+    <title>Emery Campbell Consulting</title>
 
-      <div className="top-banner">
-        READY TO TRANSFORM YOUR BUSINESS? CURRENTLY BOOKING CUSTOM PROJECTS!
-      </div>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-      <nav className="navbar">
-        <div className="nav-container">
-          <a href="/" className="nav-logo">EMERY CAMPBELL</a>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Global CSS -->
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+
+<body>
+
+<!-- TOP BANNER -->
+<div class="top-banner">
+    READY TO TRANSFORM YOUR BUSINESS? CURRENTLY BOOKING CUSTOM PROJECTS!
+</div>
+
+<!-- NAVIGATION -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo">EMERY CAMPBELL</a>
+
+        <div class="nav-actions">
+            <a href="signup.html" class="login-btn" id="signupBtn">
+                <i class="fas fa-user-plus"></i> Sign Up
+            </a>
         </div>
-      </nav>
+    </div>
+</nav>
 
-      <section className="hero-section">
-        <h1>Emery Campbell Consulting</h1>
-        <p>Transforming Visions into Reality</p>
-      </section>
-    </>
-  );
-}
+<!-- HERO -->
+<section class="hero-section">
+    <div class="container">
+        <h1 class="hero-title">Emery Campbell Consulting</h1>
+        <p class="hero-subtitle">Transforming Visions into Reality</p>
+
+        <a href="https://wa.me/18479427399?text=Hi!%20I'd%20like%20to%20book%20a%20discovery%20call" 
+           target="_blank" 
+           class="primary-btn">
+           📞 Book a Discovery Call
+        </a>
+    </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section-dark" id="services">
+    <div class="container">
+        <h2 class="section-title">Our Services</h2>
+
+        <div class="services-grid">
+
+            <div class="service-card">
+                <i class="fas fa-laptop-code service-icon"></i>
+                <h3>Website Design</h3>
+                <p>Custom, stunning websites built to convert and elevate your brand.</p>
+                <a href="website-design.html" class="secondary-btn">Learn More</a>
+            </div>
+
+            <div class="service-card">
+                <i class="fas fa-chart-line service-icon"></i>
+                <h3>Online Business Management</h3>
+                <p>Systems, admin support, and structure to help you scale efficiently.</p>
+                <a href="#contact" class="secondary-btn">Get Started</a>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section-light" id="contact">
+    <div class="container">
+        <h2 class="section-title">Contact Us</h2>
+
+        <p>
+            <i class="fas fa-envelope"></i>
+            <a href="mailto:emerycampexp@gmail.com">emerycampexp@gmail.com</a>
+        </p>
+
+        <p>
+            <i class="fas fa-phone"></i>
+            <a href="tel:+18479427399">+1 (847) 942-7399</a>
+        </p>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <h2>EMERY CAMPBELL</h2>
+    <p>© 2025 Emery Campbell Consulting</p>
+</footer>
+
+<!-- Global JS -->
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>
