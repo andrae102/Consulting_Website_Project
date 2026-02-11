@@ -1,0 +1,1104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Emery Campbell Consulting - Professional consulting services">
+    
+    <title>Emery Campbell Consulting</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Your CSS Files -->
+    <link rel="stylesheet" href="css/chatbot-styles.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #000000;
+            color: #FFFFFF;
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        
+        /* NAVIGATION BAR */
+        .top-banner {
+            background: linear-gradient(135deg, #C19A6B 0%, #8B7355 100%);
+            padding: 12px 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #FFFFFF;
+            font-weight: 500;
+        }
+        
+        .navbar {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #000000;
+            padding: 20px 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: #FFFFFF;
+            text-decoration: none;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-logo:hover {
+            color: #C19A6B;
+        }
+        
+        /* Login Button */
+        .login-btn {
+            background: transparent;
+            border: 1px solid #C19A6B;
+            color: #C19A6B;
+            padding: 8px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.05em;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .login-btn:hover {
+            background: #C19A6B;
+            color: #000000;
+            transform: translateY(-2px);
+        }
+        
+        /* Hamburger Menu */
+        .mobile-menu-toggle {
+            background: transparent;
+            border: none;
+            color: #FFFFFF;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            width: 35px;
+        }
+        
+        .mobile-menu-toggle span {
+            display: block;
+            width: 100%;
+            height: 3px;
+            background: #FFFFFF;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+        
+        .mobile-menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+        
+        /* Mobile Menu */
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: #F5F1E8;
+            padding: 80px 0 40px;
+            transition: left 0.3s ease;
+            overflow-y: auto;
+            z-index: 2000;
+        }
+        
+        .nav-menu.active {
+            left: 0;
+        }
+        
+        .menu-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: transparent;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: #000000;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .menu-logo {
+            text-align: center;
+            margin-bottom: 60px;
+            padding: 0 40px;
+        }
+        
+        .menu-logo img {
+            max-width: 150px;
+            height: auto;
+        }
+        
+        .nav-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .nav-menu li {
+            margin: 0;
+        }
+        
+        .nav-link {
+            display: block;
+            padding: 20px 40px;
+            color: #000000;
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .nav-link:hover {
+            background: rgba(193, 154, 107, 0.1);
+            color: #8B7355;
+            padding-left: 50px;
+        }
+        
+        /* Overlay */
+        .menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1999;
+        }
+        
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        /* Desktop - Hide hamburger */
+        @media (min-width: 769px) {
+            .mobile-menu-toggle {
+                display: none;
+            }
+            
+            .nav-menu {
+                position: static;
+                width: auto;
+                height: auto;
+                background: transparent;
+                padding: 0;
+                max-width: none;
+                display: flex;
+                gap: 40px;
+            }
+            
+            .nav-menu ul {
+                display: flex;
+                gap: 40px;
+                align-items: center;
+            }
+            
+            .menu-close {
+                display: none;
+            }
+            
+            .menu-logo {
+                display: none;
+            }
+            
+            .nav-link {
+                padding: 0;
+                border: none;
+                color: #FFFFFF;
+                font-size: 0.9rem;
+                text-transform: uppercase;
+                letter-spacing: 0.15em;
+                position: relative;
+            }
+            
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background: #C19A6B;
+                transition: width 0.3s ease;
+            }
+            
+            .nav-link:hover {
+                color: #C19A6B;
+                background: transparent;
+                padding-left: 0;
+            }
+            
+            .nav-link:hover::after {
+                width: 100%;
+            }
+            
+            .menu-overlay {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 20px;
+            }
+            
+            .nav-logo {
+                font-size: 1.5rem;
+            }
+        }
+        
+        /* Brown/Tan Gradient Hero */
+        .hero-section {
+            background: linear-gradient(135deg, #C19A6B 0%, #8B7355 100%);
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 80px 20px;
+        }
+        
+        .hero-title {
+            font-size: clamp(2.5rem, 7vw, 5rem);
+            color: #FFFFFF;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            line-height: 1.2;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+        
+        /* Black sections */
+        .black-section {
+            background-color: #000000;
+            color: #FFFFFF;
+            padding: 80px 20px;
+        }
+        
+        /* Cream sections */
+        .cream-section {
+            background-color: #F5F1E8;
+            color: #000000;
+            padding: 80px 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .section-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+        
+        .section-subtitle {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            opacity: 0.9;
+            margin-bottom: 40px;
+        }
+        
+        /* Book Button */
+        .book-btn {
+            background-color: #000000;
+            color: #FFFFFF;
+            padding: 18px 50px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .book-btn:hover {
+            background-color: #8B7355;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(139, 115, 85, 0.3);
+        }
+        
+        /* Lead Form */
+        .lead-form-section {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=1200');
+            background-size: cover;
+            background-position: center;
+            padding: 80px 20px;
+        }
+        
+        .lead-form-box {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .lead-form-box h2 {
+            color: #FFFFFF;
+            margin-bottom: 40px;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .form-submit {
+            background-color: #8B7355;
+            color: #FFFFFF;
+            width: 100%;
+            padding: 18px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .form-submit:hover {
+            background-color: #C19A6B;
+            transform: translateY(-2px);
+        }
+        
+        /* Footer */
+        .footer {
+            background-color: #F5F1E8;
+            padding: 80px 20px 40px;
+            text-align: center;
+        }
+        
+        .footer-brand h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            color: #C19A6B;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin: 0 0 60px 0;
+            font-weight: 400;
+        }
+        
+        .footer-nav {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+        
+        .footer-link {
+            color: #000000;
+            text-decoration: none;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            letter-spacing: 0.1em;
+            transition: color 0.3s;
+        }
+        
+        .footer-link:hover {
+            color: #C19A6B;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .social-icon {
+            color: #C19A6B;
+            font-size: 28px;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            color: #8B7355;
+            transform: translateY(-4px);
+        }
+        
+        .copyright {
+            color: rgba(0, 0, 0, 0.5);
+            font-size: 0.85rem;
+            margin-top: 20px;
+        }
+        
+        /* Divider */
+        .divider {
+            width: 1px;
+            height: 80px;
+            background-color: #FFFFFF;
+            margin: 0 auto 40px;
+            opacity: 0.3;
+        }
+        
+        .divider-dark {
+            background-color: #000000;
+        }
+        
+        @media (max-width: 768px) {
+            .footer-nav {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP BANNER -->
+    <div class="top-banner">
+        READY TO TRANSFORM YOUR BUSINESS? CURRENTLY BOOKING CUSTOM PROJECTS!
+    </div>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">EMERY CAMPBELL</a>
+            
+            <div style="display: flex; align-items: center; gap: 20px;">
+                <a href="signup.html" class="login-btn" id="signupBtn">
+                    <i class="fas fa-user-plus"></i> Sign Up
+                </a>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- MOBILE MENU -->
+    <div class="menu-overlay" id="menuOverlay"></div>
+    <div class="nav-menu" id="navMenu">
+        <button class="menu-close" id="menuClose">×</button>
+        
+        <div class="menu-logo">
+            <!-- You can add a logo image here later -->
+            <h2 style="font-family: 'Cormorant Garamond', serif; color: #8B7355; letter-spacing: 0.1em;">EMERY CAMPBELL</h2>
+        </div>
+        
+        <ul>
+            <li><a href="index.html" class="nav-link">Home</a></li>
+            <li><a href="website-design.html" class="nav-link">Website Design</a></li>
+            <li><a href="#services" class="nav-link">Online Business Management</a></li>
+            <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+            <li><a href="#about" class="nav-link">Case Studies</a></li>
+            <li><a href="#about" class="nav-link">About</a></li>
+            <li><a href="#contact" class="nav-link">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- HERO SECTION -->
+    <section class="hero-section">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <p style="font-family: 'Montserrat', sans-serif; font-size: clamp(0.9rem, 2vw, 1.1rem); font-weight: 300; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(255, 255, 255, 0.9); margin-bottom: 20px;">
+                Welcome to
+            </p>
+            <h1 style="font-family: 'Cormorant Garamond', serif; font-size: clamp(3.5rem, 10vw, 7rem); font-weight: 300; letter-spacing: 0.02em; line-height: 1.1; color: #FFFFFF; margin-bottom: 15px; text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);">
+                Emery Campbell
+            </h1>
+            <p style="font-family: 'Montserrat', sans-serif; font-size: clamp(1.2rem, 3vw, 2rem); font-weight: 400; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255, 255, 255, 0.95); margin-top: 10px;">
+                Consulting
+            </p>
+            <div style="width: 100px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent); margin: 40px auto;"></div>
+            <p style="font-family: 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 2.5vw, 1.8rem); font-weight: 300; font-style: italic; color: rgba(255, 255, 255, 0.9); letter-spacing: 0.05em;">
+                Transforming Visions into Reality
+            </p>
+        </div>
+    </section>
+
+    <!-- OUR SERVICES -->
+    <section class="black-section" id="services">
+        <div class="container">
+            <div class="divider"></div>
+            <h2 class="section-title">OUR SERVICES</h2>
+            <p class="section-subtitle" style="max-width: 800px; margin: 0 auto 20px; font-size: 1.15rem; line-height: 1.8;">
+                Emery Campbell Consulting specializes in two core areas designed to elevate your business:
+            </p>
+            <p style="font-family: 'Cormorant Garamond', serif; font-size: clamp(1.3rem, 2.5vw, 1.8rem); font-style: italic; color: #C19A6B; text-align: center; margin-bottom: 60px; letter-spacing: 0.05em;">
+                We go near and far
+            </p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 50px; margin-top: 60px;">
+                
+                <!-- WEBSITE DESIGN -->
+                <div style="background: linear-gradient(135deg, rgba(193, 154, 107, 0.08) 0%, rgba(139, 115, 85, 0.08) 100%); border: 2px solid rgba(193, 154, 107, 0.3); padding: 50px 40px; border-radius: 8px; transition: all 0.3s ease;">
+                    <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #C19A6B 0%, #8B7355 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 30px;">
+                        <i class="fas fa-laptop-code" style="font-size: 28px; color: #FFFFFF;"></i>
+                    </div>
+                    
+                    <h3 style="font-size: 2rem; color: #C19A6B; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 20px; font-weight: 400;">
+                        WEBSITE DESIGN
+                    </h3>
+                    
+                    <p style="font-size: 1.05rem; line-height: 1.9; color: rgba(255, 255, 255, 0.9); margin-bottom: 30px;">
+                        Custom, stunning websites built with the latest technologies. We create digital experiences that captivate your audience and drive results.
+                    </p>
+                    
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="padding: 12px 0; color: rgba(255, 255, 255, 0.85); font-size: 1rem; display: flex; align-items: center;">
+                            <i class="fas fa-check-circle" style="color: #C19A6B; margin-right: 12px; font-size: 18px;"></i>
+                            Custom Design & Development
+                        </li>
+                        <li style="padding: 12px 0; color: rgba(255, 255, 255, 0.85); font-size: 1rem; display: flex; align-items: center;">
+                            <i class="fas fa-check-circle" style="color: #C19A6B; margin-right: 12px; font-size: 18px;"></i>
+                            Mobile-Responsive Layouts
+                        </li>
+                        <li style="padding: 12px 0; color: rgba(255, 255, 255, 0.85); font-size: 1rem; display: flex; align-items: center;">
+                            <i class="fas fa-check-circle" style="color: #C19A6B; margin-right: 12px; font-size: 18px;"></i>
+                            SEO Optimization
+                        </li>
+                        <li style="padding: 12px 0; color: rgba(255, 255, 255, 0.85); font-size: 1rem; display: flex; align-items: center;">
+                            <i class="fas fa-check-circle" style="color: #C19A6B; margin-right: 12px; font-size: 18px;"></i>
+                            WordPress & Showit Expertise
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- ONLINE BUSINESS MANAGEMENT -->
+                <div style="background: linear-gradient(135deg, rgba(193, 154, 107, 0.08) 0%, rgba(139, 115, 85, 0.08) 100%); border: 2px solid rgba(193, 154, 107, 0.3); padding: 50px 40px; border-radius: 8px; transition: all 0.3s ease;">
+                    <div style="width: 70px; height: 70px; background: linear-gradient(135deg, #C19A6B 0%, #8B7355 100%); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-bottom: 30px;">
+                        <i class="fas fa-chart-line" style="font-size: 28px; color: #FFFFFF;"></i>
+                    </div>
+                    
+                    <h3 style="font-size: 2rem; color: #C19A6B; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 20px; font-weight: 400;">
+                        ONLINE BUSINESS MANAGEMENT
+                    </h3>
+                    
+                    <p style="font-size: 1.05rem; line-height: 1.9; color: rgba(255, 255, 255, 0.9); margin-bottom: 30px;">
+                        Complete admin support, systems optimization, and process management to streamline your operations and scale your business effectively.
+                    </p>
+                    
+                    <ul style="list-style: none; padding: 0; margin: 0;">
+                        <li style="padding: 12px 0; color: rgba(255, 255, 255, 0.85); font-size: 1rem; display: flex; align-items: center;">
+                            <i class="fas fa-check-circle" style="color: #C19A6B; margin-right: 12px; font-size: 18px;"></i>
+                            Administrative Support
+                        </li>
+                        <li style="padding: 12px 0; color: rgba(255, 255, 255, 0.85); font-size: 1rem; display: flex; align-items: center;">
+                            <i class="fas fa-check-circle" style="color: #C19A6B; margin-right: 12px; font-size: 18px;"></i>
+                            Systems & Process Optimization
+                        </li>
+                        <li style="padding: 12px 0; color: rgba(255, 255, 255, 0.85); font-size: 1rem; display: flex; align-items: center;">
+                            <i class="fas fa-check-circle" style="color: #C19A6B; margin-right: 12px; font-size: 18px;"></i>
+                            Project Management
+                        </li>
+                        <li style="padding: 12px 0; color: rgba(255, 255, 255, 0.85); font-size: 1rem; display: flex; align-items: center;">
+                            <i class="fas fa-check-circle" style="color: #C19A6B; margin-right: 12px; font-size: 18px;"></i>
+                            Team Coordination
+                        </li>
+                    </ul>
+                </div>
+                
+            </div>
+            
+            <div style="text-align: center; margin-top: 60px;">
+                <a href="https://wa.me/18479427399?text=Hi!%20I'd%20like%20to%20book%20a%20discovery%20call" target="_blank" class="book-btn" style="margin-right: 15px; text-decoration: none; display: inline-block;">
+                    📞 BOOK A DISCOVERY CALL
+                </a>
+                <button class="book-btn open-chat" style="background: transparent; border: 2px solid #FFFFFF; color: #FFFFFF;">
+                    💬 CHAT WITH US
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- LEAD CAPTURE FORM -->
+    <section class="lead-form-section">
+        <div class="lead-form-box">
+            <h2 class="section-title">DOWNLOAD MY<br>SERVICES & PRICING GUIDE!</h2>
+            
+            <form id="leadCaptureForm">
+                <input type="text" name="firstName" class="form-input" placeholder="First Name" required>
+                <input type="email" name="email" class="form-input" placeholder="Email" required>
+                <button type="submit" class="form-submit">Get Access Now!</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- PORTFOLIO -->
+    <section class="black-section" id="portfolio">
+        <div class="container">
+            <div class="divider"></div>
+            <h2 class="section-title">PORTFOLIO</h2>
+            <p class="section-subtitle">Check out our stunning projects.</p>
+        </div>
+    </section>
+
+    <!-- CASE STUDIES -->
+    <section class="cream-section">
+        <div class="container">
+            <div class="divider divider-dark"></div>
+            <h2 class="section-title" style="color: #000000;">CASE STUDIES</h2>
+            <p class="section-subtitle" style="color: #000000;">Learn how we've helped our clients succeed.</p>
+        </div>
+    </section>
+
+    <!-- ABOUT US -->
+    <section class="black-section" id="about">
+        <div class="container">
+            <div class="divider"></div>
+            <h2 class="section-title">ABOUT US</h2>
+            <p class="section-subtitle">We are dedicated to providing exceptional service.</p>
+            
+            <div style="max-width: 900px; margin: 60px auto; text-align: center;">
+                <div style="background: linear-gradient(135deg, rgba(193, 154, 107, 0.1) 0%, rgba(139, 115, 85, 0.1) 100%); border-left: 4px solid #C19A6B; padding: 50px 40px; border-radius: 8px;">
+                    <h3 style="font-size: clamp(1.8rem, 4vw, 2.5rem); color: #C19A6B; margin-bottom: 30px; font-weight: 300; letter-spacing: 0.05em;">
+                        Your Success Story Starts Here
+                    </h3>
+                    
+                    <p style="font-size: 1.2rem; line-height: 2; color: rgba(255, 255, 255, 0.95); margin-bottom: 25px;">
+                        Welcome to <strong style="color: #C19A6B;">Emery Campbell Consulting</strong> — where fresh perspectives meet unwavering dedication. 
+                    </p>
+                    
+                    <p style="font-size: 1.15rem; line-height: 2; color: rgba(255, 255, 255, 0.9); margin-bottom: 25px;">
+                        As a <span style="color: #C19A6B; font-weight: 600;">new force</span> in the consulting world, we bring <span style="color: #C19A6B; font-weight: 600;">innovative thinking</span>, <span style="color: #C19A6B; font-weight: 600;">personalized attention</span>, and an <span style="color: #C19A6B; font-weight: 600;">unmatched hunger</span> to see you succeed. We're not just building a business — we're building <span style="color: #C19A6B; font-weight: 600;">lasting partnerships</span> founded on trust, results, and genuine care.
+                    </p>
+                    
+                    <p style="font-size: 1.15rem; line-height: 2; color: rgba(255, 255, 255, 0.9); margin-bottom: 25px;">
+                        Every client matters. Every project is personal. Every success is celebrated. We're committed to <span style="color: #C19A6B; font-weight: 600;">transforming your vision into reality</span> with strategies that work, solutions that last, and service that exceeds expectations.
+                    </p>
+                    
+                    <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(193, 154, 107, 0.3);">
+                        <p style="font-size: 1.3rem; color: #C19A6B; font-style: italic; font-weight: 300; margin-bottom: 15px;">
+                            "Your growth is our mission. Your success is our promise."
+                        </p>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 30px; margin-top: 50px;">
+                        <div>
+                            <div style="font-size: 3rem; color: #C19A6B; margin-bottom: 10px;">✓</div>
+                            <h4 style="color: #FFFFFF; font-size: 1.1rem; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.1em;">Fresh Perspective</h4>
+                            <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.95rem;">Innovative solutions tailored to modern challenges</p>
+                        </div>
+                        
+                        <div>
+                            <div style="font-size: 3rem; color: #C19A6B; margin-bottom: 10px;">✓</div>
+                            <h4 style="color: #FFFFFF; font-size: 1.1rem; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.1em;">Dedicated Focus</h4>
+                            <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.95rem;">Your success is our top priority, always</p>
+                        </div>
+                        
+                        <div>
+                            <div style="font-size: 3rem; color: #C19A6B; margin-bottom: 10px;">✓</div>
+                            <h4 style="color: #FFFFFF; font-size: 1.1rem; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.1em;">Proven Results</h4>
+                            <p style="color: rgba(255, 255, 255, 0.7); font-size: 0.95rem;">Strategies that deliver measurable impact</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT US -->
+    <section class="cream-section" id="contact">
+        <div class="container" style="text-align: center;">
+            <div class="divider divider-dark"></div>
+            <h2 class="section-title" style="color: #000000;">CONTACT US</h2>
+            <p class="section-subtitle" style="color: #000000; max-width: 600px; margin: 20px auto 40px;">
+                Get in touch for a consultation.
+            </p>
+            
+            <div style="margin-bottom: 40px;">
+                <p style="font-size: 1.2rem; color: #000000; margin-bottom: 10px;">
+                    <i class="fas fa-envelope" style="color: #C19A6B; margin-right: 10px;"></i>
+                    <a href="/cdn-cgi/l/email-protection#a1c4ccc4d3d8c2c0ccd1c4d9d1e1c6ccc0c8cd8fc2cecc" style="color: #000000; text-decoration: none;"><span class="__cf_email__" data-cfemail="1c7971796e657f7d716c79646c5c7b717d7570327f7371">[email&#160;protected]</span></a>
+                </p>
+                <p style="font-size: 1.2rem; color: #000000;">
+                    <i class="fas fa-phone" style="color: #C19A6B; margin-right: 10px;"></i>
+                    <a href="tel:+18479427399" style="color: #000000; text-decoration: none;">+1 (847) 942-7399</a>
+                </p>
+            </div>
+            
+            <a href="https://wa.me/18479427399?text=Hi!%20I'd%20like%20to%20schedule%20a%20consultation" target="_blank" class="book-btn" style="margin-right: 15px; text-decoration: none; display: inline-block;">
+                📞 SCHEDULE CONSULTATION
+            </a>
+            <button class="book-btn open-chat" style="background: transparent; border: 2px solid #000000; color: #000000;">
+                💬 LIVE CHAT
+            </button>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-brand">
+            <h2>EMERY CAMPBELL</h2>
+        </div>
+        
+        <nav class="footer-nav">
+            <a href="#services" class="footer-link">SERVICES</a>
+            <a href="#about" class="footer-link">ABOUT</a>
+            <a href="#testimonials" class="footer-link">TESTIMONIALS</a>
+            <a href="#contact" class="footer-link">CONTACT</a>
+            <a href="#privacy" class="footer-link">PRIVACY POLICY</a>
+        </nav>
+        
+        <div class="social-icons">
+            <a href="/cdn-cgi/l/email-protection#35505850474c56545845504d45755258545c591b565a58" class="social-icon" title="Email Us"><i class="fas fa-envelope"></i></a>
+            <a href="tel:+18479427399" class="social-icon" title="Call Us"><i class="fas fa-phone"></i></a>
+            <a href="#" class="social-icon" title="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="#" class="social-icon" title="Facebook"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="social-icon" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+        </div>
+        
+        <p class="copyright">© 2025 EMERY CAMPBELL CONSULTING | PRIVACY POLICY | TERMS & CONDITIONS</p>
+    </footer>
+
+    <!-- JavaScript Files -->
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+    // Activity Tracking
+    function trackActivity(action, page = window.location.pathname) {
+        if (localStorage.getItem('userLoggedIn') === 'true') {
+            const userData = JSON.parse(localStorage.getItem('userData') || '{"activity":[]}');
+            
+            if (!userData.activity) {
+                userData.activity = [];
+            }
+            
+            userData.activity.push({
+                action: action,
+                page: page,
+                timestamp: new Date().toISOString(),
+                date: new Date().toLocaleString()
+            });
+            
+            localStorage.setItem('userData', JSON.stringify(userData));
+        }
+    }
+    
+    // Track page visit
+    document.addEventListener('DOMContentLoaded', function() {
+        trackActivity('Visited Home Page', 'index.html');
+        
+        // Update Sign Up button if logged in
+        if (localStorage.getItem('userLoggedIn') === 'true') {
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            const signupBtn = document.getElementById('signupBtn');
+            if (signupBtn && userData) {
+                signupBtn.innerHTML = '<i class="fas fa-user"></i> ' + userData.name;
+                signupBtn.href = 'account.html';
+            }
+        }
+    });
+    </script>
+    
+    <script>
+    // Mobile Menu Toggle
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const menuClose = document.getElementById('menuClose');
+        const navMenu = document.getElementById('navMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const navbar = document.getElementById('navbar');
+        
+        // Open mobile menu
+        mobileMenuToggle.addEventListener('click', function() {
+            navMenu.classList.add('active');
+            menuOverlay.classList.add('active');
+            this.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        // Close mobile menu
+        function closeMenu() {
+            navMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            mobileMenuToggle.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        menuClose.addEventListener('click', closeMenu);
+        menuOverlay.addEventListener('click', closeMenu);
+        
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+        
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    const offsetTop = target.offsetTop - 100;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    });
+    </script>
+    
+    <script src="js/main.js"></script>
+    <script src="js/form-handler.js"></script>
+    <script src="js/booking-integration.js"></script>
+    <script src="js/analytics.js"></script>
+    
+    <!-- AI CHATBOT (Inline for guaranteed visibility) -->
+    <script>
+    // Simple AI Chatbot Widget
+    document.addEventListener('DOMContentLoaded', function() {
+        // Create chatbot HTML
+        const chatbotHTML = `
+            <div class="ai-chatbot" id="aiChatbot">
+                <!-- Chat Toggle Button -->
+                <button class="chat-toggle-btn" id="chatToggleBtn" aria-label="Open chat">
+                    <i class="fas fa-comments"></i>
+                    <span class="chat-badge">1</span>
+                </button>
+                
+                <!-- Chat Window -->
+                <div class="chat-window" id="chatWindow">
+                    <div class="chat-header">
+                        <div class="chat-header-info">
+                            <h3>Chat with Us</h3>
+                            <span class="chat-status">
+                                <span class="status-dot"></span>
+                                AI Assistant
+                            </span>
+                        </div>
+                        <button class="chat-close-btn" id="chatCloseBtn" aria-label="Close chat">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="chat-message bot-message show">
+                            <div class="message-avatar">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="message-content">
+                                <div class="message-text">Hi! 👋 Welcome to Emery Campbell Consulting! How can I help you today?</div>
+                                <div class="message-time">Just now</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="chat-suggestions" id="chatSuggestions">
+                        <button class="suggestion-btn" data-question="What services do you offer?">What services do you offer?</button>
+                        <button class="suggestion-btn" data-question="How much do you charge?">How much do you charge?</button>
+                        <button class="suggestion-btn" data-question="Can I schedule a call?">Can I schedule a call?</button>
+                    </div>
+                    
+                    <div class="chat-input-container">
+                        <textarea 
+                            class="chat-input" 
+                            id="chatInput" 
+                            placeholder="Type your message..."
+                            rows="1"
+                        ></textarea>
+                        <button class="chat-send-btn" id="chatSendBtn">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="chat-footer">
+                        <small>Powered by AI</small>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        // Add chatbot to page
+        document.body.insertAdjacentHTML('beforeend', chatbotHTML);
+        
+        // Get elements
+        const toggleBtn = document.getElementById('chatToggleBtn');
+        const closeBtn = document.getElementById('chatCloseBtn');
+        const chatWindow = document.getElementById('chatWindow');
+        const badge = document.querySelector('.chat-badge');
+        const sendBtn = document.getElementById('chatSendBtn');
+        const chatInput = document.getElementById('chatInput');
+        const messagesContainer = document.getElementById('chatMessages');
+        const suggestions = document.getElementById('chatSuggestions');
+        
+        // Function to open chat
+        window.openChat = function() {
+            chatWindow.classList.add('open');
+            badge.style.display = 'none';
+            chatInput.focus();
+        };
+        
+        // Toggle chat
+        toggleBtn.addEventListener('click', window.openChat);
+        
+        closeBtn.addEventListener('click', function() {
+            chatWindow.classList.remove('open');
+        });
+        
+        // MAKE ANY ELEMENT OPEN CHAT - Add class "open-chat" to any button/link
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('open-chat') || 
+                e.target.closest('.open-chat')) {
+                e.preventDefault();
+                window.openChat();
+            }
+        });
+        
+        // Send message
+        function sendMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+            
+            // Add user message
+            addMessage(message, 'user');
+            chatInput.value = '';
+            
+            // Hide suggestions after first message
+            suggestions.style.display = 'none';
+            
+            // Simulate bot response
+            setTimeout(function() {
+                let response = "Thanks for your message! I'm here to help. You can call us at +1 (847) 942-7399 or email emerycampexp@gmail.com for immediate assistance!";
+                
+                if (message.toLowerCase().includes('service')) {
+                    response = "We offer Website Design and Online Business Management services. Would you like to schedule a free discovery call to discuss your needs?";
+                } else if (message.toLowerCase().includes('price') || message.toLowerCase().includes('cost')) {
+                    response = "Our pricing varies based on your specific needs. Book a free discovery call and we'll create a custom quote for you!";
+                } else if (message.toLowerCase().includes('call') || message.toLowerCase().includes('schedule')) {
+                    response = "Great! Click the 'BOOK A DISCOVERY CALL' button on our website, or call us directly at +1 (847) 942-7399!";
+                }
+                
+                addMessage(response, 'bot');
+            }, 1000);
+        }
+        
+        // Add message to chat
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}-message`;
+            
+            if (sender === 'bot') {
+                messageDiv.innerHTML = `
+                    <div class="message-avatar">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="message-content">
+                        <div class="message-text">${text}</div>
+                        <div class="message-time">${getCurrentTime()}</div>
+                    </div>
+                `;
+            } else {
+                messageDiv.innerHTML = `
+                    <div class="message-content">
+                        <div class="message-text">${text}</div>
+                        <div class="message-time">${getCurrentTime()}</div>
+                    </div>
+                    <div class="message-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                `;
+            }
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            setTimeout(() => messageDiv.classList.add('show'), 10);
+        }
+        
+        function getCurrentTime() {
+            const now = new Date();
+            return now.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', hour12: true });
+        }
+        
+        // Event listeners
+        sendBtn.addEventListener('click', sendMessage);
+        chatInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+        
+        // Sugge

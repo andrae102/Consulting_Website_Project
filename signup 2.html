@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Emery Campbell Consulting</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .auth-container {
+            background: #F5F1E8;
+            max-width: 450px;
+            width: 100%;
+            padding: 50px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(193, 154, 107, 0.2);
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo h1 {
+            font-family: 'Cormorant Garamond', serif;
+            color: #8B7355;
+            font-size: 2.5rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 10px;
+        }
+        
+        .logo p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #D0C8BC;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #C19A6B;
+            box-shadow: 0 0 0 3px rgba(193, 154, 107, 0.1);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #C19A6B 0%, #8B7355 100%);
+            color: #FFFFFF;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(193, 154, 107, 0.4);
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #E0D8CC;
+        }
+        
+        .form-footer p {
+            font-size: 0.85rem;
+            color: #666;
+        }
+        
+        .back-home {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #C19A6B;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .back-home:hover {
+            color: #FFFFFF;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html" class="back-home">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
+
+    <div class="auth-container">
+        <div class="logo">
+            <h1>EMERY CAMPBELL</h1>
+            <p>Consulting</p>
+        </div>
+        
+        <h2 style="text-align: center; margin-bottom: 30px; color: #333; font-size: 1.5rem;">Create Your Account</h2>
+        
+        <form onsubmit="handleSignup(event)">
+            <div class="form-group">
+                <label for="signupName">Full Name</label>
+                <input type="text" id="signupName" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="signupEmail">Email Address</label>
+                <input type="email" id="signupEmail" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="signupPassword">Password</label>
+                <input type="password" id="signupPassword" required minlength="6">
+            </div>
+            
+            <div class="form-group">
+                <label for="signupConfirm">Confirm Password</label>
+                <input type="password" id="signupConfirm" required>
+            </div>
+            
+            <button type="submit" class="submit-btn">Create Account</button>
+        </form>
+        
+        <div class="form-footer">
+            <p>By signing up, you agree to our Terms & Privacy Policy</p>
+        </div>
+    </div>
+
+    <script>
+        // Activity Tracking Function
+        function trackActivity(action, page = '') {
+            const userData = JSON.parse(localStorage.getItem('userData') || '{"activity":[]}');
+            
+            if (!userData.activity) {
+                userData.activity = [];
+            }
+            
+            userData.activity.push({
+                action: action,
+                page: page,
+                timestamp: new Date().toISOString(),
+                date: new Date().toLocaleString()
+            });
+            
+            localStorage.setItem('userData', JSON.stringify(userData));
+        }
+        
+        function handleSignup(e) {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value;
+            const email = document.getElementById('signupEmail').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirm = document.getElementById('signupConfirm').value;
+            
+            if (password !== confirm) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            // Create user data with activity tracking
+            const userData = {
+                name: name,
+                email: email,
+                signupDate: new Date().toISOString(),
+                activity: [{
+                    action: 'Account Created',
+                    page: 'signup',
+                    timestamp: new Date().toISOString(),
+                    date: new Date().toLocaleString()
+                }]
+            };
+            
+            localStorage.setItem('userLoggedIn', 'true');
+            localStorage.setItem('userData', JSON.stringify(userData));
+            
+            alert('Welcome ' + name + '! Your account has been created successfully!');
+            
+            // Redirect to home
+            window.location.href = 'index.html';
+        }
+    </script>
+
+</body>
+</html>
