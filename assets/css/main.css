@@ -1,1 +1,89 @@
+// =========================
+// LOGIN BUTTON SWITCH
+// =========================
 
+document.addEventListener("DOMContentLoaded", function () {
+
+    const signupBtn = document.getElementById("signupBtn");
+
+    if (localStorage.getItem("userLoggedIn") === "true") {
+        const userData = JSON.parse(localStorage.getItem("userData"));
+        if (signupBtn && userData) {
+            signupBtn.innerHTML = `<i class="fas fa-user"></i> ${userData.name}`;
+            signupBtn.href = "account.html";
+        }
+    }
+
+    initChatbot();
+});
+
+
+// =========================
+// CHATBOT
+// =========================
+
+function initChatbot() {
+
+    const chatbotHTML = `
+        <div class="ai-chatbot">
+            <button class="chat-toggle-btn" id="chatToggleBtn">
+                <i class="fas fa-comments"></i>
+            </button>
+
+            <div class="chat-window" id="chatWindow">
+                <div class="chat-header">
+                    AI Assistant
+                </div>
+
+                <div class="chat-messages" id="chatMessages">
+                    <p>Hello 👋 How can we help you?</p>
+                </div>
+
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Type message...">
+                    <button class="chat-send-btn" id="chatSendBtn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.body.insertAdjacentHTML("beforeend", chatbotHTML);
+
+    const toggleBtn = document.getElementById("chatToggleBtn");
+    const chatWindow = document.getElementById("chatWindow");
+    const sendBtn = document.getElementById("chatSendBtn");
+    const chatInput = document.getElementById("chatInput");
+    const chatMessages = document.getElementById("chatMessages");
+
+    toggleBtn.addEventListener("click", () => {
+        chatWindow.classList.toggle("open");
+    });
+
+    sendBtn.addEventListener("click", sendMessage);
+    chatInput.addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            sendMessage();
+        }
+    });
+
+    function sendMessage() {
+        const message = chatInput.value.trim();
+        if (!message) return;
+
+        chatMessages.innerHTML += `<p><strong>You:</strong> ${message}</p>`;
+        chatInput.value = "";
+
+        setTimeout(() => {
+            let response = "Call us at +1 (847) 942-7399.";
+
+            if (message.toLowerCase().includes("service")) {
+                response = "We offer Website Design and Online Business Management.";
+            }
+
+            chatMessages.innerHTML += `<p><strong>AI:</strong> ${response}</p>`;
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }, 600);
+    }
+}
