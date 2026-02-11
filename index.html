@@ -2,7 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- 🔥 Prevent iPhone Zoom -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
     <meta name="description" content="Emery Campbell Consulting - Professional consulting services">
 
     <title>Emery Campbell Consulting</title>
@@ -19,10 +22,12 @@
 
 <body>
 
+<!-- TOP BANNER -->
 <div class="top-banner">
     READY TO TRANSFORM YOUR BUSINESS? CURRENTLY BOOKING CUSTOM PROJECTS!
 </div>
 
+<!-- NAVIGATION -->
 <nav class="navbar">
     <div class="nav-container">
         <a href="index.html" class="nav-logo">EMERY CAMPBELL</a>
@@ -35,6 +40,7 @@
     </div>
 </nav>
 
+<!-- HERO -->
 <section class="hero-section">
     <div class="container">
         <h1 class="hero-title">Emery Campbell Consulting</h1>
@@ -48,7 +54,7 @@
     </div>
 </section>
 
-<!-- DETAILED SERVICES -->
+<!-- SERVICES -->
 <section class="section-dark" id="services">
     <div class="container">
         <h2 class="section-title">Our Services</h2>
@@ -56,7 +62,6 @@
         <div class="services-grid">
 
             <div class="service-card">
-                <i class="fas fa-laptop-code service-icon"></i>
                 <h3>Website Design & Development</h3>
                 <ul>
                     <li>Custom Website Design</li>
@@ -69,7 +74,6 @@
             </div>
 
             <div class="service-card">
-                <i class="fas fa-chart-line service-icon"></i>
                 <h3>Online Business Management</h3>
                 <ul>
                     <li>Admin Support</li>
@@ -85,34 +89,10 @@
     </div>
 </section>
 
-<!-- ABOUT -->
-<section class="section-light">
-    <div class="container">
-        <h2 class="section-title">About Us</h2>
-        <p class="about-text">
-            At Emery Campbell Consulting, we combine innovative thinking with dedicated execution.
-            We don’t just build websites — we build digital systems that help businesses scale.
-        </p>
-    </div>
-</section>
-
-<!-- LEAD CAPTURE -->
-<section class="lead-section">
-    <div class="container">
-        <h2 class="section-title">Download Our Services Guide</h2>
-        <form id="leadForm">
-            <input type="text" placeholder="First Name" required>
-            <input type="email" placeholder="Email Address" required>
-            <button type="submit" class="primary-btn">Get Access</button>
-        </form>
-    </div>
-</section>
-
 <!-- CONTACT -->
 <section class="section-light" id="contact">
     <div class="container">
         <h2 class="section-title">Contact Us</h2>
-
         <p><i class="fas fa-envelope"></i> emerycampexp@gmail.com</p>
         <p><i class="fas fa-phone"></i> +1 (847) 942-7399</p>
     </div>
@@ -123,9 +103,30 @@
     <p>© 2025 Emery Campbell Consulting</p>
 </footer>
 
-<!-- Chatbot container -->
-<div id="aiChatbot"></div>
+<!-- AI CHATBOT -->
+<div class="ai-chatbot">
+    <button class="chat-toggle-btn" id="chatToggle">
+        <i class="fas fa-comments"></i>
+    </button>
 
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <span>AI Assistant</span>
+            <button onclick="closeChat()" style="background:none;border:none;color:white;font-size:18px;">×</button>
+        </div>
+
+        <div class="chat-messages" id="chatMessages">
+            <div>Hi 👋 Welcome! How can we help you?</div>
+        </div>
+
+        <div class="chat-input-container">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Type message...">
+            <button class="chat-send-btn" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+</div>
+
+<!-- GLOBAL JS -->
 <script src="assets/js/main.js"></script>
 
 </body>
