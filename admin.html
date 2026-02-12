@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard - Emery Campbell Consulting</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #000;
+            color: #fff;
+        }
+
+        .top-bar {
+            background: linear-gradient(135deg, #C19A6B 0%, #8B7355 100%);
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-bar h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+        }
+
+        .logout-btn {
+            background: #000;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 6px;
+        }
+
+        .container {
+            padding: 40px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .card {
+            background: #1a1a1a;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            border: 1px solid #333;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #C19A6B;
+        }
+
+        .status-select {
+            padding: 10px;
+            border-radius: 6px;
+            border: none;
+            margin-top: 10px;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        li {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 5px;
+        }
+
+        @media(max-width: 768px){
+            .container {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="top-bar">
+    <h1>ADMIN PANEL</h1>
+    <button class="logout-btn" onclick="logout()">Logout</button>
+</div>
+
+<div class="container">
+
+    <div class="card">
+        <h2>Logged In User</h2>
+        <p><strong>Name:</strong> <span id="userName"></span></p>
+        <p><strong>Email:</strong> <span id="userEmail"></span></p>
+        <p><strong>Signup Date:</strong> <span id="signupDate"></span></p>
+    </div>
+
+    <div class="card">
+        <h2>Project Status</h2>
+        <select class="status-select" id="projectStatus">
+            <option value="Not Started">Not Started</option>
+            <option value="Discovery Phase">Discovery Phase</option>
+            <option value="Design Phase">Design Phase</option>
+            <option value="Development">Development</option>
+            <option value="Completed">Completed</option>
+        </select>
+    </div>
+
+    <div class="card">
+        <h2>User Activity Log</h2>
+        <ul id="activityLog"></ul>
+    </div>
+
+</div>
+
+<script>
+function checkAdmin(){
+    const logged = localStorage.getItem("userLoggedIn");
+    const userData = JSON.parse(localStorage.getItem("userData"));
+
+    if(!logged || !userData || userData.role !== "admin"){
+        window.location.href = "index.html";
+    }
+
+    document.getElementById("userName").textContent = userData.name;
+    document.getElementById("userEmail").textContent = userData.email;
+    document.getElementById("signupDate").textContent = new Date(userData.signupDate).toLocaleString();
+
+    loadActivity(userData.activity);
+}
+
+function loadActivity(activity){
+    const log = document.getElementById("activityLog");
+    log.innerHTML = "";
+
+    if(!activity || activity.length === 0){
+        log.innerHTML = "<li>No activity yet</li>";
+        return;
+    }
+
+    activity.reverse().forEach(item=>{
+        const li = document.createElement("li");
+        li.textContent = item.action + " — " + new Date(item.timestamp).toLocaleString();
+        log.appendChild(li);
+    });
+}
+
+function logout(){
+    localStorage.removeItem("userLoggedIn");
+    window.location.href = "index.html";
+}
+
+checkAdmin();
+</script>
+
+</body>
+</html>
