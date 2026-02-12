@@ -3,129 +3,76 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Admin Dashboard - Emery Campbell Consulting</title>
+<title>Admin Control Panel - Emery Campbell Consulting</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Montserrat',sans-serif;background:#f4f4f4;display:flex;}
 
-body {
-    font-family:'Montserrat', sans-serif;
-    background:#f4f4f4;
-    display:flex;
+/* SIDEBAR */
+.sidebar{
+width:260px;background:#111;color:#fff;
+min-height:100vh;padding:30px 20px;
+}
+.sidebar h2{
+font-family:'Cormorant Garamond',serif;
+margin-bottom:40px;text-align:center;
+}
+.sidebar ul{list-style:none;}
+.sidebar li{margin-bottom:20px;cursor:pointer;opacity:0.8;}
+.sidebar li:hover{opacity:1;}
+
+/* MAIN */
+.main{flex:1;padding:40px;}
+.header{
+display:flex;justify-content:space-between;
+align-items:center;margin-bottom:30px;
+}
+.logout{
+padding:8px 18px;background:#000;color:#fff;
+border:none;border-radius:6px;cursor:pointer;
 }
 
-/* Sidebar */
-.sidebar {
-    width:260px;
-    background:#111;
-    color:#fff;
-    min-height:100vh;
-    padding:30px 20px;
+/* CARDS */
+.cards{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;margin-bottom:30px;
+}
+.card{
+background:#fff;padding:20px;border-radius:10px;
+box-shadow:0 5px 20px rgba(0,0,0,0.05);
+}
+.card h3{font-size:0.9rem;color:#777;}
+.card p{font-size:1.4rem;font-weight:600;margin-top:10px;}
+
+/* TABLE */
+.table-container{
+background:#fff;padding:20px;
+border-radius:10px;
+box-shadow:0 5px 20px rgba(0,0,0,0.05);
+}
+table{width:100%;border-collapse:collapse;}
+th,td{padding:10px;border-bottom:1px solid #eee;font-size:0.85rem;}
+th{background:#fafafa;}
+select,input[type="number"]{padding:4px;border-radius:4px;border:1px solid #ccc;}
+button.small{padding:4px 8px;font-size:0.75rem;margin-left:5px;cursor:pointer;border:none;border-radius:4px;}
+.delete{background:#c0392b;color:#fff;}
+.save{background:#C19A6B;color:#fff;}
+
+/* SEARCH */
+.search{
+margin-bottom:15px;
+padding:8px;width:250px;border-radius:6px;border:1px solid #ccc;
 }
 
-.sidebar h2 {
-    font-family:'Cormorant Garamond', serif;
-    font-size:1.8rem;
-    margin-bottom:40px;
-    text-align:center;
-}
-
-.sidebar ul {
-    list-style:none;
-}
-
-.sidebar ul li {
-    margin-bottom:20px;
-    cursor:pointer;
-    font-weight:500;
-    opacity:0.8;
-}
-
-.sidebar ul li:hover {
-    opacity:1;
-}
-
-/* Main Content */
-.main {
-    flex:1;
-    padding:40px;
-}
-
-.header {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:40px;
-}
-
-.header h1 {
-    font-size:1.8rem;
-}
-
-.logout-btn {
-    padding:10px 20px;
-    border:none;
-    background:#000;
-    color:#fff;
-    cursor:pointer;
-    border-radius:6px;
-}
-
-/* Cards */
-.cards {
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
-    gap:20px;
-    margin-bottom:40px;
-}
-
-.card {
-    background:#fff;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 5px 20px rgba(0,0,0,0.05);
-}
-
-.card h3 {
-    font-size:0.9rem;
-    color:#888;
-    margin-bottom:10px;
-}
-
-.card p {
-    font-size:1.5rem;
-    font-weight:600;
-}
-
-/* Client Table */
-.table-container {
-    background:#fff;
-    padding:25px;
-    border-radius:12px;
-    box-shadow:0 5px 20px rgba(0,0,0,0.05);
-}
-
-table {
-    width:100%;
-    border-collapse:collapse;
-}
-
-th, td {
-    padding:12px;
-    text-align:left;
-    border-bottom:1px solid #eee;
-}
-
-th {
-    background:#fafafa;
-    font-weight:600;
-}
-
-@media(max-width:768px){
-    body { flex-direction:column; }
-    .sidebar { width:100%; min-height:auto; }
+/* AI */
+.ai-box{
+background:#fff;padding:20px;
+border-radius:10px;margin-top:30px;
+box-shadow:0 5px 20px rgba(0,0,0,0.05);
 }
 </style>
 </head>
@@ -133,120 +80,167 @@ th {
 <body>
 
 <div class="sidebar">
-    <h2>ADMIN PANEL</h2>
-    <ul>
-        <li onclick="showSection('dashboard')">Dashboard</li>
-        <li onclick="showSection('clients')">Clients</li>
-    </ul>
+<h2>ADMIN PANEL</h2>
+<ul>
+<li onclick="showSection('dashboard')">Dashboard</li>
+<li onclick="showSection('clients')">Clients</li>
+<li onclick="showSection('ai')">Admin AI</li>
+</ul>
 </div>
 
 <div class="main">
 
-    <div class="header">
-        <h1>Administrator Dashboard</h1>
-        <button class="logout-btn" onclick="logout()">Logout</button>
-    </div>
+<div class="header">
+<h1>Control Center</h1>
+<button class="logout" onclick="logout()">Logout</button>
+</div>
 
-    <!-- DASHBOARD -->
-    <div id="dashboardSection">
-        <div class="cards">
-            <div class="card">
-                <h3>Total Users</h3>
-                <p id="totalUsers">0</p>
-            </div>
-            <div class="card">
-                <h3>Total Clients</h3>
-                <p id="totalClients">0</p>
-            </div>
-            <div class="card">
-                <h3>Admins</h3>
-                <p id="totalAdmins">0</p>
-            </div>
-        </div>
-    </div>
+<!-- DASHBOARD -->
+<div id="dashboardSection">
+<div class="cards">
+<div class="card"><h3>Total Users</h3><p id="totalUsers"></p></div>
+<div class="card"><h3>Total Revenue (Demo)</h3><p id="totalRevenue"></p></div>
+<div class="card"><h3>Paid Clients</h3><p id="paidClients"></p></div>
+<div class="card"><h3>Unpaid Clients</h3><p id="unpaidClients"></p></div>
+</div>
+</div>
 
-    <!-- CLIENTS -->
-    <div id="clientsSection" style="display:none;">
-        <div class="table-container">
-            <h2 style="margin-bottom:20px;">Registered Users</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Email</th>
-                        <th>Role</th>
-                    </tr>
-                </thead>
-                <tbody id="userTable">
-                </tbody>
-            </table>
-        </div>
-    </div>
+<!-- CLIENTS -->
+<div id="clientsSection" style="display:none;">
+<input type="text" class="search" placeholder="Search client..." onkeyup="searchClient(this.value)">
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Email</th>
+<th>Service</th>
+<th>Phase</th>
+<th>Progress %</th>
+<th>Payment</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody id="clientTable"></tbody>
+</table>
+</div>
+</div>
+
+<!-- AI -->
+<div id="aiSection" style="display:none;">
+<div class="ai-box">
+<h2>Admin AI Assistant</h2>
+<p>This AI can summarize client data and suggest next steps.</p>
+<textarea id="adminAIInput" rows="3" style="width:100%;margin-top:10px;padding:8px;"></textarea>
+<button class="save" onclick="runAI()">Run AI</button>
+<div id="aiResponse" style="margin-top:15px;font-size:0.9rem;"></div>
+</div>
+</div>
 
 </div>
 
 <script>
-// ==============================
-// SECURITY CHECK
-// ==============================
-
-const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
-if(!currentUser || currentUser.role !== "admin"){
-    window.location.href = "login.html";
+const currentUser=JSON.parse(localStorage.getItem("currentUser"));
+if(!currentUser||currentUser.role!=="admin"){
+window.location.href="login.html";
 }
 
-// ==============================
-// LOAD USERS
-// ==============================
+let users=JSON.parse(localStorage.getItem("users"))||[];
 
-const users = JSON.parse(localStorage.getItem("users")) || [];
-
-const totalUsers = users.length;
-const totalAdmins = users.filter(u => u.role === "admin").length;
-const totalClients = users.filter(u => u.role !== "admin").length;
-
-document.getElementById("totalUsers").textContent = totalUsers;
-document.getElementById("totalAdmins").textContent = totalAdmins;
-document.getElementById("totalClients").textContent = totalClients;
-
-// ==============================
-// LOAD TABLE
-// ==============================
-
-const table = document.getElementById("userTable");
-
-users.forEach(user => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-        <td>${user.email}</td>
-        <td>${user.role}</td>
-    `;
-    table.appendChild(row);
+/* DEFAULT PROJECT DATA */
+users.forEach(u=>{
+if(!u.phase)u.phase="Planning";
+if(!u.progress)u.progress=20;
+if(!u.payment)u.payment="Unpaid";
 });
+localStorage.setItem("users",JSON.stringify(users));
 
-// ==============================
-// NAVIGATION
-// ==============================
+function loadDashboard(){
+document.getElementById("totalUsers").textContent=users.length;
+const paid=users.filter(u=>u.payment==="Paid").length;
+const unpaid=users.filter(u=>u.payment!=="Paid").length;
+document.getElementById("paidClients").textContent=paid;
+document.getElementById("unpaidClients").textContent=unpaid;
+document.getElementById("totalRevenue").textContent="$"+(paid*1500);
+}
+
+function loadClients(){
+const table=document.getElementById("clientTable");
+table.innerHTML="";
+users.forEach((u,index)=>{
+if(u.role==="admin")return;
+table.innerHTML+=`
+<tr>
+<td>${u.email}</td>
+<td>
+<select onchange="updateService(${index},this.value)">
+<option ${u.service==="Website Design & Development"?"selected":""}>Website Design & Development</option>
+<option ${u.service==="Online Business Management"?"selected":""}>Online Business Management</option>
+</select>
+</td>
+<td>
+<select onchange="updatePhase(${index},this.value)">
+<option ${u.phase==="Planning"?"selected":""}>Planning</option>
+<option ${u.phase==="Design"?"selected":""}>Design</option>
+<option ${u.phase==="Development"?"selected":""}>Development</option>
+<option ${u.phase==="Completed"?"selected":""}>Completed</option>
+</select>
+</td>
+<td>
+<input type="number" value="${u.progress}" min="0" max="100" onchange="updateProgress(${index},this.value)">
+</td>
+<td>
+<select onchange="updatePayment(${index},this.value)">
+<option ${u.payment==="Unpaid"?"selected":""}>Unpaid</option>
+<option ${u.payment==="Paid"?"selected":""}>Paid</option>
+</select>
+</td>
+<td>
+<button class="small delete" onclick="deleteUser(${index})">Delete</button>
+</td>
+</tr>
+`;
+});
+}
+
+function updateService(i,val){users[i].service=val;save();}
+function updatePhase(i,val){users[i].phase=val;save();}
+function updateProgress(i,val){users[i].progress=val;save();}
+function updatePayment(i,val){users[i].payment=val;save();loadDashboard();}
+function deleteUser(i){users.splice(i,1);save();loadClients();loadDashboard();}
+
+function save(){
+localStorage.setItem("users",JSON.stringify(users));
+}
+
+function searchClient(val){
+val=val.toLowerCase();
+const rows=document.querySelectorAll("#clientTable tr");
+rows.forEach(row=>{
+row.style.display=row.innerText.toLowerCase().includes(val)?"":"none";
+});
+}
 
 function showSection(section){
-    document.getElementById("dashboardSection").style.display = "none";
-    document.getElementById("clientsSection").style.display = "none";
-
-    if(section === "dashboard"){
-        document.getElementById("dashboardSection").style.display = "block";
-    } else {
-        document.getElementById("clientsSection").style.display = "block";
-    }
+document.getElementById("dashboardSection").style.display="none";
+document.getElementById("clientsSection").style.display="none";
+document.getElementById("aiSection").style.display="none";
+document.getElementById(section+"Section").style.display="block";
 }
-
-// ==============================
-// LOGOUT
-// ==============================
 
 function logout(){
-    localStorage.removeItem("currentUser");
-    window.location.href = "login.html";
+localStorage.removeItem("currentUser");
+window.location.href="login.html";
 }
+
+/* AI */
+function runAI(){
+const input=document.getElementById("adminAIInput").value;
+document.getElementById("aiResponse").innerHTML=
+"AI Suggestion: Based on current data, follow up with unpaid clients and move planning projects into design phase.";
+}
+
+loadDashboard();
+loadClients();
 </script>
 
 </body>
