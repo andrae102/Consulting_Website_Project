@@ -1,28 +1,253 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Admin Dashboard</title>
-<link rel="stylesheet" href="assets/css/main.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Dashboard - Emery Campbell Consulting</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+
+body {
+    font-family:'Montserrat', sans-serif;
+    background:#f4f4f4;
+    display:flex;
+}
+
+/* Sidebar */
+.sidebar {
+    width:260px;
+    background:#111;
+    color:#fff;
+    min-height:100vh;
+    padding:30px 20px;
+}
+
+.sidebar h2 {
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.8rem;
+    margin-bottom:40px;
+    text-align:center;
+}
+
+.sidebar ul {
+    list-style:none;
+}
+
+.sidebar ul li {
+    margin-bottom:20px;
+    cursor:pointer;
+    font-weight:500;
+    opacity:0.8;
+}
+
+.sidebar ul li:hover {
+    opacity:1;
+}
+
+/* Main Content */
+.main {
+    flex:1;
+    padding:40px;
+}
+
+.header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:40px;
+}
+
+.header h1 {
+    font-size:1.8rem;
+}
+
+.logout-btn {
+    padding:10px 20px;
+    border:none;
+    background:#000;
+    color:#fff;
+    cursor:pointer;
+    border-radius:6px;
+}
+
+/* Cards */
+.cards {
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:20px;
+    margin-bottom:40px;
+}
+
+.card {
+    background:#fff;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.05);
+}
+
+.card h3 {
+    font-size:0.9rem;
+    color:#888;
+    margin-bottom:10px;
+}
+
+.card p {
+    font-size:1.5rem;
+    font-weight:600;
+}
+
+/* Client Table */
+.table-container {
+    background:#fff;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,0.05);
+}
+
+table {
+    width:100%;
+    border-collapse:collapse;
+}
+
+th, td {
+    padding:12px;
+    text-align:left;
+    border-bottom:1px solid #eee;
+}
+
+th {
+    background:#fafafa;
+    font-weight:600;
+}
+
+@media(max-width:768px){
+    body { flex-direction:column; }
+    .sidebar { width:100%; min-height:auto; }
+}
+</style>
 </head>
-<body id="adminPage">
 
-<h1>Admin Panel</h1>
+<body>
 
-<table border="1">
-<thead>
-<tr>
-<th>Name</th>
-<th>Email</th>
-<th>Status</th>
-<th>Actions</th>
-</tr>
-</thead>
-<tbody id="userTable"></tbody>
-</table>
+<div class="sidebar">
+    <h2>ADMIN PANEL</h2>
+    <ul>
+        <li onclick="showSection('dashboard')">Dashboard</li>
+        <li onclick="showSection('clients')">Clients</li>
+    </ul>
+</div>
 
-<br>
-<button onclick="logout()">Logout</button>
+<div class="main">
 
-<script src="assets/js/main.js"></script>
+    <div class="header">
+        <h1>Administrator Dashboard</h1>
+        <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div id="dashboardSection">
+        <div class="cards">
+            <div class="card">
+                <h3>Total Users</h3>
+                <p id="totalUsers">0</p>
+            </div>
+            <div class="card">
+                <h3>Total Clients</h3>
+                <p id="totalClients">0</p>
+            </div>
+            <div class="card">
+                <h3>Admins</h3>
+                <p id="totalAdmins">0</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- CLIENTS -->
+    <div id="clientsSection" style="display:none;">
+        <div class="table-container">
+            <h2 style="margin-bottom:20px;">Registered Users</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody id="userTable">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// ==============================
+// SECURITY CHECK
+// ==============================
+
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+if(!currentUser || currentUser.role !== "admin"){
+    window.location.href = "login.html";
+}
+
+// ==============================
+// LOAD USERS
+// ==============================
+
+const users = JSON.parse(localStorage.getItem("users")) || [];
+
+const totalUsers = users.length;
+const totalAdmins = users.filter(u => u.role === "admin").length;
+const totalClients = users.filter(u => u.role !== "admin").length;
+
+document.getElementById("totalUsers").textContent = totalUsers;
+document.getElementById("totalAdmins").textContent = totalAdmins;
+document.getElementById("totalClients").textContent = totalClients;
+
+// ==============================
+// LOAD TABLE
+// ==============================
+
+const table = document.getElementById("userTable");
+
+users.forEach(user => {
+    const row = document.createElement("tr");
+    row.innerHTML = `
+        <td>${user.email}</td>
+        <td>${user.role}</td>
+    `;
+    table.appendChild(row);
+});
+
+// ==============================
+// NAVIGATION
+// ==============================
+
+function showSection(section){
+    document.getElementById("dashboardSection").style.display = "none";
+    document.getElementById("clientsSection").style.display = "none";
+
+    if(section === "dashboard"){
+        document.getElementById("dashboardSection").style.display = "block";
+    } else {
+        document.getElementById("clientsSection").style.display = "block";
+    }
+}
+
+// ==============================
+// LOGOUT
+// ==============================
+
+function logout(){
+    localStorage.removeItem("currentUser");
+    window.location.href = "login.html";
+}
+</script>
+
 </body>
 </html>
