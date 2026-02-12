@@ -2,17 +2,68 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Your Selected Service</title>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+<title>Your Service Portal</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-body{font-family:Montserrat;background:#f4f4f4;margin:0;padding:40px;}
-.header{display:flex;justify-content:space-between;align-items:center;}
-.section{background:#fff;padding:30px;border-radius:10px;margin-top:20px;}
-.template{border:1px solid #ccc;padding:10px;margin-top:10px;cursor:pointer;}
-button{padding:8px 16px;background:#C19A6B;border:none;color:#fff;border-radius:5px;}
+body{
+font-family:Montserrat;
+background:#0f0f0f;
+color:#fff;
+margin:0;
+padding:40px;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:40px;
+}
+
+h2{
+font-family:'Cormorant Garamond';
+}
+
+.section{
+background:#1a1a1a;
+padding:30px;
+border-radius:12px;
+margin-bottom:30px;
+border:1px solid rgba(193,154,107,0.2);
+}
+
+.package, .template{
+border:1px solid #333;
+padding:20px;
+border-radius:8px;
+margin-top:15px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.package:hover, .template:hover{
+border-color:#C19A6B;
+transform:translateY(-3px);
+}
+
+.selected{
+border-color:#C19A6B !important;
+background:#111;
+}
+
+button{
+margin-top:20px;
+padding:10px 20px;
+background:#C19A6B;
+border:none;
+color:#fff;
+border-radius:6px;
+cursor:pointer;
+}
 </style>
 </head>
+
 <body>
 
 <div class="header">
@@ -23,45 +74,112 @@ button{padding:8px 16px;background:#C19A6B;border:none;color:#fff;border-radius:
 <div id="content"></div>
 
 <script>
-const user=JSON.parse(localStorage.getItem("currentUser"));
-if(!user){window.location.href="login.html";}
+const user = JSON.parse(localStorage.getItem("currentUser"));
+if(!user){ window.location.href="login.html"; }
 
-document.getElementById("welcome").innerText="Welcome, "+user.email;
+document.getElementById("welcome").innerText = "Welcome, " + user.email;
 
-const service=localStorage.getItem("selectedService");
-const content=document.getElementById("content");
+let users = JSON.parse(localStorage.getItem("users")) || [];
+let currentIndex = users.findIndex(u => u.email === user.email);
 
-if(service==="online-business"){
-content.innerHTML=`
+const service = localStorage.getItem("selectedService");
+const content = document.getElementById("content");
+
+let selectedPackage = null;
+let selectedTemplate = null;
+
+/* ONLINE BUSINESS */
+if(service === "online-business"){
+
+content.innerHTML = `
 <div class="section">
-<h3>Online Business Premium Package</h3>
-<ul>
-<li>Automation Systems</li>
-<li>Revenue Growth Plan</li>
-<li>Team Coordination Systems</li>
-<li>90 Day Scaling Blueprint</li>
-</ul>
-<button>Confirm Package</button>
+<h3>Select Online Business Package</h3>
+
+<div class="package" onclick="selectPackage(this,'Standard')">
+<strong>Standard Growth</strong>
+<p>3 Month System Optimization</p>
+</div>
+
+<div class="package" onclick="selectPackage(this,'Premium')">
+<strong>Premium Scaling</strong>
+<p>Full Automation + Revenue Strategy</p>
+</div>
+
+<button onclick="saveSelection()">Confirm Selection</button>
+</div>
+`;
+
+}
+
+/* WEBSITE DESIGN */
+if(service === "website-design"){
+
+content.innerHTML = `
+<div class="section">
+<h3>Select Website Package</h3>
+
+<div class="package" onclick="selectPackage(this,'Basic Website')">
+<strong>Basic Website</strong>
+<p>5 Page Business Website</p>
+</div>
+
+<div class="package" onclick="selectPackage(this,'E-Commerce')">
+<strong>E-Commerce</strong>
+<p>Online Store + Payment System</p>
+</div>
+
+<div class="package" onclick="selectPackage(this,'Booking System')">
+<strong>Booking Website</strong>
+<p>Appointment & Calendar Integration</p>
+</div>
+</div>
+
+<div class="section">
+<h3>Select Template Style</h3>
+
+<div class="template" onclick="selectTemplate(this,'Luxury Black & Gold')">
+Luxury Black & Gold
+</div>
+
+<div class="template" onclick="selectTemplate(this,'Minimal Cream Business')">
+Minimal Cream Business
+</div>
+
+<div class="template" onclick="selectTemplate(this,'Modern Startup')">
+Modern Startup
+</div>
+
+<button onclick="saveSelection()">Confirm Selection</button>
 </div>
 `;
 }
 
-if(service==="website-design"){
-content.innerHTML=`
-<div class="section">
-<h3>Select Website Type</h3>
-<p>• Simple Front Website</p>
-<p>• E-Commerce Website</p>
-<p>• Booking System Website</p>
-</div>
+function selectPackage(element,name){
+document.querySelectorAll(".package").forEach(p=>p.classList.remove("selected"));
+element.classList.add("selected");
+selectedPackage = name;
+}
 
-<div class="section">
-<h3>Choose Template</h3>
-<div class="template">Luxury Black & Gold</div>
-<div class="template">Minimal Cream Business</div>
-<div class="template">Modern Startup Layout</div>
-</div>
-`;
+function selectTemplate(element,name){
+document.querySelectorAll(".template").forEach(t=>t.classList.remove("selected"));
+element.classList.add("selected");
+selectedTemplate = name;
+}
+
+function saveSelection(){
+if(!selectedPackage){
+alert("Please select a package.");
+return;
+}
+
+users[currentIndex].chosenPackage = selectedPackage;
+
+if(selectedTemplate){
+users[currentIndex].chosenTemplate = selectedTemplate;
+}
+
+localStorage.setItem("users", JSON.stringify(users));
+alert("Selection saved successfully.");
 }
 
 function logout(){
