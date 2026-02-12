@@ -1,24 +1,257 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<title>Client Dashboard</title>
-<link rel="stylesheet" href="assets/css/main.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Portal - Emery Campbell Consulting</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+
+body{
+font-family:'Montserrat',sans-serif;
+background:#f4f4f4;
+min-height:100vh;
+}
+
+/* HEADER */
+.header{
+background:#111;
+color:#fff;
+padding:20px 40px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.header h1{
+font-family:'Cormorant Garamond',serif;
+letter-spacing:2px;
+}
+
+.buttons button{
+margin-left:10px;
+padding:8px 18px;
+border:none;
+border-radius:6px;
+cursor:pointer;
+font-weight:500;
+}
+
+.home{background:#C19A6B;color:#fff;}
+.logout{background:#000;color:#fff;}
+
+/* CONTENT */
+.container{
+padding:40px;
+max-width:1200px;
+margin:auto;
+}
+
+.card{
+background:#fff;
+padding:30px;
+border-radius:12px;
+box-shadow:0 5px 20px rgba(0,0,0,0.05);
+margin-bottom:30px;
+}
+
+.card h2{
+margin-bottom:15px;
+font-family:'Cormorant Garamond',serif;
+}
+
+/* PROGRESS BAR */
+.progress-bar{
+width:100%;
+background:#eee;
+border-radius:10px;
+overflow:hidden;
+height:20px;
+margin-top:10px;
+}
+
+.progress-fill{
+height:100%;
+background:linear-gradient(135deg,#C19A6B,#8B7355);
+width:40%;
+}
+
+/* FILE LIST */
+.file-list{
+margin-top:15px;
+}
+
+.file-item{
+background:#fafafa;
+padding:8px 12px;
+border-radius:6px;
+margin-bottom:8px;
+font-size:0.9rem;
+}
+
+/* AI CHAT */
+.ai-chatbot{position:fixed;bottom:20px;right:20px;}
+.chat-toggle-btn{
+width:60px;height:60px;border-radius:50%;
+background:#000;color:#fff;border:none;font-size:20px;cursor:pointer;
+}
+.chat-window{
+display:none;width:320px;height:420px;background:#fff;
+border-radius:12px;box-shadow:0 5px 20px rgba(0,0,0,0.2);
+flex-direction:column;overflow:hidden;
+}
+.chat-header{
+background:#000;color:#fff;padding:10px;
+display:flex;justify-content:space-between;
+}
+.chat-messages{flex:1;padding:10px;overflow-y:auto;font-size:0.9rem;}
+.chat-input-container{display:flex;border-top:1px solid #eee;}
+.chat-input-container input{
+flex:1;padding:10px;border:none;
+}
+.chat-input-container button{
+padding:10px;border:none;background:#C19A6B;color:#fff;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+.container{padding:20px;}
+}
+</style>
 </head>
-<body id="accountPage">
 
-<h1>Welcome <span id="clientName"></span></h1>
-<p>Project Status: <strong id="projectStatus"></strong></p>
+<body>
 
-<h3>Business Information</h3>
-<div id="businessInfoBox"></div>
+<div class="header">
+<h1>CLIENT PORTAL</h1>
+<div class="buttons">
+<button class="home" onclick="goHome()">Main Page</button>
+<button class="logout" onclick="logout()">Sign Out</button>
+</div>
+</div>
 
-<input id="companyName" placeholder="Company Name">
-<input id="industry" placeholder="Industry">
-<button onclick="saveBusinessInfo()">Save</button>
+<div class="container">
 
-<br><br>
-<button onclick="logout()">Logout</button>
+<div class="card">
+<h2>Account Overview</h2>
+<p id="clientEmail"></p>
+<p><strong>Selected Service:</strong> <span id="clientService"></span></p>
+</div>
 
-<script src="assets/js/main.js"></script>
+<div class="card">
+<h2>Project Status</h2>
+<p>Current Phase: <strong id="projectPhase">Planning</strong></p>
+<div class="progress-bar">
+<div class="progress-fill" id="progressFill"></div>
+</div>
+</div>
+
+<div class="card">
+<h2>Upload Files</h2>
+<input type="file" id="fileUpload">
+<div class="file-list" id="fileList"></div>
+</div>
+
+<div class="card">
+<h2>Project Notes</h2>
+<textarea id="notes" rows="4" style="width:100%;padding:10px;border-radius:8px;border:1px solid #ccc;"></textarea>
+<button style="margin-top:10px;background:#C19A6B;color:#fff;padding:8px 16px;border:none;border-radius:6px;" onclick="saveNotes()">Save Notes</button>
+</div>
+
+<div class="card">
+<h2>Payment Status</h2>
+<p>Status: <strong id="paymentStatus">Pending</strong></p>
+<button style="margin-top:10px;background:#000;color:#fff;padding:8px 16px;border:none;border-radius:6px;" onclick="markPaid()">Mark as Paid (Demo)</button>
+</div>
+
+</div>
+
+<!-- AI CHAT -->
+<div class="ai-chatbot">
+<button class="chat-toggle-btn" onclick="toggleChat()">💬</button>
+<div class="chat-window" id="chatWindow">
+<div class="chat-header">
+<span>AI Assistant</span>
+<button onclick="toggleChat()">×</button>
+</div>
+<div class="chat-messages" id="chatMessages">
+<div>Hi 👋 Ask me anything about your project.</div>
+</div>
+<div class="chat-input-container">
+<input type="text" id="chatInput" placeholder="Type message...">
+<button onclick="sendMessage()">Send</button>
+</div>
+</div>
+</div>
+
+<script>
+const user=JSON.parse(localStorage.getItem("currentUser"));
+if(!user||user.role!=="client"){window.location.href="login.html";}
+
+document.getElementById("clientEmail").textContent="Email: "+user.email;
+document.getElementById("clientService").textContent=user.service;
+
+let progress=40;
+document.getElementById("progressFill").style.width=progress+"%";
+
+const fileUpload=document.getElementById("fileUpload");
+const fileList=document.getElementById("fileList");
+
+fileUpload.addEventListener("change",function(){
+const file=fileUpload.files[0];
+if(!file)return;
+
+const div=document.createElement("div");
+div.className="file-item";
+div.textContent=file.name;
+fileList.appendChild(div);
+});
+
+function saveNotes(){
+const notes=document.getElementById("notes").value;
+localStorage.setItem("clientNotes_"+user.email,notes);
+alert("Notes saved.");
+}
+
+document.getElementById("notes").value=localStorage.getItem("clientNotes_"+user.email)||"";
+
+function markPaid(){
+document.getElementById("paymentStatus").textContent="Paid";
+}
+
+function logout(){
+localStorage.removeItem("currentUser");
+window.location.href="login.html";
+}
+
+function goHome(){
+window.location.href="index.html";
+}
+
+/* AI */
+function toggleChat(){
+const chat=document.getElementById("chatWindow");
+chat.style.display=chat.style.display==="flex"?"none":"flex";
+}
+
+function sendMessage(){
+const input=document.getElementById("chatInput");
+const msg=input.value.trim();
+if(!msg)return;
+
+const box=document.getElementById("chatMessages");
+box.innerHTML+="<div><strong>You:</strong> "+msg+"</div>";
+input.value="";
+
+setTimeout(()=>{
+box.innerHTML+="<div><strong>AI:</strong> Thank you for your message. Our team will review your request shortly.</div>";
+box.scrollTop=box.scrollHeight;
+},700);
+}
+</script>
+
 </body>
 </html>
