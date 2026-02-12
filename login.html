@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    <title>Login - Emery Campbell Consulting</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Login - Emery Campbell Consulting</title>
 
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         * { margin:0; padding:0; box-sizing:border-box; }
@@ -28,7 +27,6 @@
             padding:60px 50px;
             border-radius:16px;
             box-shadow:0 20px 60px rgba(193,154,107,0.25);
-            position:relative;
         }
 
         .logo {
@@ -86,12 +84,20 @@
             cursor:pointer;
         }
 
+        .submit-btn:hover {
+            opacity:0.95;
+        }
+
         .message {
             margin-top:15px;
             text-align:center;
             font-size:0.9rem;
-            color:red;
+            min-height:20px;
+            font-weight:500;
         }
+
+        .error { color:#c0392b; }
+        .success { color:#27ae60; }
 
         .signup-link {
             text-align:center;
@@ -116,7 +122,7 @@
         <p>Consulting</p>
     </div>
 
-    <h2>Client Login</h2>
+    <h2>Secure Client Login</h2>
 
     <form id="loginForm">
         <div class="form-group">
@@ -142,24 +148,40 @@ document.getElementById("loginForm").addEventListener("submit", function(e){
     e.preventDefault();
 
     const email = document.getElementById("email").value.trim().toLowerCase();
+    const password = document.getElementById("password").value.trim();
     const message = document.getElementById("formMessage");
+
+    message.textContent = "";
+    message.className = "message";
 
     let users = JSON.parse(localStorage.getItem("users")) || [];
 
-    const user = users.find(u => u.email === email);
-
-    if(!user){
-        message.textContent = "No account found with this email.";
+    if(users.length === 0){
+        message.textContent = "No registered users found.";
+        message.classList.add("error");
         return;
     }
 
-    localStorage.setItem("currentUser", email);
+    const user = users.find(u => u.email === email);
 
-    if(user.role === "admin"){
-        window.location.href = "admin.html";
-    } else {
-        window.location.href = "account.html";
+    if(!user || user.password !== password){
+        message.textContent = "Invalid email or password.";
+        message.classList.add("error");
+        return;
     }
+
+    localStorage.setItem("currentUser", JSON.stringify(user));
+
+    message.textContent = "Login successful...";
+    message.classList.add("success");
+
+    setTimeout(() => {
+        if(user.role === "admin"){
+            window.location.href = "admin.html";
+        } else {
+            window.location.href = "account.html";
+        }
+    }, 800);
 });
 </script>
 
