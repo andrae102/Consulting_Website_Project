@@ -1,0 +1,1567 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Emery Campbell Consulting</title>
+
+```
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    :root {
+        --primary: #C19A6B;
+        --primary-dark: #8B7355;
+        --bg-main: #F5F1E8;
+        --bg-secondary: #E8E0D5;
+        --card-bg: #FFFFFF;
+        --text-primary: #333;
+        --text-secondary: #666;
+        --border: #E0D8CC;
+    }
+    
+    body.dark-mode {
+        --bg-main: #1a1a1a;
+        --bg-secondary: #2a2a2a;
+        --card-bg: #2d2d2d;
+        --text-primary: #f5f5f5;
+        --text-secondary: #aaa;
+        --border: #444;
+    }
+    
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background: linear-gradient(135deg, var(--bg-main) 0%, var(--bg-secondary) 100%);
+        color: var(--text-primary);
+        min-height: 100vh;
+        transition: all 0.3s;
+    }
+    
+    h1, h2, h3, h4 {
+        font-family: 'Cormorant Garamond', serif;
+    }
+    
+    /* TOP BAR */
+    .top-bar {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        padding: 15px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+    }
+    
+    .logo {
+        font-family: 'Cormorant Garamond', serif;
+        font-size: 1.8rem;
+        color: white;
+        letter-spacing: 0.1em;
+    }
+    
+    .top-actions {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .notification-btn, .dark-mode-toggle {
+        background: rgba(255,255,255,0.2);
+        border: none;
+        color: white;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        transition: all 0.3s;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .notification-btn:hover, .dark-mode-toggle:hover {
+        background: rgba(255,255,255,0.3);
+        transform: scale(1.1);
+    }
+    
+    .notification-badge {
+        position: absolute;
+        top: -5px;
+        right: -5px;
+        background: #ff4444;
+        color: white;
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        font-size: 0.7rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+    }
+    
+    .user-menu {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+    
+    .user-avatar {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--primary-dark);
+        font-weight: 600;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    
+    .user-avatar:hover {
+        transform: scale(1.1);
+    }
+    
+    .logout-btn {
+        background: rgba(255,255,255,0.2);
+        border: 1px solid white;
+        color: white;
+        padding: 8px 20px;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-size: 0.9rem;
+    }
+    
+    .logout-btn:hover {
+        background: white;
+        color: var(--primary-dark);
+    }
+    
+    /* SIDEBAR */
+    .dashboard-layout {
+        display: flex;
+        min-height: calc(100vh - 70px);
+    }
+    
+    .sidebar {
+        width: 280px;
+        background: var(--card-bg);
+        padding: 30px 0;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.05);
+        transition: all 0.3s;
+    }
+    
+    .nav-item {
+        padding: 15px 30px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        color: var(--text-secondary);
+        cursor: pointer;
+        transition: all 0.3s;
+        border-left: 4px solid transparent;
+    }
+    
+    .nav-item:hover, .nav-item.active {
+        background: linear-gradient(90deg, rgba(193, 154, 107, 0.1) 0%, transparent 100%);
+        color: var(--primary);
+        border-left-color: var(--primary);
+    }
+    
+    .nav-item i {
+        font-size: 1.2rem;
+        width: 25px;
+    }
+    
+    /* MAIN CONTENT */
+    .main-content {
+        flex: 1;
+        padding: 40px;
+        overflow-y: auto;
+    }
+    
+    .page-header {
+        margin-bottom: 30px;
+    }
+    
+    .page-header h1 {
+        font-size: clamp(2rem, 4vw, 2.5rem);
+        color: var(--primary-dark);
+        margin-bottom: 10px;
+    }
+    
+    .breadcrumb {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+    }
+    
+    /* STATS GRID */
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+    
+    .stat-card {
+        background: var(--card-bg);
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        transition: all 0.3s;
+        border-left: 4px solid var(--primary);
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(193, 154, 107, 0.2);
+    }
+    
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+    
+    .stat-icon i {
+        font-size: 28px;
+        color: white;
+    }
+    
+    .stat-info {
+        flex: 1;
+    }
+    
+    .stat-value {
+        font-size: 2rem;
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+    
+    .stat-label {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        margin-bottom: 5px;
+    }
+    
+    .stat-change {
+        font-size: 0.85rem;
+        color: #4caf50;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        margin-top: 5px;
+    }
+    
+    .stat-change.negative {
+        color: #f44336;
+    }
+    
+    /* CONTENT GRID */
+    .content-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 25px;
+        margin-bottom: 30px;
+    }
+    
+    /* CARD */
+    .card {
+        background: var(--card-bg);
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+    
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid var(--border);
+    }
+    
+    .card-title {
+        font-size: 1.4rem;
+        color: var(--primary-dark);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .card-title i {
+        color: var(--primary);
+    }
+    
+    .card-action {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        transition: all 0.3s;
+    }
+    
+    .card-action:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+    }
+    
+    /* CHART CONTAINER */
+    .chart-container {
+        position: relative;
+        height: 300px;
+        margin: 20px 0;
+    }
+    
+    /* TIMELINE */
+    .timeline {
+        position: relative;
+        padding-left: 30px;
+    }
+    
+    .timeline::before {
+        content: '';
+        position: absolute;
+        left: 10px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(180deg, var(--primary) 0%, transparent 100%);
+    }
+    
+    .timeline-item {
+        position: relative;
+        margin-bottom: 25px;
+        padding-left: 20px;
+    }
+    
+    .timeline-dot {
+        position: absolute;
+        left: -20px;
+        top: 5px;
+        width: 12px;
+        height: 12px;
+        background: var(--primary);
+        border-radius: 50%;
+        border: 3px solid var(--card-bg);
+        box-shadow: 0 0 0 3px var(--primary);
+    }
+    
+    .timeline-dot.completed {
+        background: #4caf50;
+        box-shadow: 0 0 0 3px #4caf50;
+    }
+    
+    .timeline-content {
+        background: linear-gradient(135deg, rgba(193, 154, 107, 0.05) 0%, transparent 100%);
+        padding: 15px;
+        border-radius: 8px;
+        border-left: 3px solid var(--primary);
+    }
+    
+    .timeline-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 5px;
+    }
+    
+    .timeline-date {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+    }
+    
+    /* MESSAGES */
+    .message-list {
+        max-height: 400px;
+        overflow-y: auto;
+    }
+    
+    .message-item {
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        background: linear-gradient(135deg, rgba(193, 154, 107, 0.05) 0%, transparent 100%);
+        border-left: 3px solid var(--primary);
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    
+    .message-item:hover {
+        transform: translateX(5px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    .message-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+    }
+    
+    .message-from {
+        font-weight: 600;
+        color: var(--text-primary);
+    }
+    
+    .message-time {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+    }
+    
+    .message-preview {
+        color: var(--text-secondary);
+        font-size: 0.9rem;
+        line-height: 1.5;
+    }
+    
+    .unread {
+        background: linear-gradient(135deg, rgba(193, 154, 107, 0.15) 0%, rgba(139, 115, 85, 0.1) 100%);
+        border-left-color: var(--primary-dark);
+    }
+    
+    /* FILE UPLOAD */
+    .upload-area {
+        border: 2px dashed var(--border);
+        border-radius: 12px;
+        padding: 40px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        margin: 20px 0;
+    }
+    
+    .upload-area:hover {
+        border-color: var(--primary);
+        background: linear-gradient(135deg, rgba(193, 154, 107, 0.05) 0%, transparent 100%);
+    }
+    
+    .upload-area i {
+        font-size: 3rem;
+        color: var(--primary);
+        margin-bottom: 15px;
+    }
+    
+    .upload-text {
+        color: var(--text-secondary);
+        margin-bottom: 10px;
+    }
+    
+    .upload-hint {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+    }
+    
+    .file-list {
+        margin-top: 20px;
+    }
+    
+    .file-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 15px;
+        background: linear-gradient(135deg, rgba(193, 154, 107, 0.05) 0%, transparent 100%);
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+    
+    .file-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+    
+    .file-icon {
+        width: 40px;
+        height: 40px;
+        background: var(--primary);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+    }
+    
+    .file-details {
+        flex: 1;
+    }
+    
+    .file-name {
+        font-weight: 500;
+        color: var(--text-primary);
+    }
+    
+    .file-size {
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+    }
+    
+    .file-actions {
+        display: flex;
+        gap: 10px;
+    }
+    
+    .file-actions button {
+        background: transparent;
+        border: none;
+        color: var(--text-secondary);
+        cursor: pointer;
+        padding: 5px 10px;
+        border-radius: 4px;
+        transition: all 0.3s;
+    }
+    
+    .file-actions button:hover {
+        background: var(--border);
+        color: var(--primary);
+    }
+    
+    /* FORM */
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--text-primary);
+        font-weight: 500;
+        font-size: 0.9rem;
+    }
+    
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 0.95rem;
+        background: var(--card-bg);
+        color: var(--text-primary);
+        transition: all 0.3s;
+    }
+    
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(193, 154, 107, 0.1);
+    }
+    
+    .btn-primary {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        color: white;
+        padding: 12px 30px;
+        border: none;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: 0.9rem;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(193, 154, 107, 0.3);
+    }
+    
+    /* NOTIFICATIONS PANEL */
+    .notifications-panel {
+        position: fixed;
+        top: 70px;
+        right: -400px;
+        width: 380px;
+        height: calc(100vh - 70px);
+        background: var(--card-bg);
+        box-shadow: -2px 0 20px rgba(0,0,0,0.1);
+        transition: right 0.3s;
+        z-index: 999;
+        padding: 25px;
+        overflow-y: auto;
+    }
+    
+    .notifications-panel.open {
+        right: 0;
+    }
+    
+    .notification-item {
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        background: linear-gradient(135deg, rgba(193, 154, 107, 0.05) 0%, transparent 100%);
+        border-left: 3px solid var(--primary);
+    }
+    
+    .notification-item.unread {
+        background: linear-gradient(135deg, rgba(193, 154, 107, 0.15) 0%, rgba(139, 115, 85, 0.1) 100%);
+    }
+    
+    /* PAGE SECTIONS */
+    .page-section {
+        display: none;
+    }
+    
+    .page-section.active {
+        display: block;
+        animation: fadeIn 0.3s;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+        .content-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .sidebar {
+            width: 220px;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .top-bar {
+            padding: 15px 20px;
+        }
+        
+        .sidebar {
+            position: fixed;
+            left: -280px;
+            height: 100vh;
+            z-index: 1000;
+        }
+        
+        .sidebar.open {
+            left: 0;
+        }
+        
+        .main-content {
+            padding: 20px;
+        }
+        
+        .stats-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+    
+    .compose-message {
+        margin-top: 20px;
+    }
+    
+    .compose-message textarea {
+        margin-bottom: 10px;
+    }
+</style>
+```
+
+</head>
+<body>
+
+```
+<!-- TOP BAR -->
+<div class="top-bar">
+    <div class="logo">EMERY CAMPBELL</div>
+    <div class="top-actions">
+        <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Toggle Dark Mode">
+            <i class="fas fa-moon" id="darkModeIcon"></i>
+        </button>
+        <button class="notification-btn" onclick="toggleNotifications()">
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge" id="notificationCount">3</span>
+        </button>
+        <div class="user-menu">
+            <div class="user-avatar" id="userAvatar" title="Profile">EC</div>
+            <button class="logout-btn" onclick="handleLogout()">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- MAIN LAYOUT -->
+<div class="dashboard-layout">
+    
+    <!-- SIDEBAR NAVIGATION -->
+    <div class="sidebar" id="sidebar">
+        <div class="nav-item active" onclick="showPage('overview')">
+            <i class="fas fa-th-large"></i>
+            <span>Overview</span>
+        </div>
+        <div class="nav-item" onclick="showPage('project')">
+            <i class="fas fa-project-diagram"></i>
+            <span>My Project</span>
+        </div>
+        <div class="nav-item" onclick="showPage('messages')">
+            <i class="fas fa-comments"></i>
+            <span>Messages</span>
+        </div>
+        <div class="nav-item" onclick="showPage('files')">
+            <i class="fas fa-folder-open"></i>
+            <span>Files</span>
+        </div>
+        <div class="nav-item" onclick="showPage('profile')">
+            <i class="fas fa-user-circle"></i>
+            <span>Profile</span>
+        </div>
+        <div class="nav-item" onclick="window.location.href='index.html'">
+            <i class="fas fa-home"></i>
+            <span>Back to Home</span>
+        </div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="main-content">
+        
+        <!-- OVERVIEW PAGE -->
+        <div class="page-section active" id="overview-page">
+            <div class="page-header">
+                <h1>Welcome back, <span id="userName">Client</span>!</h1>
+                <div class="breadcrumb">
+                    <i class="fas fa-home"></i> Dashboard / Overview
+                </div>
+            </div>
+
+            <!-- STATS GRID -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-label">Days With Us</div>
+                        <div class="stat-value" id="daysSinceSignup">0</div>
+                        <div class="stat-change">
+                            <i class="fas fa-arrow-up"></i> Growing strong!
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-label">Project Progress</div>
+                        <div class="stat-value">0%</div>
+                        <div class="stat-change">
+                            <i class="fas fa-arrow-up"></i> On track
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-label">Unread Messages</div>
+                        <div class="stat-value">2</div>
+                        <div class="stat-change">
+                            <i class="fas fa-info-circle"></i> New updates
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <div class="stat-label">Files Shared</div>
+                        <div class="stat-value">0</div>
+                        <div class="stat-change">
+                            <i class="fas fa-upload"></i> Upload anytime
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CONTENT GRID -->
+            <div class="content-grid">
+                
+                <!-- LEFT COLUMN -->
+                <div>
+                    <!-- PROJECT PROGRESS CHART -->
+                    <div class="card" style="margin-bottom: 25px;">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-chart-line"></i>
+                                Project Progress
+                            </h2>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="progressChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- PROJECT TIMELINE -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-tasks"></i>
+                                Project Timeline
+                            </h2>
+                        </div>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-dot completed"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Discovery Call Completed</div>
+                                    <div class="timeline-date">2 days ago</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Design Phase</div>
+                                    <div class="timeline-date">In Progress</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Development Phase</div>
+                                    <div class="timeline-date">Upcoming</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Launch</div>
+                                    <div class="timeline-date">Week of March 1st</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIGHT COLUMN -->
+                <div>
+                    <!-- RECENT MESSAGES -->
+                    <div class="card" style="margin-bottom: 25px;">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-comments"></i>
+                                Recent Messages
+                            </h2>
+                            <button class="card-action" onclick="showPage('messages')">
+                                View All
+                            </button>
+                        </div>
+                        <div class="message-list">
+                            <div class="message-item unread">
+                                <div class="message-header">
+                                    <div class="message-from">Emery Campbell</div>
+                                    <div class="message-time">2h ago</div>
+                                </div>
+                                <div class="message-preview">
+                                    Great news! Your design mockups are ready for review. Let me know your thoughts!
+                                </div>
+                            </div>
+                            <div class="message-item unread">
+                                <div class="message-header">
+                                    <div class="message-from">Emery Campbell</div>
+                                    <div class="message-time">1 day ago</div>
+                                </div>
+                                <div class="message-preview">
+                                    Thank you for sharing your brand colors. I've updated the design accordingly.
+                                </div>
+                            </div>
+                            <div class="message-item">
+                                <div class="message-header">
+                                    <div class="message-from">You</div>
+                                    <div class="message-time">2 days ago</div>
+                                </div>
+                                <div class="message-preview">
+                                    Here are my initial thoughts on the project direction...
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- QUICK ACTIONS -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">
+                                <i class="fas fa-bolt"></i>
+                                Quick Actions
+                            </h2>
+                        </div>
+                        <div style="display: grid; gap: 12px;">
+                            <button class="btn-primary" onclick="showPage('messages')">
+                                <i class="fas fa-paper-plane"></i> Send Message
+                            </button>
+                            <button class="btn-primary" onclick="showPage('files')">
+                                <i class="fas fa-upload"></i> Upload Files
+                            </button>
+                            <button class="btn-primary" onclick="window.open('https://wa.me/18479427399', '_blank')">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROJECT PAGE -->
+        <div class="page-section" id="project-page">
+            <div class="page-header">
+                <h1>My Project</h1>
+                <div class="breadcrumb">
+                    <i class="fas fa-home"></i> Dashboard / My Project
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-project-diagram"></i>
+                        Website Design Project
+                    </h2>
+                    <span style="padding: 8px 20px; background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); color: white; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">IN PROGRESS</span>
+                </div>
+
+                <div class="content-grid" style="margin-top: 25px;">
+                    <div>
+                        <h3 style="color: var(--primary-dark); margin-bottom: 20px;">Project Details</h3>
+                        <div style="background: linear-gradient(135deg, rgba(193, 154, 107, 0.1) 0%, rgba(139, 115, 85, 0.1) 100%); padding: 25px; border-radius: 10px; margin-bottom: 20px;">
+                            <div style="display: grid; gap: 15px;">
+                                <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border);">
+                                    <span style="color: var(--text-secondary);">Project Type</span>
+                                    <span style="font-weight: 600;">Website Design & Development</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border);">
+                                    <span style="color: var(--text-secondary);">Start Date</span>
+                                    <span style="font-weight: 600;">February 10, 2026</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border);">
+                                    <span style="color: var(--text-secondary);">Expected Completion</span>
+                                    <span style="font-weight: 600;">March 10, 2026</span>
+                                </div>
+                                <div style="display: flex; justify-content: space-between; padding: 12px 0;">
+                                    <span style="color: var(--text-secondary);">Progress</span>
+                                    <span style="font-weight: 600; color: var(--primary);">35%</span>
+                                </div>
+                            </div>
+                            <div style="margin-top: 20px;">
+                                <div style="background: rgba(139, 115, 85, 0.2); height: 12px; border-radius: 10px; overflow: hidden;">
+                                    <div style="background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%); height: 100%; width: 35%; border-radius: 10px; transition: width 0.5s;"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h3 style="color: var(--primary-dark); margin-bottom: 20px; margin-top: 30px;">Milestones</h3>
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-dot completed"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">✓ Initial Consultation</div>
+                                    <div class="timeline-date">Completed on Feb 10</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot completed"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">✓ Requirements Gathering</div>
+                                    <div class="timeline-date">Completed on Feb 11</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Design Mockups (In Progress)</div>
+                                    <div class="timeline-date">Due Feb 18</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Development Phase</div>
+                                    <div class="timeline-date">Starts Feb 20</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Testing & Revisions</div>
+                                    <div class="timeline-date">Starts Mar 1</div>
+                                </div>
+                            </div>
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">Launch</div>
+                                    <div class="timeline-date">Target: Mar 10</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 style="color: var(--primary-dark); margin-bottom: 20px;">Next Steps</h3>
+                        <div class="card" style="margin-bottom: 20px;">
+                            <div style="padding: 0;">
+                                <div style="display: flex; align-items: start; gap: 15px; margin-bottom: 20px;">
+                                    <div style="width: 40px; height: 40px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0;">1</div>
+                                    <div>
+                                        <div style="font-weight: 600; margin-bottom: 5px;">Review Design Mockups</div>
+                                        <div style="color: var(--text-secondary); font-size: 0.9rem;">Check your messages for the latest designs</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: start; gap: 15px; margin-bottom: 20px;">
+                                    <div style="width: 40px; height: 40px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0;">2</div>
+                                    <div>
+                                        <div style="font-weight: 600; margin-bottom: 5px;">Provide Feedback</div>
+                                        <div style="color: var(--text-secondary); font-size: 0.9rem;">Share your thoughts on colors, layout, and features</div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; align-items: start; gap: 15px;">
+                                    <div style="width: 40px; height: 40px; background: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; flex-shrink: 0;">3</div>
+                                    <div>
+                                        <div style="font-weight: 600; margin-bottom: 5px;">Upload Brand Assets</div>
+                                        <div style="color: var(--text-secondary); font-size: 0.9rem;">Logos, images, or content you'd like included</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button class="btn-primary" style="width: 100%; margin-bottom: 12px;" onclick="showPage('messages')">
+                            <i class="fas fa-paper-plane"></i> Send Message to Emery
+                        </button>
+                        <button class="btn-primary" style="width: 100%; margin-bottom: 12px;" onclick="showPage('files')">
+                            <i class="fas fa-upload"></i> Upload Files
+                        </button>
+                        <button class="btn-primary" style="width: 100%;" onclick="window.open('https://wa.me/18479427399?text=Hi!%20I%20have%20a%20question%20about%20my%20project', '_blank')">
+                            <i class="fab fa-whatsapp"></i> Quick WhatsApp
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MESSAGES PAGE -->
+        <div class="page-section" id="messages-page">
+            <div class="page-header">
+                <h1>Messages</h1>
+                <div class="breadcrumb">
+                    <i class="fas fa-home"></i> Dashboard / Messages
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-inbox"></i>
+                        Conversation with Emery Campbell
+                    </h2>
+                </div>
+
+                <div class="message-list" style="max-height: 500px;">
+                    <div class="message-item">
+                        <div class="message-header">
+                            <div class="message-from">Emery Campbell</div>
+                            <div class="message-time">2 hours ago</div>
+                        </div>
+                        <div class="message-preview">
+                            Great news! Your design mockups are ready for review. I've incorporated all the feedback from our last call. The homepage features the brown and tan color scheme you loved, with a clean, modern layout. I'll send over the files in our next message. Let me know your thoughts when you get a chance!
+                        </div>
+                    </div>
+
+                    <div class="message-item">
+                        <div class="message-header">
+                            <div class="message-from">Emery Campbell</div>
+                            <div class="message-time">1 day ago</div>
+                        </div>
+                        <div class="message-preview">
+                            Thank you for sharing your brand colors! I've updated the design palette accordingly. The combination of #C19A6B and #8B7355 creates a really sophisticated look. I'm working on the first draft of your homepage and should have something to show you by tomorrow.
+                        </div>
+                    </div>
+
+                    <div class="message-item" style="background: linear-gradient(135deg, rgba(193, 154, 107, 0.08) 0%, transparent 100%); border-left-color: var(--primary-dark);">
+                        <div class="message-header">
+                            <div class="message-from">You</div>
+                            <div class="message-time">2 days ago</div>
+                        </div>
+                        <div class="message-preview">
+                            Here are my initial thoughts on the project direction. I'm looking for something elegant and professional, with warm tones. I really like the examples you showed me during our consultation. Looking forward to seeing what you create!
+                        </div>
+                    </div>
+
+                    <div class="message-item">
+                        <div class="message-header">
+                            <div class="message-from">Emery Campbell</div>
+                            <div class="message-time">2 days ago</div>
+                        </div>
+                        <div class="message-preview">
+                            Welcome to your client portal! I'm excited to work with you on this project. This dashboard is your central hub for tracking progress, sharing files, and staying in touch. Feel free to reach out anytime via message, WhatsApp, or phone. Let's create something amazing together!
+                        </div>
+                    </div>
+                </div>
+
+                <div class="compose-message">
+                    <h3 style="color: var(--primary-dark); margin-bottom: 15px;">Send New Message</h3>
+                    <form onsubmit="sendMessage(event)">
+                        <div class="form-group">
+                            <textarea id="messageText" rows="5" placeholder="Type your message here..." style="resize: vertical;"></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- FILES PAGE -->
+        <div class="page-section" id="files-page">
+            <div class="page-header">
+                <h1>Files</h1>
+                <div class="breadcrumb">
+                    <i class="fas fa-home"></i> Dashboard / Files
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        Upload Files
+                    </h2>
+                </div>
+
+                <div class="upload-area" onclick="document.getElementById('fileInput').click()">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <div class="upload-text">Click to upload or drag and drop</div>
+                    <div class="upload-hint">PDF, PNG, JPG, DOC up to 10MB</div>
+                    <input type="file" id="fileInput" style="display: none;" multiple onchange="handleFileUpload(event)">
+                </div>
+
+                <div class="file-list" id="fileList">
+                    <h3 style="color: var(--primary-dark); margin: 30px 0 20px 0;">Uploaded Files</h3>
+                    
+                    <div class="file-item">
+                        <div class="file-info">
+                            <div class="file-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="file-details">
+                                <div class="file-name">Brand Guidelines.pdf</div>
+                                <div class="file-size">2.4 MB • Uploaded 2 days ago</div>
+                            </div>
+                        </div>
+                        <div class="file-actions">
+                            <button title="Download"><i class="fas fa-download"></i></button>
+                            <button title="Delete"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="file-item">
+                        <div class="file-info">
+                            <div class="file-icon">
+                                <i class="fas fa-file-image"></i>
+                            </div>
+                            <div class="file-details">
+                                <div class="file-name">Logo-High-Res.png</div>
+                                <div class="file-size">1.8 MB • Uploaded 3 days ago</div>
+                            </div>
+                        </div>
+                        <div class="file-actions">
+                            <button title="Download"><i class="fas fa-download"></i></button>
+                            <button title="Delete"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+
+                    <div class="file-item">
+                        <div class="file-info">
+                            <div class="file-icon">
+                                <i class="fas fa-file-word"></i>
+                            </div>
+                            <div class="file-details">
+                                <div class="file-name">Website Content.docx</div>
+                                <div class="file-size">156 KB • Uploaded 3 days ago</div>
+                            </div>
+                        </div>
+                        <div class="file-actions">
+                            <button title="Download"><i class="fas fa-download"></i></button>
+                            <button title="Delete"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PROFILE PAGE -->
+        <div class="page-section" id="profile-page">
+            <div class="page-header">
+                <h1>Profile Settings</h1>
+                <div class="breadcrumb">
+                    <i class="fas fa-home"></i> Dashboard / Profile
+                </div>
+            </div>
+
+            <div class="content-grid">
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-user"></i>
+                            Personal Information
+                        </h2>
+                    </div>
+                    <form onsubmit="saveProfile(event)">
+                        <div class="form-group">
+                            <label for="profileName">Full Name</label>
+                            <input type="text" id="profileName" placeholder="Your name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profileEmail">Email</label>
+                            <input type="email" id="profileEmail" placeholder="your@email.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profilePhone">Phone</label>
+                            <input type="tel" id="profilePhone" placeholder="+1 (234) 567-8900">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="profileLocation">Location</label>
+                            <input type="text" id="profileLocation" placeholder="City, State">
+                        </div>
+                        
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <h2 class="card-title">
+                            <i class="fas fa-briefcase"></i>
+                            Business Information
+                        </h2>
+                    </div>
+                    <form onsubmit="saveBusinessInfo(event)">
+                        <div class="form-group">
+                            <label for="businessName">Business Name</label>
+                            <input type="text" id="businessName" placeholder="Your business name">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="businessType">Industry / Type</label>
+                            <input type="text" id="businessType" placeholder="e.g., Beauty, Tech, Retail">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="businessWebsite">Current Website (if any)</label>
+                            <input type="url" id="businessWebsite" placeholder="https://yoursite.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="businessGoals">Project Goals</label>
+                            <textarea id="businessGoals" rows="4" placeholder="What do you want to achieve?"></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i> Save Changes
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- NOTIFICATIONS PANEL -->
+<div class="notifications-panel" id="notificationsPanel">
+    <h2 style="color: var(--primary-dark); margin-bottom: 20px;">Notifications</h2>
+    
+    <div class="notification-item unread">
+        <div style="font-weight: 600; margin-bottom: 8px; color: var(--primary);">
+            <i class="fas fa-check-circle"></i> Design Mockups Ready
+        </div>
+        <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 5px;">
+            Your website design mockups are ready for review!
+        </div>
+        <div style="font-size: 0.85rem; color: var(--text-secondary);">2 hours ago</div>
+    </div>
+
+    <div class="notification-item unread">
+        <div style="font-weight: 600; margin-bottom: 8px; color: var(--primary);">
+            <i class="fas fa-envelope"></i> New Message
+        </div>
+        <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 5px;">
+            Emery Campbell sent you a message about your project
+        </div>
+        <div style="font-size: 0.85rem; color: var(--text-secondary);">1 day ago</div>
+    </div>
+
+    <div class="notification-item">
+        <div style="font-weight: 600; margin-bottom: 8px;">
+            <i class="fas fa-calendar"></i> Milestone Completed
+        </div>
+        <div style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 5px;">
+            Requirements gathering phase completed successfully
+        </div>
+        <div style="font-size: 0.85rem; color: var(--text-secondary);">2 days ago</div>
+    </div>
+</div>
+
+<script>
+    // Initialize Chart.js for progress chart
+    const ctx = document.getElementById('progressChart');
+    const progressChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Feb 10', 'Feb 11', 'Feb 12', 'Feb 13', 'Feb 14', 'Feb 15', 'Today'],
+            datasets: [{
+                label: 'Project Progress',
+                data: [0, 10, 15, 20, 25, 30, 35],
+                borderColor: '#C19A6B',
+                backgroundColor: 'rgba(193, 154, 107, 0.1)',
+                tension: 0.4,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    display: false
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100,
+                    ticks: {
+                        callback: function(value) {
+                            return value + '%';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Activity Tracking
+    function trackActivity(action, page) {
+        if (localStorage.getItem('userLoggedIn') === 'true') {
+            const userData = JSON.parse(localStorage.getItem('userData') || '{"activity":[]}');
+            if (!userData.activity) userData.activity = [];
+            userData.activity.push({
+                action: action,
+                page: page,
+                timestamp: new Date().toISOString(),
+                date: new Date().toLocaleString()
+            });
+            localStorage.setItem('userData', JSON.stringify(userData));
+        }
+    }
+
+    // Load user data
+    function loadUserData() {
+        const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+        
+        if (userData.name) {
+            document.getElementById('userName').textContent = userData.name;
+            document.getElementById('userAvatar').textContent = userData.name.charAt(0).toUpperCase();
+            document.getElementById('profileName').value = userData.name;
+        }
+        
+        if (userData.email) {
+            document.getElementById('profileEmail').value = userData.email;
+        }
+        
+        if (userData.phone) {
+            document.getElementById('profilePhone').value = userData.phone;
+        }
+        
+        if (userData.location) {
+            document.getElementById('profileLocation').value = userData.location;
+        }
+        
+        if (userData.businessName) {
+            document.getElementById('businessName').value = userData.businessName;
+        }
+        
+        if (userData.businessType) {
+            document.getElementById('businessType').value = userData.businessType;
+        }
+        
+        if (userData.businessWebsite) {
+            document.getElementById('businessWebsite').value = userData.businessWebsite;
+        }
+        
+        if (userData.businessGoals) {
+            document.getElementById('businessGoals').value = userData.businessGoals;
+        }
+        
+        // Calculate days
+        if (userData.signupDate) {
+            const signupDate = new Date(userData.signupDate);
+            const today = new Date();
+            const days = Math.floor((today - signupDate) / (1000 * 60 * 60 * 24));
+            document.getElementById('daysSinceSignup').textContent = days;
+        }
+    }
+
+    // Page navigation
+    function showPage(pageName) {
+        // Hide all pages
+        document.querySelectorAll('.page-section').forEach(page => {
+            page.classList.remove('active');
+        });
+        
+        // Show selected page
+        document.getElementById(pageName + '-page').classList.add('active');
+        
+        // Update nav active state
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.classList.remove('active');
+        });
+        event.target.closest('.nav-item').classList.add('active');
+    }
+
+    // Dark mode toggle
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        const icon = document.getElementById('darkModeIcon');
+        if (document.body.classList.contains('dark-mode')) {
+            icon.className = 'fas fa-sun';
+            localStorage.setItem('darkMode', 'true');
+        } else {
+            icon.className = 'fas fa-moon';
+            localStorage.setItem('darkMode', 'false');
+        }
+    }
+
+    // Notifications toggle
+    function toggleNotifications() {
+        document.getElementById('notificationsPanel').classList.toggle('open');
+    }
+
+    // Save profile
+    function saveProfile(e) {
+        e.preventDefault();
+        const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+        
+        userData.name = document.getElementById('profileName').value;
+        userData.email = document.getElementById('profileEmail').value;
+        userData.phone = document.getElementById('profilePhone').value;
+        userData.location = document.getElementById('profileLocation').value;
+        
+        // Track activity
+        trackActivity('Updated Profile', 'dashboard.html');
+        
+        localStorage.setItem('userData', JSON.stringify(userData));
+        alert('Profile updated successfully!');
+        loadUserData();
+    }
+
+    // Save business info
+    function saveBusinessInfo(e) {
+        e.preventDefault();
+        const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+        
+        userData.businessName = document.getElementById('businessName').value;
+        userData.businessType = document.getElementById('businessType').value;
+        userData.businessWebsite = document.getElementById('businessWebsite').value;
+        userData.businessGoals = document.getElementById('businessGoals').value;
+        
+        // Track activity
+        trackActivity('Updated Business Information', 'dashboard.html');
+        
+        localStorage.setItem('userData', JSON.stringify(userData));
+        alert('Business information updated successfully!');
+    }
+
+    // Send message
+    function sendMessage(e) {
+        e.preventDefault();
+        const message = document.getElementById('messageText').value;
+        if (message.trim()) {
+            trackActivity('Sent Message', 'dashboard.html');
+            alert('Message sent! Emery will respond soon.');
+            document.getElementById('messageText').value = '';
+        }
+    }
+
+    // File upload handler
+    function handleFileUpload(e) {
+        const files = e.target.files;
+        if (files.length > 0) {
+            trackActivity(`Uploaded ${files.length} file(s)`, 'dashboard.html');
+            alert(`${files.length} file(s) uploaded successfully!`);
+        }
+    }
+
+    // Logout
+    function handleLogout() {
+        if (confirm('Are you sure you want to logout?')) {
+            trackActivity('Logged Out', 'dashboard.html');
+            localStorage.removeItem('userLoggedIn');
+            window.location.href = 'index.html';
+        }
+    }
+
+    // Check if logged in
+    if (localStorage.getItem('userLoggedIn') !== 'true') {
+        window.location.href = 'account.html';
+    } else {
+        // Track dashboard visit
+        trackActivity('Visited Dashboard', 'dashboard.html');
+    }
+
+    // Load dark mode preference
+    if (localStorage.getItem('darkMode') === 'true') {
+        document.body.classList.add('dark-mode');
+        document.getElementById('darkModeIcon').className = 'fas fa-sun';
+    }
+
+    // Load data
+    loadUserData();
+</script>
+```
+
+</body>
+</html>
