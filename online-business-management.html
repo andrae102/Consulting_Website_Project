@@ -1,92 +1,156 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Online Business Management</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Online Business Management - Emery Campbell Consulting</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-body{
-font-family:Montserrat;
-background:linear-gradient(135deg,#0f0f0f,#1a1a1a);
-color:#fff;
+*{
 margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
+body{
+font-family:'Montserrat',sans-serif;
+background:linear-gradient(135deg,#0f0f0f,#1a1a1a);
+color:#f5f1e8;
+line-height:1.6;
+}
+
+/* HERO */
 .hero{
+padding:100px 40px;
 text-align:center;
-padding:100px 30px;
+background:radial-gradient(circle at center,#1f1f1f 0%,#0f0f0f 70%);
 }
 
 .hero h1{
-font-family:'Cormorant Garamond';
+font-family:'Cormorant Garamond',serif;
 font-size:3rem;
 margin-bottom:20px;
+letter-spacing:2px;
 }
 
-.section{
-padding:60px 30px;
-max-width:900px;
+.hero p{
+max-width:700px;
 margin:auto;
+opacity:0.85;
 }
 
-.card{
-background:#1a1a1a;
-padding:30px;
-border-radius:10px;
-margin-bottom:20px;
-border:1px solid rgba(193,154,107,0.2);
-}
-
-button{
-padding:14px 30px;
-background:#C19A6B;
+.book-btn{
+margin-top:30px;
+padding:14px 35px;
+background:linear-gradient(135deg,#C19A6B,#8B7355);
 border:none;
 border-radius:30px;
 color:#fff;
 cursor:pointer;
 font-weight:600;
 }
+
+/* SECTION */
+.section{
+padding:80px 40px;
+max-width:1000px;
+margin:auto;
+}
+
+.section h2{
+text-align:center;
+font-family:'Cormorant Garamond',serif;
+margin-bottom:50px;
+font-size:2rem;
+}
+
+/* TIMELINE */
+.phase{
+background:#1a1a1a;
+padding:30px;
+border-radius:12px;
+margin-bottom:30px;
+border:1px solid rgba(193,154,107,0.2);
+}
+
+.phase h3{
+margin-bottom:10px;
+}
+
+.footer{
+text-align:center;
+padding:40px;
+opacity:0.5;
+font-size:0.8rem;
+}
 </style>
 </head>
+
 <body>
 
-<div class="hero">
+<section class="hero">
 <h1>Online Business Management</h1>
-<p>We engineer scalable systems that grow your business in 90 days.</p>
-<button onclick="book()">Book This Service</button>
-</div>
+<p>
+We design operational systems that scale your business within 90 days.
+Our approach focuses on automation, efficiency, and long-term digital infrastructure.
+</p>
 
-<div class="section">
-<h2>3 Month Growth Strategy</h2>
+<button class="book-btn" onclick="bookService()">
+Book This Service
+</button>
+</section>
 
-<div class="card">
+<section class="section">
+<h2>Your 3-Month Growth Framework</h2>
+
+<div class="phase">
 <h3>Month 1 – Structure & Optimization</h3>
-<p>Automation setup, workflow improvement, operational clarity.</p>
+<p>
+We audit your systems, eliminate inefficiencies, implement automation tools,
+and restructure workflows for operational clarity.
+</p>
 </div>
 
-<div class="card">
+<div class="phase">
 <h3>Month 2 – Strategic Growth</h3>
-<p>Brand alignment, team systems, revenue optimization.</p>
+<p>
+We refine customer journeys, improve team systems, and implement revenue optimization strategies.
+</p>
 </div>
 
-<div class="card">
+<div class="phase">
 <h3>Month 3 – Scaling & Expansion</h3>
-<p>KPI tracking, digital infrastructure, expansion roadmap.</p>
+<p>
+We introduce KPI tracking frameworks, scalable digital infrastructure,
+and long-term growth planning for sustainable expansion.
+</p>
 </div>
 
+</section>
+
+<div class="footer">
+© 2026 Emery Campbell Consulting
 </div>
 
 <script>
-function book(){
+function bookService(){
+
+/* Save selected service */
 localStorage.setItem("selectedService","online-business");
+
+/* Save redirect location */
 localStorage.setItem("redirectAfterLogin","service-portal.html");
 
-if(localStorage.getItem("currentUser")){
+const currentUser = localStorage.getItem("currentUser");
+
+if(currentUser){
 window.location.href="service-portal.html";
-}else{
-window.location.href="signup.html";
+} else {
+window.location.href="login.html";
 }
+
 }
 </script>
 
