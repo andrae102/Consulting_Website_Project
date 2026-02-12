@@ -50,6 +50,12 @@ border-radius:30px;
 color:#fff;
 cursor:pointer;
 font-weight:600;
+transition:0.3s;
+}
+
+.book-btn:hover{
+opacity:0.9;
+transform:translateY(-2px);
 }
 
 /* SECTION */
@@ -66,7 +72,6 @@ margin-bottom:50px;
 font-size:2rem;
 }
 
-/* TIMELINE */
 .phase{
 background:#1a1a1a;
 padding:30px;
@@ -137,18 +142,22 @@ and long-term growth planning for sustainable expansion.
 <script>
 function bookService(){
 
+/* DEBUG: CONFIRM BUTTON WORKS */
+alert("Book button clicked");
+
 /* Save selected service */
 localStorage.setItem("selectedService","online-business");
 
-/* Save redirect location */
+/* Save redirect page */
 localStorage.setItem("redirectAfterLogin","service-portal.html");
 
+/* Redirect */
 const currentUser = localStorage.getItem("currentUser");
 
 if(currentUser){
-window.location.href="service-portal.html";
+window.location.href = "service-portal.html";
 } else {
-window.location.href="login.html";
+window.location.href = "login.html";
 }
 
 }
