@@ -1,256 +1,266 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Emery Campbell Consulting</title>
-
-```
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
     
-    body {
-        font-family: 'Montserrat', sans-serif;
-        background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-    }
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
     
-    .auth-container {
-        background: #F5F1E8;
-        max-width: 450px;
-        width: 100%;
-        padding: 50px 40px;
-        border-radius: 12px;
-        box-shadow: 0 10px 40px rgba(193, 154, 107, 0.2);
-    }
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    .logo {
-        text-align: center;
-        margin-bottom: 40px;
-    }
-    
-    .logo h1 {
-        font-family: 'Cormorant Garamond', serif;
-        color: #8B7355;
-        font-size: 2.5rem;
-        letter-spacing: 0.1em;
-        margin-bottom: 10px;
-    }
-    
-    .logo p {
-        color: #666;
-        font-size: 0.9rem;
-    }
-    
-    h2 {
-        font-family: 'Cormorant Garamond', serif;
-        color: #333;
-        text-align: center;
-        margin-bottom: 30px;
-        font-size: 1.8rem;
-    }
-    
-    .form-group {
-        margin-bottom: 20px;
-    }
-    
-    .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        color: #333;
-        font-size: 0.9rem;
-        font-weight: 500;
-    }
-    
-    .form-group input {
-        width: 100%;
-        padding: 14px 16px;
-        border: 1px solid #D0C8BC;
-        border-radius: 8px;
-        font-size: 1rem;
-        font-family: 'Montserrat', sans-serif;
-        transition: all 0.3s;
-    }
-    
-    .form-group input:focus {
-        outline: none;
-        border-color: #C19A6B;
-        box-shadow: 0 0 0 3px rgba(193, 154, 107, 0.1);
-    }
-    
-    .submit-btn {
-        width: 100%;
-        padding: 16px;
-        background: linear-gradient(135deg, #C19A6B 0%, #8B7355 100%);
-        color: #FFFFFF;
-        border: none;
-        border-radius: 8px;
-        font-size: 1rem;
-        font-weight: 600;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-        cursor: pointer;
-        transition: all 0.3s;
-    }
-    
-    .submit-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(193, 154, 107, 0.4);
-    }
-    
-    .form-footer {
-        text-align: center;
-        margin-top: 30px;
-        padding-top: 20px;
-        border-top: 1px solid #E0D8CC;
-    }
-    
-    .form-footer a {
-        color: #8B7355;
-        text-decoration: none;
-        font-size: 0.9rem;
-        font-weight: 500;
-    }
-    
-    .form-footer a:hover {
-        color: #C19A6B;
-    }
-    
-    .back-home {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        color: #C19A6B;
-        text-decoration: none;
-        font-size: 0.9rem;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        transition: all 0.3s;
-    }
-    
-    .back-home:hover {
-        color: #FFFFFF;
-    }
-    
-    .error-message {
-        background: #ffebee;
-        color: #c62828;
-        padding: 12px;
-        border-radius: 6px;
-        margin-bottom: 20px;
-        display: none;
-        font-size: 0.9rem;
-    }
-</style>
-```
-
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .auth-container {
+            background: #F5F1E8;
+            max-width: 450px;
+            width: 100%;
+            padding: 50px 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(193, 154, 107, 0.2);
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .logo h1 {
+            font-family: 'Cormorant Garamond', serif;
+            color: #8B7355;
+            font-size: 2.5rem;
+            letter-spacing: 0.1em;
+            margin-bottom: 10px;
+        }
+        
+        .logo p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        h2 {
+            font-family: 'Cormorant Garamond', serif;
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 1.8rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid #D0C8BC;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Montserrat', sans-serif;
+            transition: all 0.3s;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #C19A6B;
+            box-shadow: 0 0 0 3px rgba(193, 154, 107, 0.1);
+        }
+        
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #C19A6B 0%, #8B7355 100%);
+            color: #FFFFFF;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(193, 154, 107, 0.4);
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #E0D8CC;
+        }
+        
+        .form-footer a {
+            color: #8B7355;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+        
+        .form-footer a:hover {
+            color: #C19A6B;
+        }
+        
+        .back-home {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #C19A6B;
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
+        }
+        
+        .back-home:hover {
+            color: #FFFFFF;
+        }
+        
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 0.9rem;
+        }
+    </style>
 </head>
 <body>
 
-```
-<a href="index.html" class="back-home">
-    <i class="fas fa-arrow-left"></i> Back to Home
-</a>
+    <a href="index.html" class="back-home">
+        <i class="fas fa-arrow-left"></i> Back to Home
+    </a>
 
-<div class="auth-container">
-    <div class="logo">
-        <h1>EMERY CAMPBELL</h1>
-        <p>Consulting</p>
-    </div>
-    
-    <h2>Login to Your Account</h2>
-    
-    <div class="error-message" id="errorMessage"></div>
-    
-    <form onsubmit="handleLogin(event)">
-        <div class="form-group">
-            <label for="loginEmail">Email Address</label>
-            <input type="email" id="loginEmail" required>
+    <div class="auth-container">
+        <div class="logo">
+            <h1>EMERY CAMPBELL</h1>
+            <p>Consulting</p>
         </div>
         
-        <div class="form-group">
-            <label for="loginPassword">Password</label>
-            <input type="password" id="loginPassword" required>
-        </div>
+        <h2>Login to Your Account</h2>
         
-        <button type="submit" class="submit-btn">Login</button>
-    </form>
-    
-    <div class="form-footer">
-        <p style="color: #666; margin-bottom: 15px;">Don't have an account?</p>
-        <a href="signup.html">Create an account</a>
-    </div>
-</div>
-
-<script>
-    function handleLogin(e) {
-        e.preventDefault();
-        const email = document.getElementById('loginEmail').value;
-        const password = document.getElementById('loginPassword').value;
-        const errorMsg = document.getElementById('errorMessage');
+        <div class="error-message" id="errorMessage"></div>
         
-        // Check if user exists
-        const userData = JSON.parse(localStorage.getItem('userData'));
-        
-        if (!userData || userData.email !== email) {
-            // User doesn't exist - show error and suggest signup
-            errorMsg.textContent = 'No account found with this email. Please create an account first.';
-            errorMsg.style.display = 'block';
+        <form onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label for="loginEmail">Email Address</label>
+                <input type="email" id="loginEmail" required>
+            </div>
             
-            setTimeout(() => {
-                if (confirm('No account found. Would you like to create one?')) {
-                    window.location.href = 'signup.html';
-                }
-            }, 1500);
-            return;
+            <div class="form-group">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" required>
+            </div>
+            
+            <button type="submit" class="submit-btn">Login</button>
+        </form>
+        
+        <div class="form-footer">
+            <p style="color: #666; margin-bottom: 15px;">Don't have an account?</p>
+            <a href="signup.html">Create an account</a>
+        </div>
+    </div>
+
+    <script>
+        // Admin email
+        const ADMIN_EMAIL = 'emerycampexp@gmail.com';
+        
+        function handleLogin(e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const errorMsg = document.getElementById('errorMessage');
+            
+            // Check if user exists
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            
+            if (!userData || userData.email !== email) {
+                // User doesn't exist - show error and suggest signup
+                errorMsg.textContent = 'No account found with this email. Please create an account first.';
+                errorMsg.style.display = 'block';
+                
+                setTimeout(() => {
+                    if (confirm('No account found. Would you like to create one?')) {
+                        window.location.href = 'signup.html';
+                    }
+                }, 1500);
+                return;
+            }
+            
+            // Check password
+            if (userData.password !== password) {
+                errorMsg.textContent = 'Incorrect password. Please try again.';
+                errorMsg.style.display = 'block';
+                return;
+            }
+            
+            // User exists and password correct - log them in
+            localStorage.setItem('userLoggedIn', 'true');
+            
+            // Track login
+            if (!userData.activity) userData.activity = [];
+            userData.activity.push({
+                action: 'Logged In',
+                page: 'account.html',
+                timestamp: new Date().toISOString(),
+                date: new Date().toLocaleString()
+            });
+            localStorage.setItem('userData', JSON.stringify(userData));
+            
+            // Check if admin and redirect accordingly
+            if (email === ADMIN_EMAIL) {
+                // Admin login - set admin flag
+                localStorage.setItem('isAdmin', 'true');
+                window.location.href = 'admin-dashboard.html';
+            } else {
+                // Regular client login
+                localStorage.setItem('isAdmin', 'false');
+                window.location.href = 'dashboard.html';
+            }
         }
         
-        // Check password
-        if (userData.password !== password) {
-            errorMsg.textContent = 'Incorrect password. Please try again.';
-            errorMsg.style.display = 'block';
-            return;
+        // Check if already logged in
+        if (localStorage.getItem('userLoggedIn') === 'true') {
+            // Redirect to appropriate dashboard
+            if (localStorage.getItem('isAdmin') === 'true') {
+                window.location.href = 'admin-dashboard.html';
+            } else {
+                window.location.href = 'dashboard.html';
+            }
         }
-        
-        // User exists and password correct - log them in
-        localStorage.setItem('userLoggedIn', 'true');
-        
-        // Track login
-        if (!userData.activity) userData.activity = [];
-        userData.activity.push({
-            action: 'Logged In',
-            page: 'account.html',
-            timestamp: new Date().toISOString(),
-            date: new Date().toLocaleString()
-        });
-        localStorage.setItem('userData', JSON.stringify(userData));
-        
-        // Redirect to dashboard
-        window.location.href = 'dashboard.html';
-    }
-    
-    // Check if already logged in
-    if (localStorage.getItem('userLoggedIn') === 'true') {
-        window.location.href = 'dashboard.html';
-    }
-</script>
-```
+    </script>
 
 </body>
 </html>
