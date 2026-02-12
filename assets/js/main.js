@@ -1,222 +1,132 @@
+document.addEventListener("DOMContentLoaded", function () {
 
-/* =========================
-GLOBAL STYLES
-========================= */
+    /* =========================
+       AUTO NAVBAR LOGIN SYSTEM
+    ========================== */
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+    const navActions = document.querySelector(".nav-actions");
 
-body {
-    font-family: 'Montserrat', sans-serif;
-    background-color: #000;
-    color: #fff;
-    line-height: 1.6;
-}
+    const currentUser = localStorage.getItem("currentUser");
+    const users = JSON.parse(localStorage.getItem("users")) || [];
 
-h1, h2, h3 {
-    font-family: 'Cormorant Garamond', serif;
-}
+    if (currentUser && navActions) {
 
-.container {
-    max-width: 1100px;
-    margin: auto;
-    padding: 40px 20px;
-}
+        const user = users.find(u => u.email === currentUser);
 
-/* =========================
-NAVIGATION
-========================= */
+        if (user) {
 
-.top-banner {
-    background: linear-gradient(135deg,#C19A6B,#8B7355);
-    text-align: center;
-    padding: 10px;
-    font-size: 0.8rem;
-    letter-spacing: 2px;
-}
+            navActions.innerHTML = "";
 
-.navbar {
-    background: #000;
-    padding: 20px;
-}
+            const accountBtn = document.createElement("a");
+            accountBtn.className = "login-btn";
 
-.nav-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+            if (user.role === "admin") {
+                accountBtn.href = "admin.html";
+                accountBtn.innerHTML = `<i class="fas fa-user-shield"></i> Admin Panel`;
+            } else {
+                accountBtn.href = "account.html";
+                accountBtn.innerHTML = `<i class="fas fa-user"></i> My Account`;
+            }
 
-.nav-logo {
-    font-size: 1.8rem;
-    text-decoration: none;
-    color: #fff;
-    letter-spacing: 3px;
-}
+            const logoutBtn = document.createElement("a");
+            logoutBtn.href = "#";
+            logoutBtn.className = "login-btn";
+            logoutBtn.style.marginLeft = "10px";
+            logoutBtn.innerHTML = `<i class="fas fa-sign-out-alt"></i> Logout`;
 
-.login-btn {
-    border: 1px solid #C19A6B;
-    padding: 8px 18px;
-    border-radius: 6px;
-    color: #C19A6B;
-    text-decoration: none;
-    font-size: 0.85rem;
-}
+            logoutBtn.addEventListener("click", function (e) {
+                e.preventDefault();
+                localStorage.removeItem("currentUser");
+                window.location.reload();
+            });
 
-.login-btn:hover {
-    background: #C19A6B;
-    color: #000;
-}
+            navActions.appendChild(accountBtn);
+            navActions.appendChild(logoutBtn);
+        }
+    }
 
-/* =========================
-HERO
-========================= */
 
-.hero-section {
-    background: linear-gradient(135deg,#C19A6B,#8B7355);
-    text-align: center;
-    padding: 100px 20px;
-}
+    /* =========================
+       SIMPLE AI CHATBOT
+    ========================== */
 
-.hero-title {
-    font-size: clamp(2.5rem,6vw,4rem);
-}
+    const chatbotHTML = `
+        <div class="ai-chatbot">
+            <button class="chat-toggle-btn" id="chatToggleBtn">
+                <i class="fas fa-comments"></i>
+            </button>
 
-.hero-subtitle {
-    margin-top: 10px;
-    font-style: italic;
-}
+            <div class="chat-window" id="chatWindow">
+                <div class="chat-header">
+                    <strong>Emery Assistant</strong>
+                </div>
 
-.primary-btn {
-    display: inline-block;
-    margin-top: 30px;
-    background: #000;
-    color: #fff;
-    padding: 14px 30px;
-    border-radius: 6px;
-    text-decoration: none;
-}
+                <div class="chat-messages" id="chatMessages">
+                    <div>Hi 👋 How can we help you today?</div>
+                </div>
 
-/* =========================
-SERVICES
-========================= */
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chatInput" placeholder="Type a message..." />
+                    <button class="chat-send-btn" id="chatSendBtn">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
 
-.section-dark {
-    background: #000;
-    padding: 80px 0;
-}
+    document.body.insertAdjacentHTML("beforeend", chatbotHTML);
 
-.section-light {
-    background: #F5F1E8;
-    color: #000;
-    padding: 80px 0;
-}
+    const toggleBtn = document.getElementById("chatToggleBtn");
+    const chatWindow = document.getElementById("chatWindow");
+    const sendBtn = document.getElementById("chatSendBtn");
+    const chatInput = document.getElementById("chatInput");
+    const chatMessages = document.getElementById("chatMessages");
 
-.section-title {
-    text-align: center;
-    margin-bottom: 40px;
-    font-size: 2rem;
-}
+    toggleBtn.addEventListener("click", function () {
+        chatWindow.classList.toggle("open");
+    });
 
-.services-grid {
-    display: grid;
-    gap: 30px;
-}
+    sendBtn.addEventListener("click", sendMessage);
 
-.service-card {
-    background: #111;
-    padding: 30px;
-    border-radius: 8px;
-}
+    chatInput.addEventListener("keydown", function (e) {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            sendMessage();
+        }
+    });
 
-.service-card ul {
-    margin: 15px 0;
-}
+    function sendMessage() {
 
-.service-card li {
-    margin-bottom: 8px;
-}
+        const message = chatInput.value.trim();
+        if (!message) return;
 
-/* =========================
-FOOTER
-========================= */
+        const userMsg = document.createElement("div");
+        userMsg.style.marginBottom = "8px";
+        userMsg.textContent = "You: " + message;
+        chatMessages.appendChild(userMsg);
 
-.footer {
-    background: #000;
-    text-align: center;
-    padding: 40px 20px;
-    font-size: 0.9rem;
-}
+        chatInput.value = "";
 
-/* =========================
-CHATBOT
-========================= */
+        setTimeout(function () {
 
-.ai-chatbot {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 9999;
-}
+            const botMsg = document.createElement("div");
+            botMsg.style.marginBottom = "8px";
 
-.chat-toggle-btn {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: none;
-    background: linear-gradient(135deg,#C19A6B,#8B7355);
-    color: #fff;
-    font-size: 22px;
-    cursor: pointer;
-}
+            if (message.toLowerCase().includes("service")) {
+                botMsg.textContent = "We offer Website Design & Online Business Management.";
+            } else if (message.toLowerCase().includes("price")) {
+                botMsg.textContent = "Pricing depends on your needs. Book a free discovery call!";
+            } else if (message.toLowerCase().includes("call")) {
+                botMsg.textContent = "Call +1 (847) 942-7399 or click Book Discovery Call.";
+            } else {
+                botMsg.textContent = "Email emerycampexp@gmail.com and we'll assist you!";
+            }
 
-.chat-window {
-    width: 320px;
-    height: 450px;
-    background: #fff;
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    border-radius: 12px;
-    display: none;
-    flex-direction: column;
-}
+            chatMessages.appendChild(botMsg);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
 
-.chat-window.open {
-    display: flex;
-}
+        }, 700);
+    }
 
-.chat-header {
-    background: #C19A6B;
-    padding: 12px;
-    color: #fff;
-}
-
-.chat-messages {
-    flex: 1;
-    padding: 10px;
-    overflow-y: auto;
-    font-size: 0.85rem;
-    color: #000;
-}
-
-.chat-input-container {
-    display: flex;
-    border-top: 1px solid #ddd;
-}
-
-.chat-input {
-    flex: 1;
-    border: none;
-    padding: 10px;
-}
-
-.chat-send-btn {
-    background: #C19A6B;
-    border: none;
-    padding: 10px;
-    color: #fff;
-    cursor: pointer;
-}
+});
