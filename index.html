@@ -1,133 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
 
-    <!-- 🔥 Prevent iPhone Zoom -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="Emery Campbell Consulting - Professional consulting services">
+<title>Emery Campbell Consulting</title>
 
-    <title>Emery Campbell Consulting</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+body{
+font-family:'Montserrat',sans-serif;
+background:#0f0f0f;
+color:#f5f1e8;
+}
 
-    <!-- Global CSS -->
-    <link rel="stylesheet" href="assets/css/main.css">
+/* NAVIGATION */
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 60px;
+background:#000;
+position:sticky;
+top:0;
+z-index:1000;
+}
+
+.logo{
+font-family:'Cormorant Garamond',serif;
+font-size:1.8rem;
+letter-spacing:2px;
+}
+
+.nav-links a{
+color:#f5f1e8;
+text-decoration:none;
+margin-left:30px;
+font-weight:500;
+}
+
+.nav-links a:hover{
+color:#C19A6B;
+}
+
+/* HERO */
+.hero{
+height:90vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+padding:20px;
+background:linear-gradient(135deg,#0f0f0f,#1a1a1a);
+}
+
+.hero h1{
+font-family:'Cormorant Garamond',serif;
+font-size:3.5rem;
+margin-bottom:20px;
+}
+
+.hero p{
+max-width:600px;
+line-height:1.6;
+opacity:0.8;
+margin-bottom:30px;
+}
+
+.primary-btn{
+padding:14px 30px;
+background:linear-gradient(135deg,#C19A6B,#8B7355);
+border:none;
+border-radius:30px;
+color:#fff;
+cursor:pointer;
+font-weight:600;
+}
+
+/* SERVICES */
+.services{
+padding:100px 60px;
+background:#111;
+}
+
+.services h2{
+text-align:center;
+margin-bottom:60px;
+font-family:'Cormorant Garamond',serif;
+font-size:2.5rem;
+}
+
+.services-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+gap:40px;
+}
+
+.service-card{
+background:#1a1a1a;
+padding:40px;
+border-radius:12px;
+border:1px solid rgba(193,154,107,0.2);
+transition:0.3s;
+}
+
+.service-card:hover{
+transform:translateY(-5px);
+border-color:#C19A6B;
+}
+
+.service-card h3{
+margin-bottom:20px;
+font-size:1.4rem;
+}
+
+.service-card ul{
+margin-bottom:20px;
+}
+
+.service-card li{
+margin-bottom:8px;
+opacity:0.8;
+}
+
+.secondary-btn{
+display:inline-block;
+padding:10px 20px;
+background:#C19A6B;
+border-radius:20px;
+text-decoration:none;
+color:#fff;
+font-size:0.9rem;
+}
+
+/* CONTACT */
+.contact{
+padding:80px 60px;
+text-align:center;
+background:#0f0f0f;
+}
+
+.contact h2{
+font-family:'Cormorant Garamond',serif;
+margin-bottom:20px;
+}
+
+.contact p{
+opacity:0.8;
+margin-bottom:10px;
+}
+
+/* FOOTER */
+.footer{
+padding:30px;
+text-align:center;
+background:#000;
+font-size:0.8rem;
+opacity:0.6;
+}
+
+@media(max-width:768px){
+.navbar{
+flex-direction:column;
+gap:10px;
+}
+.services{
+padding:60px 20px;
+}
+}
+</style>
 </head>
 
 <body>
 
-<!-- TOP BANNER -->
-<div class="top-banner">
-    READY TO TRANSFORM YOUR BUSINESS? CURRENTLY BOOKING CUSTOM PROJECTS!
+<!-- NAVIGATION -->
+<div class="navbar">
+<div class="logo">EMERY CAMPBELL</div>
+<div class="nav-links">
+<a href="signup.html">Sign Up</a>
+<a href="login.html">Login</a>
+</div>
 </div>
 
-<!-- NAVIGATION -->
-<nav class="navbar">
-    <div class="nav-container">
-        <a href="index.html" class="nav-logo">EMERY CAMPBELL</a>
-
-        <div class="nav-actions">
-            <a href="signup.html" class="login-btn" id="signupBtn">
-                <i class="fas fa-user-plus"></i> Sign Up
-            </a>
-        </div>
-    </div>
-</nav>
-
 <!-- HERO -->
-<section class="hero-section">
-    <div class="container">
-        <h1 class="hero-title">Emery Campbell Consulting</h1>
-        <p class="hero-subtitle">Transforming Visions into Reality</p>
-
-        <a href="https://wa.me/18479427399?text=Hi!%20I'd%20like%20to%20book%20a%20discovery%20call" 
-           target="_blank" 
-           class="primary-btn">
-           📞 Book a Discovery Call
-        </a>
-    </div>
+<section class="hero">
+<h1>Emery Campbell Consulting</h1>
+<p>Transforming Vision Into Scalable Digital Infrastructure.</p>
+<a href="#services" class="primary-btn">Explore Services</a>
 </section>
 
 <!-- SERVICES -->
-<section class="section-dark" id="services">
-    <div class="container">
-        <h2 class="section-title">Our Services</h2>
+<section class="services" id="services">
+<h2>Our Services</h2>
 
-        <div class="services-grid">
+<div class="services-grid">
 
-            <div class="service-card">
-                <h3>Website Design & Development</h3>
-                <ul>
-                    <li>Custom Website Design</li>
-                    <li>Mobile Optimization</li>
-                    <li>E-commerce Setup</li>
-                    <li>Booking Systems</li>
-                    <li>SEO Optimization</li>
-                </ul>
-                <a href="website-design.html" class="secondary-btn">Learn More</a>
-            </div>
+<div class="service-card">
+<h3>Website Design & Development</h3>
+<ul>
+<li>Custom Website Design</li>
+<li>E-Commerce Platforms</li>
+<li>Booking Systems</li>
+<li>Mobile Optimization</li>
+<li>SEO Optimization</li>
+</ul>
+<a href="website-design.html" class="secondary-btn">Learn More</a>
+</div>
 
-            <div class="service-card">
-                <h3>Online Business Management</h3>
-                <ul>
-                    <li>Admin Support</li>
-                    <li>Process Optimization</li>
-                    <li>Project Management</li>
-                    <li>Systems Setup</li>
-                    <li>Team Coordination</li>
-                </ul>
-                <a href="#contact" class="secondary-btn">Get Started</a>
-            </div>
+<div class="service-card">
+<h3>Online Business Management</h3>
+<ul>
+<li>Process Optimization</li>
+<li>Systems Setup</li>
+<li>Automation Implementation</li>
+<li>Team Coordination</li>
+<li>Growth Strategy</li>
+</ul>
+<a href="online-business-management.html" class="secondary-btn">Learn More</a>
+</div>
 
-        </div>
-    </div>
+</div>
 </section>
 
 <!-- CONTACT -->
-<section class="section-light" id="contact">
-    <div class="container">
-        <h2 class="section-title">Contact Us</h2>
-        <p><i class="fas fa-envelope"></i> emerycampexp@gmail.com</p>
-        <p><i class="fas fa-phone"></i> +1 (847) 942-7399</p>
-    </div>
+<section class="contact">
+<h2>Contact Us</h2>
+<p>Email: emerycampexp@gmail.com</p>
+<p>Phone: +1 (847) 942-7399</p>
 </section>
 
-<footer class="footer">
-    <h2>EMERY CAMPBELL</h2>
-    <p>© 2025 Emery Campbell Consulting</p>
-</footer>
-
-<!-- AI CHATBOT -->
-<div class="ai-chatbot">
-    <button class="chat-toggle-btn" id="chatToggle">
-        <i class="fas fa-comments"></i>
-    </button>
-
-    <div class="chat-window" id="chatWindow">
-        <div class="chat-header">
-            <span>AI Assistant</span>
-            <button onclick="closeChat()" style="background:none;border:none;color:white;font-size:18px;">×</button>
-        </div>
-
-        <div class="chat-messages" id="chatMessages">
-            <div>Hi 👋 Welcome! How can we help you?</div>
-        </div>
-
-        <div class="chat-input-container">
-            <input type="text" class="chat-input" id="chatInput" placeholder="Type message...">
-            <button class="chat-send-btn" onclick="sendMessage()">Send</button>
-        </div>
-    </div>
+<!-- FOOTER -->
+<div class="footer">
+© 2026 Emery Campbell Consulting. All Rights Reserved.
 </div>
-
-<!-- GLOBAL JS -->
-<script src="assets/js/main.js"></script>
 
 </body>
 </html>
