@@ -8,7 +8,11 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
 body{
 font-family:'Montserrat',sans-serif;
@@ -20,7 +24,7 @@ justify-content:center;
 padding:20px;
 }
 
-.container{
+.auth-container{
 background:#F5F1E8;
 width:100%;
 max-width:520px;
@@ -41,29 +45,34 @@ font-size:2.8rem;
 letter-spacing:0.1em;
 }
 
-h2{text-align:center;margin-bottom:30px;}
+h2{
+text-align:center;
+margin-bottom:35px;
+font-size:1.6rem;
+color:#333;
+}
 
-input,select{
+.form-group{
+margin-bottom:18px;
+}
+
+input{
 width:100%;
 padding:16px;
-margin-bottom:15px;
 border:1px solid #D0C8BC;
 border-radius:10px;
 font-size:1rem;
 }
 
-input:focus,select:focus{
-outline:none;
-border-color:#C19A6B;
-}
-
-button{
+.submit-btn{
 width:100%;
 padding:18px;
+margin-top:10px;
 background:linear-gradient(135deg,#C19A6B 0%,#8B7355 100%);
 color:#fff;
 border:none;
 border-radius:10px;
+font-size:1rem;
 font-weight:600;
 cursor:pointer;
 }
@@ -71,6 +80,7 @@ cursor:pointer;
 .message{
 margin-top:15px;
 text-align:center;
+font-size:0.9rem;
 min-height:20px;
 }
 
@@ -93,26 +103,25 @@ font-weight:600;
 
 <body>
 
-<div class="container">
+<div class="auth-container">
 
 <div class="logo">
 <h1>EMERY CAMPBELL</h1>
 </div>
 
-<h2>Create Client Account</h2>
+<h2>Create Your Account</h2>
 
 <form id="signupForm">
+<div class="form-group">
 <input type="email" id="email" placeholder="Email Address" required>
-<input type="password" id="password" placeholder="Password" required>
+</div>
 
-<select id="service" required>
-<option value="">Select Service</option>
-<option value="Website Design & Development">Website Design & Development</option>
-<option value="Online Business Management">Online Business Management</option>
-</select>
+<div class="form-group">
+<input type="password" id="password" placeholder="Create Password" required>
+</div>
 
-<button type="submit">Create Account</button>
-<div id="message" class="message"></div>
+<button type="submit" class="submit-btn">Create Account</button>
+<div id="formMessage" class="message"></div>
 </form>
 
 <div class="login-link">
@@ -122,38 +131,51 @@ Already have an account? <a href="login.html">Login</a>
 </div>
 
 <script>
-document.getElementById("signupForm").addEventListener("submit",function(e){
+document.getElementById("signupForm").addEventListener("submit", function(e){
 e.preventDefault();
 
-const email=document.getElementById("email").value.trim().toLowerCase();
-const password=document.getElementById("password").value.trim();
-const service=document.getElementById("service").value;
-const message=document.getElementById("message");
+const email = document.getElementById("email").value.trim().toLowerCase();
+const password = document.getElementById("password").value.trim();
+const message = document.getElementById("formMessage");
 
-let users=JSON.parse(localStorage.getItem("users"))||[];
+message.textContent = "";
+message.className = "message";
 
-if(users.find(u=>u.email===email)){
-message.textContent="Email already registered.";
-message.className="message error";
+let users = JSON.parse(localStorage.getItem("users")) || [];
+
+/* Check if user already exists */
+if(users.find(u => u.email === email)){
+message.textContent = "Account already exists.";
+message.classList.add("error");
 return;
 }
 
-const newUser={
-email:email,
-password:password,
-role:"client",
-service:service
+/* Create new user */
+const newUser = {
+email: email,
+password: password,
+role: "client",
+service: null,
+chosenPackage: null,
+chosenTemplate: null,
+phase: "Planning",
+progress: 0,
+payment: "Unpaid"
 };
 
 users.push(newUser);
-localStorage.setItem("users",JSON.stringify(users));
 
-message.textContent="Account created successfully. Redirecting...";
-message.className="message success";
+localStorage.setItem("users", JSON.stringify(users));
 
-setTimeout(()=>{
-window.location.href="login.html";
-},1000);
+message.textContent = "Account created successfully!";
+message.classList.add("success");
+
+/* Auto login after signup */
+localStorage.setItem("currentUser", JSON.stringify(newUser));
+
+setTimeout(() => {
+window.location.href = "account.html";
+}, 800);
 
 });
 </script>
