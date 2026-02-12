@@ -3,181 +3,208 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Create Account - Emery Campbell Consulting</title>
+<title>Service Portal</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
 body{
 font-family:'Montserrat',sans-serif;
-background:linear-gradient(135deg,#000000 0%,#1a1a1a 100%);
-min-height:100vh;
+background:#0f0f0f;
+color:#fff;
+padding:40px;
+margin:0;
+}
+
+.header{
 display:flex;
+justify-content:space-between;
 align-items:center;
-justify-content:center;
-padding:20px;
-}
-
-.auth-container{
-background:#F5F1E8;
-width:100%;
-max-width:520px;
-padding:60px 50px;
-border-radius:16px;
-box-shadow:0 20px 60px rgba(193,154,107,0.25);
-}
-
-.logo{
-text-align:center;
 margin-bottom:40px;
 }
 
-.logo h1{
-font-family:'Cormorant Garamond',serif;
-color:#8B7355;
-font-size:2.8rem;
-letter-spacing:0.1em;
+.section{
+background:#1a1a1a;
+padding:30px;
+border-radius:12px;
+border:1px solid rgba(193,154,107,0.2);
+margin-bottom:30px;
 }
 
-h2{
-text-align:center;
-margin-bottom:35px;
-font-size:1.6rem;
-color:#333;
-}
-
-.form-group{
-margin-bottom:18px;
-}
-
-input{
-width:100%;
-padding:16px;
-border:1px solid #D0C8BC;
+.card{
+border:1px solid #333;
+padding:20px;
 border-radius:10px;
-font-size:1rem;
-}
-
-.submit-btn{
-width:100%;
-padding:18px;
-margin-top:10px;
-background:linear-gradient(135deg,#C19A6B 0%,#8B7355 100%);
-color:#fff;
-border:none;
-border-radius:10px;
-font-size:1rem;
-font-weight:600;
-cursor:pointer;
-}
-
-.message{
 margin-top:15px;
-text-align:center;
-font-size:0.9rem;
-min-height:20px;
+cursor:pointer;
+transition:0.3s;
 }
 
-.error{color:#c0392b;}
-.success{color:#27ae60;}
+.card:hover{
+border-color:#C19A6B;
+}
 
-.login-link{
-text-align:center;
+.selected{
+border-color:#C19A6B !important;
+background:#151515;
+}
+
+button{
 margin-top:20px;
-font-size:0.9rem;
-}
-
-.login-link a{
-color:#8B7355;
-text-decoration:none;
-font-weight:600;
+padding:10px 20px;
+background:#C19A6B;
+border:none;
+border-radius:6px;
+color:#fff;
+cursor:pointer;
 }
 </style>
 </head>
-
 <body>
 
-<div class="auth-container">
-
-<div class="logo">
-<h1>EMERY CAMPBELL</h1>
+<div class="header">
+<h2 id="welcome"></h2>
+<button onclick="logout()">Sign Out</button>
 </div>
 
-<h2>Create Your Account</h2>
-
-<form id="signupForm">
-<div class="form-group">
-<input type="email" id="email" placeholder="Email Address" required>
-</div>
-
-<div class="form-group">
-<input type="password" id="password" placeholder="Create Password" required>
-</div>
-
-<button type="submit" class="submit-btn">Create Account</button>
-<div id="formMessage" class="message"></div>
-</form>
-
-<div class="login-link">
-Already have an account? <a href="login.html">Login</a>
-</div>
-
-</div>
+<div id="content"></div>
 
 <script>
-document.getElementById("signupForm").addEventListener("submit", function(e){
-e.preventDefault();
+const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+if(!currentUser){
+window.location.href = "login.html";
+}
 
-const email = document.getElementById("email").value.trim().toLowerCase();
-const password = document.getElementById("password").value.trim();
-const message = document.getElementById("formMessage");
-
-message.textContent = "";
-message.className = "message";
+document.getElementById("welcome").innerText = "Welcome, " + currentUser.email;
 
 let users = JSON.parse(localStorage.getItem("users")) || [];
+let userIndex = users.findIndex(u => u.email === currentUser.email);
 
-/* Check if user already exists */
-if(users.find(u => u.email === email)){
-message.textContent = "Account already exists.";
-message.classList.add("error");
+/* 🔥 FIX: GET SERVICE FROM USER FIRST */
+let selectedService = users[userIndex].service;
+
+/* If no service saved to user, check temporary storage */
+if(!selectedService){
+selectedService = localStorage.getItem("selectedService");
+}
+
+/* If still nothing → show message */
+if(!selectedService){
+document.getElementById("content").innerHTML = `
+<div class="section">
+<h3>No Service Selected</h3>
+<p>Please return to the homepage and select a service.</p>
+<button onclick="goHome()">Go to Homepage</button>
+</div>
+`;
 return;
 }
 
-/* Create new user */
-const newUser = {
-email: email,
-password: password,
-role: "client",
-service: null,
-chosenPackage: null,
-chosenTemplate: null,
-phase: "Planning",
-progress: 0,
-payment: "Unpaid"
-};
-
-users.push(newUser);
-
+/* Save service permanently if coming from booking */
+users[userIndex].service = selectedService;
 localStorage.setItem("users", JSON.stringify(users));
 
-message.textContent = "Account created successfully!";
-message.classList.add("success");
+const content = document.getElementById("content");
 
-/* Auto login after signup */
-localStorage.setItem("currentUser", JSON.stringify(newUser));
+let chosenPackage = null;
+let chosenTemplate = null;
 
-setTimeout(() => {
-window.location.href = "account.html";
-}, 800);
+/* WEBSITE SERVICE */
+if(selectedService === "website-design"){
 
-});
+content.innerHTML = `
+<div class="section">
+<h3>Select Website Package</h3>
+
+<div class="card" onclick="selectPackage(this,'Basic Website')">
+Basic Website
+</div>
+
+<div class="card" onclick="selectPackage(this,'E-Commerce Website')">
+E-Commerce Website
+</div>
+
+<div class="card" onclick="selectPackage(this,'Booking Website')">
+Booking Website
+</div>
+
+<h3 style="margin-top:30px;">Select Template</h3>
+
+<div class="card" onclick="selectTemplate(this,'Luxury Black & Gold')">
+Luxury Black & Gold
+</div>
+
+<div class="card" onclick="selectTemplate(this,'Minimal Cream Business')">
+Minimal Cream Business
+</div>
+
+<div class="card" onclick="selectTemplate(this,'Modern Startup')">
+Modern Startup
+</div>
+
+<button onclick="saveSelection()">Confirm Selection</button>
+</div>
+`;
+
+}
+
+/* ONLINE BUSINESS SERVICE */
+if(selectedService === "online-business"){
+
+content.innerHTML = `
+<div class="section">
+<h3>Select Online Business Package</h3>
+
+<div class="card" onclick="selectPackage(this,'Standard Growth')">
+Standard Growth
+</div>
+
+<div class="card" onclick="selectPackage(this,'Premium Scaling')">
+Premium Scaling
+</div>
+
+<button onclick="saveSelection()">Confirm Selection</button>
+</div>
+`;
+
+}
+
+function selectPackage(element,name){
+document.querySelectorAll(".card").forEach(c=>c.classList.remove("selected"));
+element.classList.add("selected");
+chosenPackage = name;
+}
+
+function selectTemplate(element,name){
+document.querySelectorAll(".card").forEach(c=>c.classList.remove("selected"));
+element.classList.add("selected");
+chosenTemplate = name;
+}
+
+function saveSelection(){
+if(!chosenPackage){
+alert("Please select a package.");
+return;
+}
+
+users[userIndex].chosenPackage = chosenPackage;
+
+if(chosenTemplate){
+users[userIndex].chosenTemplate = chosenTemplate;
+}
+
+localStorage.setItem("users", JSON.stringify(users));
+alert("Selection saved successfully.");
+}
+
+function logout(){
+localStorage.removeItem("currentUser");
+window.location.href = "index.html";
+}
+
+function goHome(){
+window.location.href = "index.html";
+}
 </script>
 
 </body>
