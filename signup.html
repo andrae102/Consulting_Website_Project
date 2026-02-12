@@ -1,213 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-
-    <!-- Prevent iPhone zoom -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-
-    <title>Create Account - Emery Campbell Consulting</title>
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-    <style>
-        * { margin:0; padding:0; box-sizing:border-box; }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
-            min-height:100vh;
-            display:flex;
-            align-items:center;
-            justify-content:center;
-            padding:20px;
-        }
-
-        .auth-container {
-            background:#F5F1E8;
-            width:100%;
-            max-width:520px;
-            padding:60px 50px;
-            border-radius:16px;
-            box-shadow:0 20px 60px rgba(193,154,107,0.25);
-            position:relative;
-        }
-
-        .back-home {
-            position:absolute;
-            top:25px;
-            left:25px;
-            color:#C19A6B;
-            text-decoration:none;
-            font-size:0.9rem;
-            display:flex;
-            align-items:center;
-            gap:8px;
-        }
-
-        .logo {
-            text-align:center;
-            margin-bottom:40px;
-        }
-
-        .logo h1 {
-            font-family:'Cormorant Garamond', serif;
-            color:#8B7355;
-            font-size:2.8rem;
-            letter-spacing:0.1em;
-        }
-
-        .logo p {
-            color:#666;
-            font-size:0.9rem;
-        }
-
-        h2 {
-            text-align:center;
-            margin-bottom:35px;
-            font-size:1.6rem;
-            color:#333;
-        }
-
-        .form-group {
-            margin-bottom:18px;
-        }
-
-        input {
-            width:100%;
-            padding:16px;
-            border:1px solid #D0C8BC;
-            border-radius:10px;
-            font-size:1rem;
-            transition:0.3s ease;
-        }
-
-        input:focus {
-            outline:none;
-            border-color:#C19A6B;
-            box-shadow:0 0 0 3px rgba(193,154,107,0.15);
-        }
-
-        .submit-btn {
-            width:100%;
-            padding:18px;
-            margin-top:10px;
-            background:linear-gradient(135deg,#C19A6B 0%,#8B7355 100%);
-            color:#fff;
-            border:none;
-            border-radius:10px;
-            font-size:1rem;
-            font-weight:600;
-            letter-spacing:0.05em;
-            text-transform:uppercase;
-            cursor:pointer;
-            transition:0.3s ease;
-        }
-
-        .submit-btn:hover {
-            transform:translateY(-2px);
-            box-shadow:0 8px 25px rgba(193,154,107,0.4);
-        }
-
-        .message {
-            margin-top:15px;
-            text-align:center;
-            font-size:0.9rem;
-        }
-
-        .error { color:red; }
-        .success { color:green; }
-
-        @media(max-width:480px){
-            .auth-container { padding:40px 25px; }
-            .logo h1 { font-size:2.2rem; }
-        }
-    </style>
-</head>
-
-<body>
-
-<a href="index.html" class="back-home">
-    <i class="fas fa-arrow-left"></i> Back
-</a>
-
-<div class="auth-container">
-
-    <div class="logo">
-        <h1>EMERY CAMPBELL</h1>
-        <p>Consulting</p>
-    </div>
-
-    <h2>Create Your Account</h2>
-
-    <form id="signupForm">
-        <div class="form-group">
-            <input type="text" id="name" placeholder="Full Name" required>
-        </div>
-
-        <div class="form-group">
-            <input type="email" id="email" placeholder="Email Address" required>
-        </div>
-
-        <div class="form-group">
-            <input type="password" id="password" placeholder="Password (min 6 characters)" minlength="6" required>
-        </div>
-
-        <div class="form-group">
-            <input type="password" id="confirm" placeholder="Confirm Password" required>
-        </div>
-
-        <button type="submit" class="submit-btn">Create Account</button>
-
-        <div id="formMessage" class="message"></div>
-    </form>
-
-</div>
-
 <script>
 document.getElementById("signupForm").addEventListener("submit", function(e){
     e.preventDefault();
 
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim().toLowerCase();
-    const password = document.getElementById("password").value;
-    const confirm = document.getElementById("confirm").value;
-    const message = document.getElementById("formMessage");
-
-    message.textContent = "";
-    message.className = "message";
+    const name = document.getElementById("signupName").value.trim();
+    const email = document.getElementById("signupEmail").value.trim().toLowerCase();
+    const password = document.getElementById("signupPassword").value;
+    const confirm = document.getElementById("signupConfirm").value;
 
     if(password !== confirm){
-        message.textContent = "Passwords do not match.";
-        message.classList.add("error");
+        alert("Passwords do not match.");
         return;
     }
 
     let users = JSON.parse(localStorage.getItem("users")) || [];
 
-    const existingUser = users.find(user => user.email === email);
-
-    if(existingUser){
-        message.textContent = "An account with this email already exists.";
-        message.classList.add("error");
+    // Check if user already exists
+    if(users.find(u => u.email === email)){
+        alert("Account already exists.");
         return;
     }
 
     const newUser = {
-        id: Date.now(),
         name: name,
         email: email,
         role: email === "admin@emery.com" ? "admin" : "client",
-        projectStatus: "Not Started",
-        signupDate: new Date().toISOString(),
-        activity: [{
-            action: "Account Created",
-            timestamp: new Date().toISOString()
-        }]
+        signupDate: new Date().toISOString()
     };
 
     users.push(newUser);
@@ -215,18 +32,10 @@ document.getElementById("signupForm").addEventListener("submit", function(e){
     localStorage.setItem("users", JSON.stringify(users));
     localStorage.setItem("currentUser", email);
 
-    message.textContent = "Account created successfully!";
-    message.classList.add("success");
-
-    setTimeout(()=>{
-        if(newUser.role === "admin"){
-            window.location.href = "admin.html";
-        } else {
-            window.location.href = "account.html";
-        }
-    },1000);
+    if(newUser.role === "admin"){
+        window.location.href = "admin.html";
+    } else {
+        window.location.href = "account.html";
+    }
 });
 </script>
-
-</body>
-</html>
