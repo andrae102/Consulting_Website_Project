@@ -35,24 +35,37 @@ margin-bottom:40px;
 border:1px solid rgba(193,154,107,0.2);
 }
 
-/* PACKAGE CARD */
-.package{
+/* PRICING TABLE */
+.pricing-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+margin-top:20px;
+}
+
+.pricing-card{
+background:#111;
 border:1px solid #333;
-padding:20px;
-border-radius:8px;
-margin-top:15px;
+padding:25px;
+border-radius:10px;
 cursor:pointer;
 transition:0.3s;
 }
 
-.package:hover{
+.pricing-card:hover{
+transform:translateY(-5px);
 border-color:#C19A6B;
-transform:translateY(-4px);
+}
+
+.price{
+font-size:1.5rem;
+margin:15px 0;
+color:#C19A6B;
 }
 
 .selected{
 border-color:#C19A6B !important;
-background:#111;
+background:#151515;
 }
 
 /* TEMPLATE GRID */
@@ -73,7 +86,7 @@ transition:0.3s;
 }
 
 .template-card:hover{
-transform:translateY(-4px);
+transform:translateY(-5px);
 border-color:#C19A6B;
 }
 
@@ -87,8 +100,41 @@ object-fit:cover;
 padding:15px;
 }
 
-button{
+/* PROGRESS BAR */
+.progress-bar{
+width:100%;
+background:#222;
+height:12px;
+border-radius:10px;
 margin-top:20px;
+overflow:hidden;
+}
+
+.progress-fill{
+height:100%;
+width:0%;
+background:linear-gradient(135deg,#C19A6B,#8B7355);
+transition:0.5s;
+}
+
+/* AI BOX */
+.ai-box{
+background:#111;
+padding:20px;
+border-radius:10px;
+margin-top:20px;
+}
+
+textarea{
+width:100%;
+padding:10px;
+border-radius:6px;
+border:none;
+margin-top:10px;
+}
+
+button{
+margin-top:15px;
 padding:10px 20px;
 background:#C19A6B;
 border:none;
@@ -122,113 +168,130 @@ const content = document.getElementById("content");
 
 let selectedPackage = null;
 let selectedTemplate = null;
+let progress = 0;
 
-/* ONLINE BUSINESS */
-if(service === "online-business"){
-content.innerHTML = `
-<div class="section">
-<h3>Select Online Business Package</h3>
-
-<div class="package" onclick="selectPackage(this,'Standard Growth')">
-<strong>Standard Growth</strong>
-<p>3 Month System Optimization</p>
-</div>
-
-<div class="package" onclick="selectPackage(this,'Premium Scaling')">
-<strong>Premium Scaling</strong>
-<p>Full Automation + Revenue Strategy</p>
-</div>
-
-<button onclick="saveSelection()">Confirm Selection</button>
-</div>
-`;
-}
-
-/* WEBSITE DESIGN */
 if(service === "website-design"){
+
 content.innerHTML = `
 <div class="section">
-<h3>Select Website Package</h3>
+<h3>Choose Your Website Package</h3>
 
-<div class="package" onclick="selectPackage(this,'Basic Website')">
-<strong>Basic Website</strong>
-<p>5 Page Business Website</p>
+<div class="pricing-grid">
+
+<div class="pricing-card" onclick="selectPackage(this,'Basic Website',1200)">
+<h4>Basic Website</h4>
+<div class="price">$1,200</div>
+<p>5 Pages • Responsive • Contact Form</p>
 </div>
 
-<div class="package" onclick="selectPackage(this,'E-Commerce Website')">
-<strong>E-Commerce Website</strong>
-<p>Online Store + Payment Integration</p>
+<div class="pricing-card" onclick="selectPackage(this,'E-Commerce',2500)">
+<h4>E-Commerce</h4>
+<div class="price">$2,500</div>
+<p>Online Store • Payments • Product Pages</p>
 </div>
 
-<div class="package" onclick="selectPackage(this,'Booking Website')">
-<strong>Booking Website</strong>
-<p>Appointment & Calendar Integration</p>
+<div class="pricing-card" onclick="selectPackage(this,'Booking Website',1800)">
+<h4>Booking Website</h4>
+<div class="price">$1,800</div>
+<p>Appointment System • Calendar Integration</p>
+</div>
+
 </div>
 </div>
 
 <div class="section">
-<h3>Select Template Style</h3>
+<h3>Select Template</h3>
 
 <div class="template-grid">
 
 <div class="template-card" onclick="selectTemplate(this,'Luxury Black & Gold')">
-<img src="https://images.unsplash.com/photo-1518770660439-4636190af475" alt="Luxury Template">
+<img src="https://images.unsplash.com/photo-1518770660439-4636190af475">
 <div class="template-info">
 <strong>Luxury Black & Gold</strong>
-<p>High-end consulting layout</p>
 </div>
 </div>
 
 <div class="template-card" onclick="selectTemplate(this,'Minimal Cream Business')">
-<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee" alt="Minimal Template">
+<img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee">
 <div class="template-info">
 <strong>Minimal Cream Business</strong>
-<p>Elegant professional structure</p>
 </div>
 </div>
 
 <div class="template-card" onclick="selectTemplate(this,'Modern Startup')">
-<img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7" alt="Modern Template">
+<img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7">
 <div class="template-info">
 <strong>Modern Startup</strong>
-<p>Bold tech-inspired layout</p>
 </div>
 </div>
 
 </div>
 
 <button onclick="saveSelection()">Confirm Selection</button>
+
+<div class="progress-bar">
+<div class="progress-fill" id="progressFill"></div>
+</div>
+</div>
+
+<div class="section">
+<h3>AI Assistant</h3>
+<div class="ai-box">
+<p>Ask about packages, features, or recommendations.</p>
+<textarea id="aiInput" rows="3" placeholder="Type your question..."></textarea>
+<button onclick="runAI()">Ask AI</button>
+<div id="aiResponse" style="margin-top:10px;"></div>
+</div>
 </div>
 `;
 }
 
 function selectPackage(element,name){
-document.querySelectorAll(".package").forEach(p=>p.classList.remove("selected"));
+document.querySelectorAll(".pricing-card").forEach(p=>p.classList.remove("selected"));
 element.classList.add("selected");
 selectedPackage = name;
+progress = 40;
+updateProgress();
 }
 
 function selectTemplate(element,name){
 document.querySelectorAll(".template-card").forEach(t=>t.classList.remove("selected"));
 element.classList.add("selected");
 selectedTemplate = name;
+progress = 80;
+updateProgress();
+}
+
+function updateProgress(){
+document.getElementById("progressFill").style.width = progress + "%";
 }
 
 function saveSelection(){
-if(!selectedPackage){
-alert("Please select a package.");
+if(!selectedPackage || !selectedTemplate){
+alert("Please select both package and template.");
 return;
 }
 
 users[currentIndex].chosenPackage = selectedPackage;
-
-if(selectedTemplate){
 users[currentIndex].chosenTemplate = selectedTemplate;
-}
 
 localStorage.setItem("users", JSON.stringify(users));
 
+progress = 100;
+updateProgress();
+
 alert("Selection saved successfully.");
+}
+
+function runAI(){
+const question = document.getElementById("aiInput").value;
+let response = "Based on your selection, the E-Commerce package is best for selling products online.";
+
+if(question.toLowerCase().includes("booking")){
+response = "The Booking Website package is ideal for appointment-based businesses.";
+}
+
+document.getElementById("aiResponse").innerText = response;
 }
 
 function logout(){
