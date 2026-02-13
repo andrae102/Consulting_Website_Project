@@ -1,167 +1,428 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Online Business Management - Emery Campbell Consulting</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
-
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-}
-
-body{
-font-family:'Montserrat',sans-serif;
-background:linear-gradient(135deg,#0f0f0f,#1a1a1a);
-color:#f5f1e8;
-line-height:1.6;
-}
-
-/* HERO */
-.hero{
-padding:100px 40px;
-text-align:center;
-background:radial-gradient(circle at center,#1f1f1f 0%,#0f0f0f 70%);
-}
-
-.hero h1{
-font-family:'Cormorant Garamond',serif;
-font-size:3rem;
-margin-bottom:20px;
-letter-spacing:2px;
-}
-
-.hero p{
-max-width:700px;
-margin:auto;
-opacity:0.85;
-}
-
-.book-btn{
-margin-top:30px;
-padding:14px 35px;
-background:linear-gradient(135deg,#C19A6B,#8B7355);
-border:none;
-border-radius:30px;
-color:#fff;
-cursor:pointer;
-font-weight:600;
-transition:0.3s;
-}
-
-.book-btn:hover{
-opacity:0.9;
-transform:translateY(-2px);
-}
-
-/* SECTION */
-.section{
-padding:80px 40px;
-max-width:1000px;
-margin:auto;
-}
-
-.section h2{
-text-align:center;
-font-family:'Cormorant Garamond',serif;
-margin-bottom:50px;
-font-size:2rem;
-}
-
-.phase{
-background:#1a1a1a;
-padding:30px;
-border-radius:12px;
-margin-bottom:30px;
-border:1px solid rgba(193,154,107,0.2);
-}
-
-.phase h3{
-margin-bottom:10px;
-}
-
-.footer{
-text-align:center;
-padding:40px;
-opacity:0.5;
-font-size:0.8rem;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Business Management - Emery Campbell Consulting</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #000000;
+            color: #FFFFFF;
+        }
+        
+        h1, h2, h3 {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        
+        /* TOP BANNER */
+        .top-banner {
+            background: linear-gradient(135deg, #C19A6B 0%, #8B7355 100%);
+            padding: 12px 20px;
+            text-align: center;
+            font-size: 0.85rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #FFFFFF;
+            font-weight: 500;
+        }
+        
+        /* NAVBAR */
+        .navbar {
+            background: #000000;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: #FFFFFF;
+            text-decoration: none;
+            letter-spacing: 0.15em;
+        }
+        
+        .back-btn {
+            background: transparent;
+            border: 1px solid #C19A6B;
+            color: #C19A6B;
+            padding: 8px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .back-btn:hover {
+            background: #C19A6B;
+            color: #000000;
+        }
+        
+        /* HERO */
+        .hero {
+            background: linear-gradient(135deg, #C19A6B 0%, #8B7355 100%);
+            padding: 100px 20px;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            margin-bottom: 20px;
+            font-weight: 300;
+            letter-spacing: 0.05em;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* CONTENT SECTION */
+        .content-section {
+            max-width: 1000px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+        
+        .content-section h2 {
+            font-size: 2.5rem;
+            color: #C19A6B;
+            margin-bottom: 30px;
+        }
+        
+        .content-section p {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            margin-bottom: 30px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        /* PERSONAL NOTE */
+        .personal-note {
+            background: linear-gradient(135deg, rgba(193, 154, 107, 0.15) 0%, rgba(139, 115, 85, 0.15) 100%);
+            border-left: 4px solid #C19A6B;
+            padding: 40px;
+            margin: 60px 0;
+            border-radius: 8px;
+        }
+        
+        .personal-note h3 {
+            color: #C19A6B;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+        
+        .personal-note p {
+            font-size: 1.15rem;
+            line-height: 2;
+            color: rgba(255, 255, 255, 0.95);
+        }
+        
+        /* PACKAGES */
+        .packages-section {
+            margin: 80px 0;
+        }
+        
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .package-card {
+            background: linear-gradient(135deg, rgba(193, 154, 107, 0.1) 0%, rgba(139, 115, 85, 0.1) 100%);
+            border: 2px solid rgba(193, 154, 107, 0.3);
+            border-radius: 12px;
+            padding: 40px 30px;
+            text-align: center;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .package-card:hover {
+            transform: translateY(-10px);
+            border-color: #C19A6B;
+            box-shadow: 0 10px 30px rgba(193, 154, 107, 0.3);
+        }
+        
+        .package-card.featured {
+            border-color: #C19A6B;
+            border-width: 3px;
+        }
+        
+        .featured-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #C19A6B 0%, #8B7355 100%);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        
+        .package-name {
+            font-size: 2rem;
+            color: #C19A6B;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .package-price {
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .package-period {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            margin-bottom: 30px;
+        }
+        
+        .package-features {
+            list-style: none;
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .package-features li {
+            padding: 12px 0;
+            padding-left: 30px;
+            position: relative;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+        }
+        
+        .package-features li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #C19A6B;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .package-btn {
+            background: linear-gradient(135deg, #C19A6B 0%, #8B7355 100%);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .package-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(193, 154, 107, 0.4);
+        }
+        
+        .package-btn.selected {
+            background: #4caf50;
+        }
+        
+        /* CTA */
+        .cta-section {
+            background: linear-gradient(135deg, #C19A6B 0%, #8B7355 100%);
+            padding: 80px 20px;
+            text-align: center;
+            margin-top: 80px;
+        }
+        
+        .cta-btn {
+            background: #000000;
+            color: #FFFFFF;
+            padding: 18px 50px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            display: inline-block;
+            transition: all 0.3s;
+            margin: 10px;
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 20px;
+            }
+            
+            .packages-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
-
 <body>
 
-<section class="hero">
-<h1>Online Business Management</h1>
-<p>
-We design operational systems that scale your business within 90 days.
-Our approach focuses on automation, efficiency, and long-term digital infrastructure.
-</p>
+    <div class="top-banner">
+        STREAMLINE YOUR OPERATIONS • SCALE YOUR BUSINESS
+    </div>
 
-<button class="book-btn" onclick="bookService()">
-Book This Service
-</button>
-</section>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">EMERY CAMPBELL</a>
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+        </div>
+    </nav>
 
-<section class="section">
-<h2>Your 3-Month Growth Framework</h2>
+    <section class="hero">
+        <h1>ONLINE BUSINESS MANAGEMENT</h1>
+        <p>Complete administrative support, systems optimization, and process management to help your business run smoothly and scale effectively.</p>
+    </section>
 
-<div class="phase">
-<h3>Month 1 – Structure & Optimization</h3>
-<p>
-We audit your systems, eliminate inefficiencies, implement automation tools,
-and restructure workflows for operational clarity.
-</p>
-</div>
-
-<div class="phase">
-<h3>Month 2 – Strategic Growth</h3>
-<p>
-We refine customer journeys, improve team systems, and implement revenue optimization strategies.
-</p>
-</div>
-
-<div class="phase">
-<h3>Month 3 – Scaling & Expansion</h3>
-<p>
-We introduce KPI tracking frameworks, scalable digital infrastructure,
-and long-term growth planning for sustainable expansion.
-</p>
-</div>
-
-</section>
-
-<div class="footer">
-© 2026 Emery Campbell Consulting
-</div>
-
-<script>
-function bookService(){
-
-/* DEBUG: CONFIRM BUTTON WORKS */
-alert("Book button clicked");
-
-/* Save selected service */
-localStorage.setItem("selectedService","online-business");
-
-/* Save redirect page */
-localStorage.setItem("redirectAfterLogin","service-portal.html");
-
-/* Redirect */
-const currentUser = localStorage.getItem("currentUser");
-
-if(currentUser){
-window.location.href = "service-portal.html";
-} else {
-window.location.href = "login.html";
-}
-
-}
-</script>
-
-</body>
-</html>
+    <div class="content-section">
+        
+        <!-- Personal Note -->
+        <div class="personal-note">
+            <h3>"Let me handle the backend so you can focus on what you do best..."</h3>
+            <p>
+                Running a business is hard enough without drowning in admin work, tech issues, and trying to keep all the moving pieces organized. That's where I come in.
+            </p>
+            <p style="margin-top: 20px;">
+                I'm not just here to check boxes on your to-do list. I'm here to actually understand YOUR business, set up systems that work for YOU, and become the support you can count on. Think of me as your right hand – the person who makes sure everything runs smoothly behind the scenes so you can focus on growth.
+            </p>
+            <p style="margin-top: 20px;">
+                Whether you need help managing projects, organizing your workflows, or just need someone who "gets it" to take things off your plate – I've got you. Let's work together. 🚀
+            </p>
+        </div>
+        
+        <h2>What I Can Help You With</h2>
+        <p>
+            From day-to-day operations to big-picture strategy, here's how I support your business:
+        </p>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin: 40px 0;">
+            <div style="background: rgba(193, 154, 107, 0.08); border: 1px solid rgba(193, 154, 107, 0.2); padding: 30px; border-radius: 8px;">
+                <h3 style="color: #C19A6B; margin-bottom: 15px;"><i class="fas fa-tasks"></i> Project Management</h3>
+                <p style="font-size: 0.95rem;">Keep your projects on track, on time, and on budget. I handle timelines, team coordination, and make sure nothing falls through the cracks.</p>
+            </div>
+            
+            <div style="background: rgba(193, 154, 107, 0.08); border: 1px solid rgba(193, 154, 107, 0.2); padding: 30px; border-radius: 8px;">
+                <h3 style="color: #C19A6B; margin-bottom: 15px;"><i class="fas fa-cogs"></i> Systems & Processes</h3>
+                <p style="font-size: 0.95rem;">Set up and optimize workflows that save you time and reduce headaches. From automation to SOPs, I make your business run like a well-oiled machine.</p>
+            </div>
+            
+            <div style="background: rgba(193, 154, 107, 0.08); border: 1px solid rgba(193, 154, 107, 0.2); padding: 30px; border-radius: 8px;">
+                <h3 style="color: #C19A6B; margin-bottom: 15px;"><i class="fas fa-users"></i> Team Coordination</h3>
+                <p style="font-size: 0.95rem;">Managing contractors, freelancers, or employees? I help coordinate schedules, delegate tasks, and keep everyone aligned with your vision.</p>
+            </div>
+            
+            <div style="background: rgba(193, 154, 107, 0.08); border: 1px solid rgba(193, 154, 107, 0.2); padding: 30px; border-radius: 8px;">
+                <h3 style="color: #C19A6B; margin-bottom: 15px;"><i class="fas fa-file-alt"></i> Admin Support</h3>
+                <p style="font-size: 0.95rem;">Email management, scheduling, document organization, client onboarding – all the behind-the-scenes stuff that takes up your time.</p>
+            </div>
+            
+            <div style="background: rgba(193, 154, 107, 0.08); border: 1px solid rgba(193, 154, 107, 0.2); padding: 30px; border-radius: 8px;">
+                <h3 style="color: #C19A6B; margin-bottom: 15px;"><i class="fas fa-chart-line"></i> Operations Strategy</h3>
+                <p style="font-size: 0.95rem;">Let's look at the big picture. I help identify bottlenecks, streamline operations, and create scalable systems for growth.</p>
+            </div>
+            
+            <div style="background: rgba(193, 154, 107, 0.08); border: 1px solid rgba(193, 154, 107, 0.2); padding: 30px; border-radius: 8px;">
+                <h3 style="color: #C19A6B; margin-bottom: 15px;"><i class="fas fa-tools"></i> Tech & Tools Setup</h3>
+                <p style="font-size: 0.95rem;">CRMs, project management software, automation tools – I'll research, set up, and train you on the best tools for your business.</p>
+            </div>
+        </div>
+        
+        <!-- Packages Section -->
+        <div class="packages-section">
+            <h2 style="text-align: center; margin-bottom: 20px;">Choose Your Package</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto 40px;">Select the level of support that fits your business needs. All packages include dedicated support and can be customized.</p>
+            
+            <div class="packages-grid">
+                
+                <!-- BASIC PACKAGE -->
+                <div class="package-card">
+                    <h3 class="package-name">Essentials</h3>
+                    <div class="package-price">$XXX</div>
+                    <div class="package-period">per month</div>
+                    <ul class="package-features">
+                        <li>Up to 10 hours/month support</li>
+                        <li>Email & admin management</li>
+                        <li>Basic project coordination</li>
+                        <li>Monthly strategy call</li>
+                        <li>Email support (48hr response)</li>
+                    </ul>
+                    <button class="package-btn" onclick="selectPackage('essentials', this)">Select Essentials</button>
+                </div>
+                
+                <!-- PRO PACKAGE (FEATURED) -->
+                <div class="package-card featured">
+                    <div class="featured-badge">Most Popular</div>
+                    <h3 class="package-name">Professional</h3>
+                    <div class="package-price">$XXX</div>
+                    <div class="package-period">per month</div>
+                    <ul class="package-features">
+                        <li>Up to 20 hours/month support</li>
+                        <li>Everything in Essentials, plus:</li>
+                        <li>Full project management</li>
+                        <li>Systems & process optimization</li>
+                        <li>Team coordination</li>
+                        <li>Bi-weekly strategy calls</li>
+                        <li>Priority email support (24hr response)</li>
+                    </ul>
+                    <button class="package-btn" onclick="selectPackage('professional', this)">Select Professional</button>
+                </div>
+                
+                <!-- PREMIUM PACKAGE -->
+                <div class="package-card">
+                    <h3 class="package-name">Executive</h3>
+                    <div class="package-price">$XXX</div>
+                    <div class="package-period">per month</div>
+                    <ul class="package-features">
+                        <li>Up to 40 hours/month support</li>
+                        <li>Everything in Professional, plus:</li>
+                        <li>Full operations management</li>
+                        <li>Strategic planning & consulting</li>
+                        <li>Unlimited team coordination</li>
+                        <li>Weekly​​​​​​​​​​​​​​​​
