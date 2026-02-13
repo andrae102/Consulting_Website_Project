@@ -425,4 +425,101 @@
                         <li>Full operations management</li>
                         <li>Strategic planning & consulting</li>
                         <li>Unlimited team coordination</li>
-                        <li>Weekly​​​​​​​​​​​​​​​​
+                        <li>Weekly strategy sessions</li>
+                        <li>Direct access (same-day response)</li>
+                        <li>Custom integrations & automation</li>
+                    </ul>
+                    <button class="package-btn" onclick="selectPackage('executive', this)">Select Executive</button>
+                </div>
+                
+            </div>
+            
+            <p style="text-align: center; margin-top: 40px; font-size: 0.95rem; color: rgba(255, 255, 255, 0.7);">
+                * Prices are placeholder. Custom packages available – let's chat about what you need!
+            </p>
+        </div>
+        
+    </div>
+
+    <section class="cta-section">
+        <h2 style="font-size: 3rem; margin-bottom: 20px; color: #FFFFFF;">Ready to Streamline Your Business?</h2>
+        <p style="font-size: 1.2rem; margin-bottom: 40px; color: #FFFFFF;">Book a free consultation to discuss your needs and find the perfect fit!</p>
+        <a href="https://wa.me/18479427399?text=Hi!%20I'm%20interested%20in%20Online%20Business%20Management%20services" class="cta-btn" target="_blank">
+            📞 Book Free Consultation
+        </a>
+        <a href="mailto:emerycampexp@gmail.com" class="cta-btn">
+            📧 Send Email
+        </a>
+    </section>
+
+    <script>
+        // Track page visit
+        function trackActivity(action, page) {
+            if (localStorage.getItem('userLoggedIn') === 'true') {
+                const userData = JSON.parse(localStorage.getItem('userData') || '{"activity":[]}');
+                
+                if (!userData.activity) {
+                    userData.activity = [];
+                }
+                
+                userData.activity.push({
+                    action: action,
+                    page: page,
+                    timestamp: new Date().toISOString(),
+                    date: new Date().toLocaleString()
+                });
+                
+                localStorage.setItem('userData', JSON.stringify(userData));
+            }
+        }
+        
+        // Check if user is logged in
+        const isLoggedIn = localStorage.getItem('userLoggedIn') === 'true';
+        
+        if (!isLoggedIn) {
+            // Not logged in - redirect to login after showing message
+            alert('Please log in or create an account to select a package.');
+            window.location.href = 'account.html?redirect=online-business-management.html';
+        } else {
+            trackActivity('Visited Online Business Management Page', 'online-business-management.html');
+        }
+        
+        // Package selection function
+        function selectPackage(packageName, button) {
+            // Get user data
+            const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+            
+            // Save selected package to user profile
+            userData.selectedPackage = {
+                type: 'Online Business Management',
+                tier: packageName,
+                selectedDate: new Date().toISOString(),
+                status: 'pending'
+            };
+            
+            localStorage.setItem('userData', JSON.stringify(userData));
+            
+            // Track activity
+            trackActivity(`Selected ${packageName} package`, 'online-business-management.html');
+            
+            // Update button text
+            document.querySelectorAll('.package-btn').forEach(btn => {
+                btn.classList.remove('selected');
+                btn.textContent = btn.textContent.replace('✓ Selected', 'Select');
+            });
+            
+            button.classList.add('selected');
+            button.textContent = '✓ Selected - ' + packageName.charAt(0).toUpperCase() + packageName.slice(1);
+            
+            // Show confirmation
+            alert(`Great choice! The ${packageName.charAt(0).toUpperCase() + packageName.slice(1)} package has been added to your profile.\n\nNext steps:\n1. We'll review your selection\n2. Schedule a consultation call\n3. Get started!\n\nCheck your dashboard for updates.`);
+            
+            // Redirect to dashboard
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 2000);
+        }
+    </script>
+
+</body>
+</html>
